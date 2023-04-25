@@ -19,6 +19,10 @@ if (process.env.NODE_ENV === 'development') {
 	app.use(cors({ origin: 'http://localhost:3000', credentials: true }))
 }
 
+const publicPath = path.join(__dirname, 'public')
+const uploadsPath = path.join(__dirname, 'uploads')
+app.use(express.static(publicPath))
+app.use('/uploads', express.static(uploadsPath))
 app.use('/api', require('./indexRouter'))
 
 const PORT = process.env.PORT

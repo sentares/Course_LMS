@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+input {
+	@apply transition;
+}
+
+button {
+	@apply transition-all;
+}
