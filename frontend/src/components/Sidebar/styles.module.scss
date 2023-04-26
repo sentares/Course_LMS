@@ -1,0 +1,46 @@
+.Sidebar {
+	@apply min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-50 text-gray-800;
+	&_Block {
+		@apply fixed flex flex-col top-0 left-0 w-64 bg-white h-full border-r;
+		.nameBlock {
+			@apply flex items-center justify-center h-14 border-b text-xl;
+		}
+		.choseBlock {
+			@apply overflow-y-auto overflow-x-hidden flex-grow;
+			.choseList {
+				@apply flex flex-col py-4 space-y-1;
+				.aLink {
+					@apply w-full relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-100 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6;
+					.iconBlock {
+						@apply inline-flex justify-center items-center ml-4;
+						.icon {
+							@apply w-5 h-5 flex items-center justify-center text-xl;
+						}
+						.iconYellow {
+							@apply w-5 h-5 flex items-center justify-center text-lg text-yellow-500;
+						}
+					}
+
+					.title {
+						@apply ml-2 text-sm tracking-wide truncate;
+					}
+					.countOfGreen {
+						@apply px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-green-500 bg-green-50 rounded-full;
+					}
+					.countOfOrange {
+						@apply px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-orange-500 bg-orange-50 rounded-full;
+					}
+				}
+				.active {
+					@apply w-full bg-indigo-100 relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6 border-indigo-400;
+				}
+			}
+		}
+	}
+	.categoryBlock {
+		@apply flex flex-row items-center h-8 border-b-gray-100 w-full border-b-2;
+		.categoryTitle {
+			@apply text-sm font-light tracking-wide text-gray-500;
+		}
+	}
+}

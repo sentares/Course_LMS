@@ -59,7 +59,7 @@ class AuthService {
 		}
 	}
 
-	async loginStudent({ login, password: dataPassword }) {
+	async loginStudent(login, password) {
 		try {
 			const { rows } = await pool.query('select * from students where login=$1', [login])
 
@@ -73,8 +73,8 @@ class AuthService {
 				}
 			}
 
-			const { name, surname, patronymic, password, id_student, role } = await rows[0]
-			const isPasswordCorrect = await bcrypt.compare(dataPassword, password)
+			const { name, surname, patronymic, password: hashedPassword, id_student, role } = await rows[0]
+			const isPasswordCorrect = await bcrypt.compare(password, hashedPassword)
 
 			if (!isPasswordCorrect) {
 				return {
@@ -101,48 +101,31 @@ class AuthService {
 		}
 	}
 
-	async check(req, res) {
+	async verifyToken(token) {
 		try {
-			const { token } = req.cookies
+			const decoded = jwt.verify(token, process.env.SECRET_KEY)
 
-			if (!token) {
-				return res.status(303).json({
-					message: 'Вы не авторизованы',
-					type: 'warn',
-					data: {},
-					accessToken: ''
-				})
-			}
-
-			try {
-				const { name, surname, patronymic, login, id_student, role } = jwt.verify(token, process.env.SECRET_KEY)
-				res.status(202).json({
-					message: 'Вы авторизованы',
-					type: 'success',
-					data: { name, surname, patronymic, login, id_student, role },
-					accessToken: token
-				})
-			} catch (studentTokenError) {
-				try {
-					const { name, login, id_user, activ, try_count, role } = jwt.verify(token, process.env.SECRET_KEY)
-					res.status(202).json({
-						message: 'Вы авторизованы',
-						type: 'success',
-						data: { name, login, id_user, activ, try_count, role },
-						accessToken: token
-					})
-				} catch (adminTokenError) {
-					return res.status(401).json({
-						message: 'Неправильный токен',
-						type: 'error',
-						data: {},
-						accessToken: ''
-					})
+			if (decoded.id_student) {
+				return {
+					name: decoded.name,
+					surname: decoded.surname,
+					patronymic: decoded.patronymic,
+					login: decoded.login,
+					id_student: decoded.id_student,
+					role: decoded.role
+				}
+			} else {
+				return {
+					name: decoded.name,
+					login: decoded.login,
+					id_user: decoded.id_user,
+					activ: decoded.activ,
+					try_count: decoded.try_count,
+					role: decoded.role
 				}
 			}
-		} catch (e) {
-			console.log(e)
-			throw e
+		} catch (error) {
+			throw error
 		}
 	}
 }

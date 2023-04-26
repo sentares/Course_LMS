@@ -7,11 +7,11 @@ import { setIsAuth, setUser } from '../redux/slices/authSlice'
 const useAuth = (form, isCaptchaSuccessful) => {
 	const { request } = useHttp()
 	const navigate = useNavigate()
-	const dispath = useDispatch()
+	const dispatch = useDispatch()
 
 	const getData = data => {
-		dispath(setUser(data))
-		dispath(setIsAuth(true))
+		dispatch(setUser(data))
+		dispatch(setIsAuth(true))
 	}
 
 	const registerStudent = async () => {
@@ -65,7 +65,34 @@ const useAuth = (form, isCaptchaSuccessful) => {
 		toast.warn('Заполните пустые поля')
 	}
 
-	return { registerStudent, loginStudent }
+	const checkAuth = async () => {
+		try {
+			const { data, accessToken } = await request('/auth/check')
+			if (accessToken.length) {
+				dispatch(setUser(data))
+				dispatch(setIsAuth(true))
+			}
+		} catch (e) {
+			console.log(e)
+		}
+	}
+
+	const logout = async () => {
+		await request('/auth/logout')
+		dispatch(
+			setUser({
+				name: '',
+				login: '',
+				id_student: null,
+				is_admin: null,
+				role: null,
+			})
+		)
+		dispatch(setIsAuth(false))
+		navigate('/')
+	}
+
+	return { registerStudent, loginStudent, checkAuth, logout }
 }
 
 export default useAuth

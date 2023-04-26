@@ -1,13 +1,12 @@
 import React from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
-import HomePage from './HomePage/HomePage'
-import RegisterPage from './RegisterPage/RegisterPage'
-import LoginPage from './LoginPage/LoginPage'
-import { useSelector } from 'react-redux'
+import HomePage from '../pages/HomePage/HomePage'
+import RegisterPage from '../pages/RegisterPage/RegisterPage'
+import LoginPage from '../pages/LoginPage/LoginPage'
+import CoursesPage from '../pages/CoursesPage/CoursesPage'
+import LikedPage from '../pages/LikedPage/LikedPage'
 
-const Router = () => {
-	const isAuth = useSelector(state => state.auth.isAuth)
-	const user = useSelector(state => state.auth.user)
+const Router = ({ user, isAuth }) => {
 	const { role } = user
 
 	if (isAuth && role === 4) {
@@ -16,12 +15,14 @@ const Router = () => {
 				<Route path='/login' element={<Navigate replace to='/' />} />
 				<Route path='/register' element={<Navigate replace to='/' />} />
 				<Route path='/' element={<HomePage />} />
+				<Route path='/courses' element={<CoursesPage />} />
+				<Route path='/liked' element={<LikedPage />} />
 			</Routes>
 		)
 	} else {
 		return (
 			<Routes>
-				<Route path='/' element={<Navigate replace to='/login' />} />
+				<Route path='/' element={<HomePage />} />
 				<Route path='/login' element={<LoginPage />} />
 				<Route path='/register' element={<RegisterPage />} />
 				{/* <Route path='/loginAdmin' element={<LoginAdmin />} /> */}
