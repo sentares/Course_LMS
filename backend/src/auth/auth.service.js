@@ -104,7 +104,6 @@ class AuthService {
 	async verifyToken(token) {
 		try {
 			const decoded = jwt.verify(token, process.env.SECRET_KEY)
-
 			if (decoded.id_student) {
 				return {
 					name: decoded.name,

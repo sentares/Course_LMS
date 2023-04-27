@@ -23,6 +23,7 @@ const LoginForm = () => {
 					type='text'
 					placeholder={'Введите ваш login'}
 					onChange={onChangeForm}
+					classOfStyle={'auth'}
 				/>
 			</div>
 			<div>
@@ -32,12 +33,14 @@ const LoginForm = () => {
 					type='text'
 					placeholder={'Введите пароль'}
 					onChange={onChangeForm}
+					classOfStyle={'auth'}
 				/>
 			</div>
 			<div>
 				<Button
 					title={'Войти'}
 					onClick={handleClickLogin}
+					classOfStyle={'auth'}
 					// disabled={isDisabled}
 				/>
 			</div>

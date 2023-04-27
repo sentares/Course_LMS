@@ -8,6 +8,23 @@ class CourseService {
 			console.log(e)
 		}
 	}
+
+	async createCourse(nameOfCourse, descriptionOfCourse) {
+		try {
+			return await pool.query('INSERT INTO course (course_name, course_description) VALUES ($1, $2) returning *', [nameOfCourse, descriptionOfCourse]).rows
+		} catch (e) {
+			console.log(e)
+		}
+	}
+
+	async getSpecialCourse(id_course) {
+		try {
+			const { rows } = await pool.query('select * from course where id_course=$1', [id_course])
+			return rows[0]
+		} catch (e) {
+			console.log(e)
+		}
+	}
 }
 
 module.exports = new CourseService()

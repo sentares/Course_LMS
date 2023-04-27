@@ -7,16 +7,18 @@ const Layout = props => {
 	const { pathname } = useLocation()
 
 	return (
-		<div>
-			{pathname === '/register' || pathname === '/login' ? (
+		<>
+			{pathname === '/register' ||
+			pathname === '/login' ||
+			pathname === '/loginAdmin' ? (
 				<div>{children}</div>
 			) : (
-				<div>
+				<div className='flex'>
 					<Sidebar />
 					<div>{children}</div>
 				</div>
 			)}
-		</div>
+		</>
 	)
 }
 

@@ -62,6 +62,16 @@ const Sidebar = () => {
 							</>
 						)}
 					</ul>
+					{!isAuth && (
+						<ul className={styles.shortList}>
+							<button className={styles.shortList_info}>
+								<Link to={'/loginTeacher'}>Преподаватель</Link>
+							</button>
+							<button className={styles.shortList_info}>
+								<Link to={'/loginAdmin'}>Администратор</Link>
+							</button>
+						</ul>
+					)}
 				</div>
 			</div>
 		</div>

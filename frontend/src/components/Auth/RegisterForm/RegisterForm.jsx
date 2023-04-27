@@ -24,6 +24,7 @@ const RegisterForm = () => {
 					type='text'
 					placeholder={'Введите вашу фамилию'}
 					onChange={onChangeForm}
+					classOfStyle={'auth'}
 				/>
 			</div>
 			<div>
@@ -33,6 +34,7 @@ const RegisterForm = () => {
 					type='text'
 					placeholder={'Введите ваше имя'}
 					onChange={onChangeForm}
+					classOfStyle={'auth'}
 				/>
 			</div>
 			<div>
@@ -42,6 +44,7 @@ const RegisterForm = () => {
 					type='text'
 					placeholder={'Введите ваше отчество'}
 					onChange={onChangeForm}
+					classOfStyle={'auth'}
 				/>
 			</div>
 			<div>
@@ -51,6 +54,7 @@ const RegisterForm = () => {
 					type='text'
 					placeholder={'Введите ваш login'}
 					onChange={onChangeForm}
+					classOfStyle={'auth'}
 				/>
 			</div>
 			<div>
@@ -60,6 +64,7 @@ const RegisterForm = () => {
 					type='text'
 					placeholder={'Введите пароль'}
 					onChange={onChangeForm}
+					classOfStyle={'auth'}
 				/>
 			</div>
 			<div className={styles.captcha}>
@@ -69,6 +74,7 @@ const RegisterForm = () => {
 				<Button
 					title={'Регистрация'}
 					onClick={handleClickRegister}
+					classOfStyle={'auth'}
 					// disabled={isDisabled}
 				/>
 			</div>

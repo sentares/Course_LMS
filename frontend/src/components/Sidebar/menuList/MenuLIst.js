@@ -3,7 +3,7 @@ import { AiOutlineHome } from 'react-icons/ai'
 import { BiMessageDetail, BiTask } from 'react-icons/bi'
 import { CgProfile } from 'react-icons/cg'
 import { DiJsBadge } from 'react-icons/di'
-import { FaRegStar } from 'react-icons/fa'
+import { FaChalkboardTeacher, FaRegStar } from 'react-icons/fa'
 import { RiSettings5Fill } from 'react-icons/ri'
 
 const MenuLIst = () => {
@@ -85,9 +85,41 @@ const MenuLIst = () => {
 		},
 	]
 
+	const menuListAdmin = [
+		{
+			id: 1,
+			title: 'Главная',
+			link: '/',
+			icon: <AiOutlineHome />,
+			isActive: true,
+		},
+		{
+			id: 2,
+			title: 'Курсы',
+			link: '/courses',
+			icon: <DiJsBadge />,
+			isActive: false,
+		},
+		{
+			id: 3,
+			title: 'Преподаватели',
+			link: '/teachers',
+			icon: <FaChalkboardTeacher />,
+			isActive: false,
+		},
+		{
+			id: 7,
+			title: 'Настройки',
+			link: '/settings',
+			icon: <RiSettings5Fill />,
+			isActive: false,
+		},
+	]
+
 	return {
 		menuListStudent,
 		menuListGuest,
+		menuListAdmin,
 	}
 }
 

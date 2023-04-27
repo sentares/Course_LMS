@@ -1,4 +1,7 @@
 const AuthService = require('./auth.service')
+const jwt = require('jsonwebtoken')
+const pool = require('../db/db')
+const bcrypt = require('bcrypt')
 
 class AuthController {
 	async login(req, res) {
@@ -19,6 +22,80 @@ class AuthController {
 					message: 'Авторизация прошла успешно',
 					type: 'success',
 					data: user,
+					accessToken: token
+				})
+		} catch (e) {
+			console.log(e)
+			res.status(500).json({
+				message: 'Ошибка в сервер',
+				type: 'error',
+				data: []
+			})
+		}
+	}
+
+	async loginAdmin(req, res) {
+		try {
+			const data = req.body
+
+			const { rows } = await pool.query('select * from users where login=$1', [data.login])
+
+			if (!rows.length) {
+				return res.status(303).json({
+					message: 'Такой пользователь не существует',
+					type: 'warn',
+					data: {},
+					accessToken: ''
+				})
+			}
+
+			const { name, password, login, id_user, activ, try_count, role } = await rows[0]
+
+			if (!activ) {
+				return res.status(401).json({
+					message: 'У вас нет полномочий для входа',
+					type: 'error',
+					data: { activ },
+					accessToken: ''
+				})
+			}
+
+			if (try_count >= 5) {
+				await pool.query(`update users set activ=false where id_user=${id_user}`)
+				return res.status(401).json({
+					message: 'Вы превысили лимит попыток входа.',
+					type: 'error',
+					data: { try_count, activ },
+					accessToken: ''
+				})
+			}
+
+			const isPassword = await bcrypt.compare(data.password, password)
+
+			if (!isPassword) {
+				await pool.query(`update users set try_count=${try_count + 1} where id_user=${id_user}`)
+
+				return res.status(303).json({
+					message: 'Неправильный пароль',
+					type: 'warn',
+					data: { try_count: try_count + 1 },
+					accessToken: ''
+				})
+			}
+
+			const token = jwt.sign({ name, login, id_user, activ, try_count, role }, process.env.SECRET_KEY)
+
+			await pool.query(`update users set try_count=0 where id_user=${id_user}`)
+
+			res.status(202)
+				.cookie('token', token, {
+					httpOnly: true,
+					maxAge: 100 * 60 * 60 * 24 * 30
+				})
+				.json({
+					message: 'Авторизация прошла успешно',
+					type: 'success',
+					data: { name, login, id_user, activ, try_count, role },
 					accessToken: token
 				})
 		} catch (e) {

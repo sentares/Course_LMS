@@ -3,8 +3,11 @@ import { useHttp } from './useHttp'
 import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
 import { setIsAuth, setUser } from '../redux/slices/authSlice'
+import { useState } from 'react'
 
 const useAuth = (form, isCaptchaSuccessful) => {
+	const [tryCount, setTryCount] = useState(null)
+	const [isActive, setIsActive] = useState(true)
 	const { request } = useHttp()
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
@@ -55,8 +58,29 @@ const useAuth = (form, isCaptchaSuccessful) => {
 				'POST',
 				{ login: login.trim(), password: password.trim() }
 			)
-			console.log(data)
 			toast[type](message)
+			if (accessToken.length) {
+				getData(data)
+			}
+			return
+		}
+		toast.warn('Заполните пустые поля')
+	}
+
+	const loginAdmin = async () => {
+		const { login, password } = form
+		if (!isCaptchaSuccessful) {
+			return toast.warn('Подтвердите что вы не робот')
+		}
+		if (login.trim().length && password.trim().length) {
+			const { data, accessToken, message, type } = await request(
+				'/auth/loginAdmin',
+				'POST',
+				{ login: login.trim(), password: password.trim() }
+			)
+			toast[type](message)
+			setIsActive(data.activ)
+			setTryCount(data.try_count)
 			if (accessToken.length) {
 				getData(data)
 			}
@@ -92,7 +116,7 @@ const useAuth = (form, isCaptchaSuccessful) => {
 		navigate('/')
 	}
 
-	return { registerStudent, loginStudent, checkAuth, logout }
+	return { registerStudent, loginStudent, loginAdmin, checkAuth, logout }
 }
 
 export default useAuth

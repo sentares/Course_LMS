@@ -1,0 +1,18 @@
+.TeacherPage {
+	@apply flex items-center justify-center w-full m-1 mt-8;
+	.teacherItem {
+		@apply w-96 max-w-sm relative flex flex-row items-center m-3 p-2 focus:outline-none bg-slate-100 hover:bg-slate-200 text-gray-600 hover:text-gray-800 hover:scale-[1.02] transition-all
+			rounded-md;
+		.name {
+		}
+		.role {
+			@apply font-semibold text-sm;
+		}
+		.roleTeacher {
+			@apply text-blue-500;
+		}
+		.roleManager {
+			@apply text-orange-500;
+		}
+	}
+}
