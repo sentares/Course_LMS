@@ -22,7 +22,8 @@ class CourseController {
 		try {
 			const { nameOfCourse, descriptionOfCourse } = req.body
 
-			const { rows } = CourseService.createCourse(nameOfCourse, descriptionOfCourse)
+			const { rows } = await CourseService.createCourse(nameOfCourse, descriptionOfCourse)
+			console.log(rows)
 
 			return res.status(200).json({
 				message: 'Курс успешно создан',

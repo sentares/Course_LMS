@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useHttp } from './useHttp'
 
-const useTeacher = () => {
+const useTeacher = id_teacher => {
 	const { request } = useHttp()
 
 	const [allTeachers, setAllTeachers] = useState(null)
@@ -13,7 +13,7 @@ const useTeacher = () => {
 	}
 
 	const getSpecialTeacher = async () => {
-		const { data } = await request('/teacher/getSpecial')
+		const { data } = await request(`/teacher/getSpecial/${id_teacher}`)
 		setSpecialTeacher(data)
 	}
 

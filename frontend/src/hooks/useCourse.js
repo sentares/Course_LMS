@@ -5,6 +5,7 @@ import { toast } from 'react-toastify'
 const useCourse = (form, id_course) => {
 	const [allCourses, setAllCourses] = useState(null)
 	const [specialCourse, setSpecialCourse] = useState(null)
+	const [isDoneFunction, setIsDoneFunction] = useState(false)
 	const { request } = useHttp()
 
 	const getAllCourses = async () => {
@@ -15,18 +16,19 @@ const useCourse = (form, id_course) => {
 	const createCourse = async () => {
 		const { nameOfCourse, descriptionOfCourse } = form
 		if (nameOfCourse.trim().length && descriptionOfCourse.trim().length) {
-			const { message, type } = await request('/course/create', 'POST', {
+			const { type, message } = await request('/course/create', 'POST', {
 				nameOfCourse: nameOfCourse.trim(),
 				descriptionOfCourse: descriptionOfCourse.trim(),
 			})
 			toast[type](message)
+			setIsDoneFunction(true)
 		}
+		toast.warn('Заполните пустые поля')
 	}
 
 	const getSpecialCourse = async () => {
-		const { rows } = await request(`/course/getSpecial/${id_course}`)
-		console.log(rows)
-		setSpecialCourse(rows)
+		const { data } = await request(`/course/getSpecial/${id_course}`)
+		setSpecialCourse(data)
 	}
 
 	return {
@@ -34,6 +36,7 @@ const useCourse = (form, id_course) => {
 		getSpecialCourse,
 		createCourse,
 		allCourses,
+		isDoneFunction,
 		specialCourse,
 	}
 }

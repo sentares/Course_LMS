@@ -14,6 +14,7 @@ const CoursesPageModule = () => {
 	const handleOpenChangeCourseModal = () => {
 		setIsOpenCourseModal(!isOpenCreateCourseModal)
 	}
+
 	const handleUploadCourse = async event => {
 		event.preventDefault()
 		await createCourse()

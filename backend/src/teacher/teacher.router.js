@@ -4,6 +4,6 @@ const TeacherController = require('./teacher.controller')
 const router = Router()
 
 router.get('/', TeacherController.getTeachers)
-router.get('/getSpecial', TeacherController.getSpecialTeacher)
+router.get('/getSpecial/:id_teacher', TeacherController.getSpecialTeacher)
 
 module.exports = router

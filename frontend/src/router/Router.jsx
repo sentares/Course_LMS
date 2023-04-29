@@ -9,6 +9,7 @@ import TeacherPage from '../pages/Teachers/TeacherPage/TeacherPage'
 import SpecialTeacherPage from '../pages/Teachers/SpecialTeacherPage/SpecialTeacherPage'
 import CoursesPage from '../pages/CoursesPages/CoursesPage/CoursesPage'
 import SpecialCoursePage from '../pages/CoursesPages/SpecialCoursePage/SpecialCoursePage'
+import SpecialFlowsPage from '../pages/FlowsPage/SpecialFlowsPage/SpecialFlowsPage'
 
 const Router = ({ user, isAuth }) => {
 	const { role } = user
@@ -29,6 +30,7 @@ const Router = ({ user, isAuth }) => {
 				<Route path='/loginAdmin' element={<Navigate replace to='/' />} />
 				<Route path='/courses' element={<CoursesPage />} />
 				<Route path='/courses/:id_course' element={<SpecialCoursePage />} />
+				<Route path='/coursesFlows/:id_flows' element={<SpecialFlowsPage />} />
 				<Route path='/teachers' element={<TeacherPage />} />
 				<Route path='/teachers/:id_teacher' element={<SpecialTeacherPage />} />
 				<Route path='/' element={<HomePage />} />

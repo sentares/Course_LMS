@@ -11,7 +11,8 @@ class CourseService {
 
 	async createCourse(nameOfCourse, descriptionOfCourse) {
 		try {
-			return await pool.query('INSERT INTO course (course_name, course_description) VALUES ($1, $2) returning *', [nameOfCourse, descriptionOfCourse]).rows
+			const { rows } = await pool.query('INSERT INTO course (course_name, course_description) VALUES ($1, $2) returning *', [nameOfCourse, descriptionOfCourse])
+			return rows[0]
 		} catch (e) {
 			console.log(e)
 		}
