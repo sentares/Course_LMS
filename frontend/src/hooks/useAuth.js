@@ -89,6 +89,31 @@ const useAuth = (form, isCaptchaSuccessful) => {
 		toast.warn('Заполните пустые поля')
 	}
 
+	const loginTeacher = async () => {
+		try {
+			const { login: temp_inn, password } = form
+			if (!isCaptchaSuccessful) {
+				return toast.warn('Подтвердите что вы не робот')
+			}
+			if (temp_inn.trim().length && password.trim().length) {
+				const { data, accessToken, message, type } = await request(
+					'/auth/loginTeacher',
+					'POST',
+					{ temp_inn: temp_inn.trim(), password: password.trim() }
+				)
+				toast[type](message)
+
+				if (accessToken.length) {
+					getData(data)
+				}
+				return
+			}
+			toast.warn('Заполните пустые поля')
+		} catch (e) {
+			console.log(e)
+		}
+	}
+
 	const checkAuth = async () => {
 		try {
 			const { data, accessToken } = await request('/auth/check')
@@ -116,7 +141,14 @@ const useAuth = (form, isCaptchaSuccessful) => {
 		navigate('/')
 	}
 
-	return { registerStudent, loginStudent, loginAdmin, checkAuth, logout }
+	return {
+		registerStudent,
+		loginStudent,
+		loginAdmin,
+		loginTeacher,
+		checkAuth,
+		logout,
+	}
 }
 
 export default useAuth

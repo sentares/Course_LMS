@@ -1,9 +1,13 @@
 import { useParams } from 'react-router-dom'
 import useFlows from '../../../../hooks/useFlows'
 import useTeacher from '../../../../hooks/useTeacher'
+import { useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 
 const SpecialFlowsPageModule = () => {
+	const user = useSelector(state => state.auth.user)
+	const { role } = user
+
 	const [form, setForm] = useState({
 		activ: '',
 		count_of_seats: '',
@@ -17,9 +21,15 @@ const SpecialFlowsPageModule = () => {
 		price: '',
 	})
 	const [isPressChange, setIsPressChange] = useState(false)
+	const [isAdmin, setIsAdmin] = useState(false)
 
 	const params = useParams()
 	const { id_flows } = params
+	const checkIsAdmin = async () => {
+		if (role === 1) {
+			setIsAdmin(true)
+		}
+	}
 
 	const { getSpecialCourseFlows, specialFlows } = useFlows(null, null, id_flows)
 	const { getSpecialTeacher, getAllTeachers, allTeachers, specialTeahcer } =
@@ -31,6 +41,7 @@ const SpecialFlowsPageModule = () => {
 	}
 
 	useEffect(() => {
+		checkIsAdmin()
 		getSpecialCourseFlows()
 		getAllTeachers()
 	}, [])
@@ -48,6 +59,7 @@ const SpecialFlowsPageModule = () => {
 		form,
 		allTeachers,
 		isPressChange,
+		isAdmin,
 		change,
 		handlePressChangeDate,
 	}

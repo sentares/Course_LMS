@@ -18,8 +18,6 @@ class AuthService {
 				}
 			}
 
-			const hashPassword = await bcrypt.hash(password, 12)
-
 			const { rows: arrId } = await pool.query('insert into students (login, password, name, surname, patronymic) values ($1, $2, $3, $4, $5) returning id_student', [
 				login,
 				hashPassword,
@@ -101,6 +99,11 @@ class AuthService {
 		}
 	}
 
+	async checkTeacher(data) {
+		const { rows } = await pool.query('select * from teachers where temp_inn=$1'[data.temp_inn])
+		return rows[0] || null
+	}
+
 	async verifyToken(token) {
 		try {
 			const decoded = jwt.verify(token, process.env.SECRET_KEY)
@@ -112,6 +115,17 @@ class AuthService {
 					login: decoded.login,
 					id_student: decoded.id_student,
 					role: decoded.role
+				}
+			} else if (decoded.id_teacher) {
+				return {
+					name: decoded.name,
+					surname: decoded.surname,
+					patronymic: decoded.patronymic,
+					email: decoded.email,
+					temp_inn: decoded.temp_inn,
+					id_teacher: decoded.id_teacher,
+					role: decoded.role,
+					status: decoded.status
 				}
 			} else {
 				return {

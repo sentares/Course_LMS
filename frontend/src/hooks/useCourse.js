@@ -6,6 +6,7 @@ const useCourse = (form, id_course) => {
 	const [allCourses, setAllCourses] = useState(null)
 	const [specialCourse, setSpecialCourse] = useState(null)
 	const [isDoneFunction, setIsDoneFunction] = useState(false)
+	const [teachersCourses, setTeachersCourses] = useState(null)
 	const { request } = useHttp()
 
 	const getAllCourses = async () => {
@@ -31,10 +32,17 @@ const useCourse = (form, id_course) => {
 		setSpecialCourse(data)
 	}
 
+	// const getTeachersCourses = async id_teachers => {
+	// 	const { data } = await request(`/course/getTeachersCourse/${id_teachers}`)
+	// 	setTeachersCourses(data)
+	// }
+
 	return {
 		getAllCourses,
 		getSpecialCourse,
 		createCourse,
+		// getTeachersCourses,
+		// teachersCourses,
 		allCourses,
 		isDoneFunction,
 		specialCourse,

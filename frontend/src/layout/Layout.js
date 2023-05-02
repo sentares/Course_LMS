@@ -10,7 +10,8 @@ const Layout = props => {
 		<>
 			{pathname === '/register' ||
 			pathname === '/login' ||
-			pathname === '/loginAdmin' ? (
+			pathname === '/loginAdmin' ||
+			pathname === '/loginTeacher' ? (
 				<div>{children}</div>
 			) : (
 				<div className='flex'>

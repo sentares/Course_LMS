@@ -30,6 +30,15 @@ class CourseFlowsService {
 			console.log(e)
 		}
 	}
+
+	async getSpecialFlowsOfTeacher(id_teacher) {
+		try {
+			const { rows } = await pool.query('select * from course_flows where id_teacher=$1', [id_teacher])
+			return rows
+		} catch (e) {
+			console.log(e)
+		}
+	}
 }
 
 module.exports = new CourseFlowsService()

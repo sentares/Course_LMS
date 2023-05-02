@@ -1,13 +1,37 @@
 import React from 'react'
 import styles from './styles.module.scss'
 import { Link } from 'react-router-dom'
+import Button from '../../../ui/button/Button'
 import TeacherPageModule from './module/TeacherPageModule'
+import CreateTeacherModal from '../../../components/Modals/CreateTeacherModal/CreateTeacherModal'
 
 const TeacherPage = () => {
-	const { allTeachers } = TeacherPageModule()
+	const {
+		openModal,
+		form,
+		allTeachers,
+		handleChangeModal,
+		change,
+		handleUploadTeacher,
+	} = TeacherPageModule()
 	return (
 		<div className={styles.TeacherPage}>
+			{openModal && (
+				<CreateTeacherModal
+					handleChangeModal={handleChangeModal}
+					change={change}
+					form={form}
+					handleUploadTeacher={handleUploadTeacher}
+				/>
+			)}
 			<div>
+				<div className={styles.buttonBlock}>
+					<Button
+						title={'Добавить преподавателя'}
+						classOfStyle={'create'}
+						onClick={handleChangeModal}
+					/>
+				</div>
 				{allTeachers && (
 					<div>
 						{allTeachers.map(teacher => (

@@ -108,6 +108,61 @@ class AuthController {
 		}
 	}
 
+	async loginTeacher(req, res) {
+		try {
+			const data = req.body
+			const { rows } = await pool.query('select * from teachers where temp_inn=$1', [data.temp_inn])
+
+			if (!rows.length) {
+				return res.status(303).json({
+					message: 'Такой пользователь не существует',
+					type: 'warn',
+					data: {},
+					accessToken: ''
+				})
+			}
+
+			const { name, surname, patronymic, password, email, temp_inn, id_teacher, role, status } = await rows[0]
+
+			const isPassword = await bcrypt.compare(data.password, password)
+
+			if (!isPassword) {
+				return res.status(303).json({
+					message: 'Неправильный пароль',
+					type: 'warn',
+					data: {},
+					accessToken: ''
+				})
+			}
+
+			const token = jwt.sign({ name, surname, patronymic, email, temp_inn, id_teacher, role, status }, process.env.SECRET_KEY)
+
+			res.status(202)
+				.cookie('token', token, {
+					httpOnly: true,
+					maxAge: 100 * 60 * 60 * 24 * 30
+				})
+				.json({
+					message: 'Авторизация прошла успешно',
+					type: 'success',
+					data: {
+						name,
+						id_teacher,
+						role,
+						status
+					},
+					accessToken: token
+				})
+		} catch (e) {
+			console.log(e)
+			res.status(500).json({
+				message: 'Ошибка в сервер',
+				type: 'error',
+				data: []
+			})
+		}
+	}
+
 	async register(req, res) {
 		try {
 			const { name, surname, patronymic, password, login } = req.body

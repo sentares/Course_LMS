@@ -7,6 +7,7 @@ import Button from '../../../ui/button/Button'
 const LoginForm = () => {
 	const {
 		form,
+		isTeacher,
 		isCaptchaSuccessful,
 		isDisabled,
 		onChangeForm,
@@ -21,7 +22,7 @@ const LoginForm = () => {
 					name='login'
 					value={form.login}
 					type='text'
-					placeholder={'Введите ваш login'}
+					placeholder={isTeacher ? 'Введите ваш ИНН' : 'Введите ваш login'}
 					onChange={onChangeForm}
 					classOfStyle={'auth'}
 				/>

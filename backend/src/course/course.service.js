@@ -26,6 +26,15 @@ class CourseService {
 			console.log(e)
 		}
 	}
+
+	async getTeachersCourses(id_teacher) {
+		try {
+			const { rows } = await pool.query('select * from course where id_teacher=$1', [id_teacher])
+			return rows
+		} catch (e) {
+			console.log(e)
+		}
+	}
 }
 
 module.exports = new CourseService()

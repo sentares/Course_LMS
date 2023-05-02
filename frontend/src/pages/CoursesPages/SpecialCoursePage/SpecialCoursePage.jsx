@@ -43,7 +43,7 @@ const SpecialCoursePage = () => {
 						</div>
 						<div className={styles.flowsBlock}>
 							<div>
-								<div className={styles.shapka}> Потоки курсов:</div>
+								<div className={styles.shapka}>Потоки курсов:</div>
 								<div>
 									<Button
 										title={'Создать поток'}

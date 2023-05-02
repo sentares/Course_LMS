@@ -1,7 +1,7 @@
 .TeacherPage {
 	@apply flex items-center justify-center w-full m-1 mt-8;
 	.teacherItem {
-		@apply w-96 max-w-sm relative flex flex-row items-center m-3 p-2 focus:outline-none bg-slate-100 hover:bg-slate-200 text-gray-600 hover:text-gray-800 hover:scale-[1.02] transition-all
+		@apply w-96 max-w-sm relative flex flex-row items-center mt-3 p-2 focus:outline-none bg-slate-100 hover:bg-slate-200 text-gray-600 hover:text-gray-800 hover:scale-[1.02] transition-all
 			rounded-md;
 		.name {
 		}

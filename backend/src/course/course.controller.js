@@ -59,6 +59,26 @@ class CourseController {
 			})
 		}
 	}
+
+	async getTeachersCourses(req, res) {
+		try {
+			const { id_teacher } = req.body
+			const rows = await CourseService.getTeachersCourses(id_teacher)
+
+			return res.status(200).json({
+				message: 'Курсы успешно получены',
+				type: 'success',
+				data: rows
+			})
+		} catch (e) {
+			console.log(e)
+			res.status(500).json({
+				message: 'Ошибка в сервер',
+				status: 'error',
+				data: []
+			})
+		}
+	}
 }
 
 module.exports = new CourseController()

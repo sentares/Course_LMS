@@ -9,7 +9,8 @@ const SidebarModules = () => {
 	const user = useSelector(state => state.auth.user)
 	const [nameOfRole, setNameOfRole] = useState('')
 	const [menuList, setMenuList] = useState([])
-	const { menuListStudent, menuListGuest, menuListAdmin } = MenuLIst()
+	const { menuListStudent, menuListGuest, menuListAdmin, menuListManager } =
+		MenuLIst()
 	const location = useLocation()
 	const { logout } = useAuth()
 	const currentPath = location.pathname
@@ -29,6 +30,11 @@ const SidebarModules = () => {
 		isActive: menuItem.link === currentPath,
 	}))
 
+	const updatedMenuListManager = menuListManager.map(menuItem => ({
+		...menuItem,
+		isActive: menuItem.link === currentPath,
+	}))
+
 	const checkRole = () => {
 		if (!isAuth) {
 			setNameOfRole('Гость')
@@ -38,8 +44,10 @@ const SidebarModules = () => {
 			setMenuList(updatedMenuList)
 		} else if (user.role === 3) {
 			setNameOfRole('Преподаватель')
+			setMenuList(updatedMenuListManager)
 		} else if (user.role === 2) {
 			setNameOfRole('Менеджер')
+			setMenuList(updatedMenuListManager)
 		} else if (user.role === 1) {
 			setNameOfRole('Администратор')
 			setMenuList(updatedMenuListAdmin)

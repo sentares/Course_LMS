@@ -10,6 +10,10 @@ import SpecialTeacherPage from '../pages/Teachers/SpecialTeacherPage/SpecialTeac
 import CoursesPage from '../pages/CoursesPages/CoursesPage/CoursesPage'
 import SpecialCoursePage from '../pages/CoursesPages/SpecialCoursePage/SpecialCoursePage'
 import SpecialFlowsPage from '../pages/FlowsPage/SpecialFlowsPage/SpecialFlowsPage'
+import LoginTeacherPage from '../pages/AuthPages/LoginTeacherPage/LoginTeacherPage'
+import TeacherFlowsPage from '../pages/FlowsPage/TeacherFlowsPage/TeacherFlowsPage'
+import TeachersCoursesPage from '../pages/CoursesPages/TeachersCoursesPage/TeachersCoursesPage'
+import TestsPage from '../pages/TestsPage/TestsPage'
 
 const Router = ({ user, isAuth }) => {
 	const { role } = user
@@ -36,6 +40,26 @@ const Router = ({ user, isAuth }) => {
 				<Route path='/' element={<HomePage />} />
 			</Routes>
 		)
+	} else if ((isAuth && role === 2) || (isAuth && role === 3)) {
+		return (
+			<Routes>
+				<Route path='/loginTeacher' element={<Navigate replace to='/' />} />
+				<Route
+					path='/teacher/:id_teacher/flows'
+					element={<TeacherFlowsPage />}
+				/>
+				<Route
+					path='/teacher/:id_teacher/courses'
+					element={<TeachersCoursesPage />}
+				/>
+				<Route
+					path='/teacher/:id_teacher/flows/:id_flows'
+					element={<SpecialFlowsPage />}
+				/>
+				<Route path='/tests' element={<TestsPage />} />
+				<Route path='/' element={<HomePage />} />
+			</Routes>
+		)
 	} else {
 		return (
 			<Routes>
@@ -44,6 +68,7 @@ const Router = ({ user, isAuth }) => {
 				<Route path='/register' element={<RegisterPage />} />
 				<Route path='/courses' element={<CoursesPage />} />
 				<Route path='/loginAdmin' element={<LoginAdminPage />} />
+				<Route path='/loginTeacher' element={<LoginTeacherPage />} />
 			</Routes>
 		)
 	}
