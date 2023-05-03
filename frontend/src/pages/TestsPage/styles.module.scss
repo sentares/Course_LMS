@@ -1,3 +1,25 @@
 .TestsPage {
 	@apply flex items-center justify-center w-full m-1 mt-8;
+	.testItem {
+		@apply w-96 max-w-sm relative flex flex-row items-center mt-3 p-2 focus:outline-none bg-slate-100 hover:bg-slate-200 text-gray-600 hover:text-gray-800 hover:scale-[1.02] transition-all
+			rounded-md;
+		.nameBlock {
+			@apply flex justify-between w-full;
+			.name {
+				@apply font-semibold;
+			}
+			.count {
+				@apply text-sm mr-1 text-gray-400;
+			}
+			.courseName {
+				@apply font-semibold text-yellow-500;
+			}
+			.teacherName {
+				@apply font-semibold text-gray-500;
+			}
+		}
+		.description {
+			@apply font-normal text-sm text-gray-400;
+		}
+	}
 }

@@ -5,9 +5,8 @@ class TestsController {
 		try {
 			const { id_teacher, id_course, test_name, test_description, question_count } = req.body
 
-			const checkResult = await TestsService.checkTest(test_name)
-
-			if (checkResult) {
+			const exists = await TestsService.testExists(id_course, test_name)
+			if (exists) {
 				return res.status(303).json({
 					message: `Тест с таким названием уже создан`,
 					type: 'warn',

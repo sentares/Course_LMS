@@ -1,17 +1,18 @@
 const pool = require('../db/db')
 
 class TestsService {
-	async checkTest(test_name) {
+	async testExists(id_course, test_name) {
 		try {
-			const rows = await pool.query('select * from tests where test_name=$1', [test_name])
-			return rows[0] || null
+			const result = await pool.query('SELECT EXISTS (SELECT 1 FROM tests WHERE id_course=$1 AND test_name=$2)', [id_course, test_name])
+			return result.rows[0].exists
 		} catch (e) {
 			console.log(e)
+			return false
 		}
 	}
 
 	async createTest(id_teacher, id_course, test_name, test_description, question_count) {
-		const rows = await pool.query('insert into tests (id_teacher, id_course, test_name, test_description, question_count) values ($1, $2, $3, $4, $5) returning *', [
+		const { rows } = await pool.query('insert into tests (id_teacher, id_course, test_name, test_description, question_count) values ($1, $2, $3, $4, $5) returning *', [
 			id_teacher,
 			id_course,
 			test_name,
