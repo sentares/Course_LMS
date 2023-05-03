@@ -13,8 +13,8 @@ import SpecialFlowsPage from '../pages/FlowsPage/SpecialFlowsPage/SpecialFlowsPa
 import LoginTeacherPage from '../pages/AuthPages/LoginTeacherPage/LoginTeacherPage'
 import TeacherFlowsPage from '../pages/FlowsPage/TeacherFlowsPage/TeacherFlowsPage'
 import TeachersCoursesPage from '../pages/CoursesPages/TeachersCoursesPage/TeachersCoursesPage'
-import TestsPage from '../pages/TestsPage/TestsPage'
-
+import TestsPage from '../pages/TestsPage/TestsPage/TestsPage'
+import SpecialTestPage from '../pages/TestsPage/SpecialTestPage/SpecialTestPage'
 const Router = ({ user, isAuth }) => {
 	const { role } = user
 
@@ -57,6 +57,7 @@ const Router = ({ user, isAuth }) => {
 					element={<SpecialFlowsPage />}
 				/>
 				<Route path='/tests' element={<TestsPage />} />
+				<Route path='/test/:id_test' element={<SpecialTestPage />} />
 				<Route path='/' element={<HomePage />} />
 			</Routes>
 		)

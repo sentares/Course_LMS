@@ -23,8 +23,13 @@ class TestsService {
 	}
 
 	async getTests() {
-		const { rows } = await pool.query('select * from tests')
+		const { rows } = await pool.query('SELECT * FROM tests ORDER BY id_test DESC')
 		return rows
+	}
+
+	async getSpecialTest(id_test) {
+		const { rows } = await pool.query('select * from tests where id_test=$1', [id_test])
+		return rows[0]
 	}
 }
 

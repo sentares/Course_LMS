@@ -1,8 +1,8 @@
 import React from 'react'
-import Button from '../../ui/button/Button'
+import Button from '../../../ui/button/Button'
 import styles from './styles.module.scss'
 import TestsPageModule from './module/TestsPageModule'
-import CreateTestModal from '../../components/Modals/CreateTestModal/CreateTestModal'
+import CreateTestModal from '../../../components/Modals/CreateTestModal/CreateTestModal'
 import { Link } from 'react-router-dom'
 
 const TestsPage = () => {
@@ -10,7 +10,7 @@ const TestsPage = () => {
 		handleChangeModal,
 		change,
 		handleCreateTest,
-		newTestId,
+		newTest,
 		allCourses,
 		allTests,
 		allTeachers,
@@ -53,6 +53,9 @@ const TestsPage = () => {
 									className={styles.testItem}
 								>
 									<div className='w-full'>
+										{test.id_test === newTest.id_test && (
+											<div className={styles.new}>new</div>
+										)}
 										<div className={styles.nameBlock}>
 											<div className={styles.name}>{test.test_name}</div>
 											<div className={styles.count}>

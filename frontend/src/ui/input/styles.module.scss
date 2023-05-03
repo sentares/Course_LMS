@@ -9,3 +9,7 @@
 .editDate {
 	@apply flex text-right w-[80%] bg-slate-100 hover:bg-slate-300  pr-10 py-1 border-2 border-slate-200 rounded-lg outline-0;
 }
+
+.answer {
+	@apply w-full  bg-transparent outline-none focus:outline-none px-3 py-2 text-lg rounded-lg border hover:bg-gray-200;
+}

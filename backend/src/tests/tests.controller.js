@@ -48,6 +48,25 @@ class TestsController {
 			})
 		}
 	}
+
+	async getSpecialTest(req, res) {
+		try {
+			const { id_test } = req.params
+			const data = await TestsService.getSpecialTest(id_test)
+			return res.status(200).json({
+				message: 'Тест получен',
+				type: 'success',
+				data
+			})
+		} catch (e) {
+			console.log(e)
+			res.status(500).json({
+				message: 'Ошибка в сервере',
+				type: 'error',
+				data: {}
+			})
+		}
+	}
 }
 
 module.exports = new TestsController()

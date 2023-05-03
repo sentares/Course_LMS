@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
-import useCourse from '../../../hooks/useCourse'
+import useCourse from '../../../../hooks/useCourse'
+import useTest from '../../../../hooks/useTest'
+import useTeacher from '../../../../hooks/useTeacher'
 import { useDispatch, useSelector } from 'react-redux'
-import useTest from '../../../hooks/useTest'
-import useTeacher from '../../../hooks/useTeacher'
-import { setNewTest } from '../../../redux/slices/newTestSlice'
+import { setNewTest } from '../../../../redux/slices/newTestSlice'
 
 const TestsPageModule = () => {
 	const dispatch = useDispatch()
@@ -27,17 +27,21 @@ const TestsPageModule = () => {
 	}
 
 	const { getAllCourses, allCourses } = useCourse()
-	const { createTest, getTests, allTests, createdTest } = useTest(form)
+	const { createTest, getTests, allTests, createdTest, isSucces } =
+		useTest(form)
 	const { getAllTeachers, allTeachers } = useTeacher()
 	const change = e => setForm({ ...form, [e.target.name]: e.target.value })
 
 	const handleCreateTest = async event => {
 		event.preventDefault()
 		await createTest()
+		if (isSucces) {
+			await handleChangeModal()
+		}
 	}
 
 	const addNewTestToState = async () => {
-		if (createTest !== null) {
+		if (createdTest !== null) {
 			dispatch(setNewTest(createdTest))
 		}
 	}
@@ -54,14 +58,14 @@ const TestsPageModule = () => {
 
 	useEffect(() => {
 		addNewTestToState()
-		console.log(newTest)
-	}, [createTest])
+	}, [createdTest])
 
 	return {
 		handleChangeModal,
 		handleCreateTest,
 		change,
 		allTeachers,
+		newTest,
 		allCourses,
 		allTests,
 		isOpenCreateTestModal,

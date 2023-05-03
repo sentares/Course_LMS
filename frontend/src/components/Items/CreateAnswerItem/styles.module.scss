@@ -1,0 +1,6 @@
+.AnswerItem {
+	@apply w-full;
+	.answerBlock {
+		@apply flex items-center justify-between mb-2 w-full;
+	}
+}

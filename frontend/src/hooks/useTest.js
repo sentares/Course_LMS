@@ -5,12 +5,18 @@ import { useState } from 'react'
 const useTest = form => {
 	const { request } = useHttp()
 	const [createdTest, setCreatedTest] = useState(null)
-
 	const [allTests, setAllTests] = useState(null)
+	const [isSucces, setIsSucces] = useState(false)
+	const [specialTest, setSpecialTest] = useState(null)
 
 	const getTests = async () => {
 		const { data } = await request('/test')
 		setAllTests(data)
+	}
+
+	const getSpecialTest = async id_test => {
+		const { data } = await request(`/test/getSpecial/${id_test}`)
+		setSpecialTest(data)
 	}
 
 	const createTest = async () => {
@@ -35,15 +41,25 @@ const useTest = form => {
 				test_description: test_description.trim(),
 				question_count: question_count.trim(),
 			})
-
 			toast[data.type](data.message)
 			setCreatedTest(data.data)
+			setIsSucces(true)
+			return
 		} else {
 			toast.warn('Заполните пустые поля')
 		}
+		setIsSucces(true)
 	}
 
-	return { createTest, getTests, allTests, createdTest }
+	return {
+		createTest,
+		getTests,
+		getSpecialTest,
+		specialTest,
+		allTests,
+		createdTest,
+		isSucces,
+	}
 }
 
 export default useTest

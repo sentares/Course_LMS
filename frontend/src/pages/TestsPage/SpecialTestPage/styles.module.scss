@@ -1,0 +1,21 @@
+.SpecialTestPage {
+	@apply flex items-center justify-center w-full mt-8;
+	.testInfoBlock {
+		@apply flex items-center justify-start bg-yellow-200 p-3 rounded-md;
+		.naming {
+			@apply w-96;
+			.nameOfCat {
+				@apply flex justify-start gap-1;
+				.testDescription {
+				}
+			}
+		}
+	}
+	.questionBlock {
+		@apply mt-3 w-full;
+		.questionItem {
+			@apply w-full relative flex flex-row items-center mr-0 mt-3 p-2 focus:outline-none bg-slate-100 hover:bg-slate-200 text-gray-600 hover:text-gray-800 hover:scale-[1.02] transition-all
+			rounded-md;
+		}
+	}
+}

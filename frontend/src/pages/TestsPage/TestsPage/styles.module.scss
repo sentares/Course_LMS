@@ -3,8 +3,11 @@
 	.testItem {
 		@apply w-96 max-w-sm relative flex flex-row items-center mt-3 p-2 focus:outline-none bg-slate-100 hover:bg-slate-200 text-gray-600 hover:text-gray-800 hover:scale-[1.02] transition-all
 			rounded-md;
+		.new {
+			@apply absolute left-[-10px] top-[-6px] text-sm text-white  px-1.5 rounded-2xl bg-green-600 bg-opacity-60;
+		}
 		.nameBlock {
-			@apply flex justify-between w-full;
+			@apply flex justify-between w-full mt-0.5;
 			.name {
 				@apply font-semibold;
 			}
