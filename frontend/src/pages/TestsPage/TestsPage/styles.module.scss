@@ -1,6 +1,34 @@
 .TestsPage {
 	@apply flex items-center justify-center w-full m-1 mt-8;
 	.testItem {
+		@apply w-96 max-w-sm relative flex flex-row items-center mt-3 p-2 focus:outline-none bg-green-200 hover:bg-green-100 text-gray-600 hover:text-gray-800 hover:scale-[1.02] transition-all
+			rounded-md;
+		.new {
+			@apply absolute left-[-10px] top-[-6px] text-sm text-white  px-1.5 rounded-2xl bg-green-600 bg-opacity-60;
+		}
+		.nameBlock {
+			@apply flex justify-between w-full mt-0.5;
+			.name {
+				@apply font-semibold flex items-center;
+			}
+			.count {
+				@apply text-sm mr-1 text-gray-400;
+				.countReady {
+					@apply font-semibold text-green-700;
+				}
+			}
+			.courseName {
+				@apply font-semibold text-yellow-500;
+			}
+			.teacherName {
+				@apply font-semibold text-gray-500;
+			}
+		}
+		.description {
+			@apply font-normal text-sm text-gray-400;
+		}
+	}
+	.testItemNotReady {
 		@apply w-96 max-w-sm relative flex flex-row items-center mt-3 p-2 focus:outline-none bg-slate-100 hover:bg-slate-200 text-gray-600 hover:text-gray-800 hover:scale-[1.02] transition-all
 			rounded-md;
 		.new {
@@ -9,7 +37,7 @@
 		.nameBlock {
 			@apply flex justify-between w-full mt-0.5;
 			.name {
-				@apply font-semibold;
+				@apply font-semibold flex items-center;
 			}
 			.count {
 				@apply text-sm mr-1 text-gray-400;

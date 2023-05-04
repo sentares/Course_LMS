@@ -3,7 +3,7 @@ const TestsService = require('./tests.service.js')
 class TestsController {
 	async createTest(req, res) {
 		try {
-			const { id_teacher, id_course, test_name, test_description, question_count } = req.body
+			const { id_teacher, id_course, test_name, test_description, min_question_count } = req.body
 
 			const exists = await TestsService.testExists(id_course, test_name)
 			if (exists) {
@@ -14,7 +14,7 @@ class TestsController {
 				})
 			}
 
-			const rows = await TestsService.createTest(id_teacher, id_course, test_name, test_description, question_count)
+			const rows = await TestsService.createTest(id_teacher, id_course, test_name, test_description, min_question_count)
 
 			return res.status(200).json({
 				message: 'Тест создан',
@@ -34,6 +34,26 @@ class TestsController {
 	async getTests(req, res) {
 		try {
 			const data = await TestsService.getTests()
+			return res.status(200).json({
+				message: 'Тесты получены',
+				type: 'success',
+				data
+			})
+		} catch (e) {
+			console.log(e)
+			res.status(500).json({
+				message: 'Ошибка в сервере',
+				type: 'error',
+				data: {}
+			})
+		}
+	}
+
+	async getTeachersTests(req, res) {
+		try {
+			const { id_teacher } = req.params
+			const data = await TestsService.getTeachersTests(id_teacher)
+
 			return res.status(200).json({
 				message: 'Тесты получены',
 				type: 'success',

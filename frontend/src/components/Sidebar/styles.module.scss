@@ -4,6 +4,9 @@
 		@apply fixed flex flex-col top-0 left-0 w-64 bg-white h-full border-r;
 		.nameBlock {
 			@apply flex items-center justify-center h-14 border-b text-xl;
+			.nameOfRole {
+				@apply flex flex-wrap;
+			}
 		}
 		.choseBlock {
 			@apply overflow-y-auto overflow-x-hidden flex-grow relative;

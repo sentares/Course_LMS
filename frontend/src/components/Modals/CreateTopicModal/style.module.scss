@@ -1,0 +1,27 @@
+.CreateTopicModal {
+	@apply h-screen w-screen bg-black bg-opacity-70 fixed flex items-center justify-center top-0 left-0 z-20;
+	.content {
+		@apply p-12 rounded-2xl w-[50%] bg-slate-50 relative;
+		.title {
+			@apply flex items-center justify-center mb-4 text-xl font-semibold;
+		}
+		.close {
+			@apply flex justify-end items-center;
+		}
+		.createForm {
+			@apply flex items-center justify-center;
+			form {
+				@apply w-full;
+				.labels {
+					@apply w-full;
+				}
+				.titleLabel {
+					@apply ml-1 text-sm text-gray-400;
+				}
+				.choseTeacher {
+					@apply w-full mb-2 bg-transparent outline-none focus:outline-none px-3 py-2 text-lg rounded-lg border hover:bg-gray-200;
+				}
+			}
+		}
+	}
+}

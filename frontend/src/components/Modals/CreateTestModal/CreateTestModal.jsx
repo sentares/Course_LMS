@@ -63,14 +63,14 @@ const CreateTestModal = ({
 							/>
 						</label>
 						<label htmlFor=''>
-							<p className={styles.titleLabel}>Количество вопросов</p>
+							<p className={styles.titleLabel}>Минимальное кол-во вопросов</p>
 							<Input
 								classOfStyle={'auth'}
 								type={'number'}
-								name='question_count'
-								placeholder='Количество вопросов'
+								name='min_question_count'
+								placeholder='Минимальное кол-во вопросов'
 								onChange={change}
-								value={form.question_count}
+								value={form.min_question_count}
 							/>
 						</label>
 						<Button

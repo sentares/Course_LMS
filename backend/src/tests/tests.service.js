@@ -11,19 +11,24 @@ class TestsService {
 		}
 	}
 
-	async createTest(id_teacher, id_course, test_name, test_description, question_count) {
-		const { rows } = await pool.query('insert into tests (id_teacher, id_course, test_name, test_description, question_count) values ($1, $2, $3, $4, $5) returning *', [
+	async createTest(id_teacher, id_course, test_name, test_description, min_question_count) {
+		const { rows } = await pool.query('insert into tests (id_teacher, id_course, test_name, test_description, min_question_count) values ($1, $2, $3, $4, $5) returning *', [
 			id_teacher,
 			id_course,
 			test_name,
 			test_description,
-			question_count
+			min_question_count
 		])
 		return rows[0]
 	}
 
 	async getTests() {
 		const { rows } = await pool.query('SELECT * FROM tests ORDER BY id_test DESC')
+		return rows
+	}
+
+	async getTeachersTests(id_teacher) {
+		const { rows } = await pool.query('SELECT * FROM tests WHERE id_teacher = $1 ORDER BY id_test DESC', [id_teacher])
 		return rows
 	}
 

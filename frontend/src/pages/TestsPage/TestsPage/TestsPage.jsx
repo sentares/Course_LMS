@@ -50,7 +50,11 @@ const TestsPage = () => {
 								<Link
 									to={`/test/${test.id_test}`}
 									key={test.id_test}
-									className={styles.testItem}
+									className={
+										test.question_count >= test.min_question_count
+											? styles.testItem
+											: styles.testItemNotReady
+									}
 								>
 									<div className='w-full'>
 										{test.id_test === newTest.id_test && (
@@ -59,7 +63,13 @@ const TestsPage = () => {
 										<div className={styles.nameBlock}>
 											<div className={styles.name}>{test.test_name}</div>
 											<div className={styles.count}>
-												вопросов: {test.question_count}
+												<div>
+													вопросов:{' '}
+													<span className={styles.countReady}>
+														{test.question_count ? test.question_count : 0}
+													</span>
+												</div>
+												<div>мин: {test.min_question_count}</div>
 											</div>
 										</div>
 										<div className={styles.description}>

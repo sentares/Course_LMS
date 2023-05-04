@@ -43,10 +43,10 @@ const SidebarModules = () => {
 			setNameOfRole('Студент')
 			setMenuList(updatedMenuList)
 		} else if (user.role === 3) {
-			setNameOfRole('Преподаватель')
+			setNameOfRole(`Преподаватель ${user.name}`)
 			setMenuList(updatedMenuListManager)
 		} else if (user.role === 2) {
-			setNameOfRole('Менеджер')
+			setNameOfRole(`Менеджер ${user.name}`)
 			setMenuList(updatedMenuListManager)
 		} else if (user.role === 1) {
 			setNameOfRole('Администратор')

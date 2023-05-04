@@ -12,7 +12,7 @@ const Sidebar = () => {
 		<div className={styles.Sidebar}>
 			<div className={styles.Sidebar_Block}>
 				<div className={styles.nameBlock}>
-					<div>{nameOfRole}</div>
+					<div className={styles.nameOfRole}>{nameOfRole}</div>
 				</div>
 				<div className={styles.choseBlock}>
 					<ul className={styles.choseList}>
