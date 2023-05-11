@@ -48,7 +48,7 @@ const TestsPage = () => {
 							)
 							return (
 								<Link
-									to={`/test/${test.id_test}`}
+									to={`/tests/${test.id_test}`}
 									key={test.id_test}
 									className={
 										test.question_count >= test.min_question_count

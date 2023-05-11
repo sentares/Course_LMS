@@ -1,13 +1,15 @@
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import useFlows from '../../../../hooks/useFlows'
 import useTeacher from '../../../../hooks/useTeacher'
 import { useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
+import useStudent from '../../../../hooks/useStudent'
 
 const SpecialFlowsPageModule = () => {
 	const user = useSelector(state => state.auth.user)
 	const { role } = user
-
+	const navigate = useNavigate()
 	const [form, setForm] = useState({
 		activ: '',
 		count_of_seats: '',
@@ -21,27 +23,31 @@ const SpecialFlowsPageModule = () => {
 		price: '',
 	})
 	const [isPressChange, setIsPressChange] = useState(false)
-	const [isAdmin, setIsAdmin] = useState(false)
 
 	const params = useParams()
 	const { id_flows } = params
-	const checkIsAdmin = async () => {
-		if (role === 1) {
-			setIsAdmin(true)
-		}
-	}
 
 	const { getSpecialCourseFlows, specialFlows } = useFlows(null, null, id_flows)
 	const { getSpecialTeacher, getAllTeachers, allTeachers, specialTeahcer } =
 		useTeacher(specialFlows ? specialFlows.id_teacher : null)
+	const { addStudentToCourseFlows } = useStudent()
 
 	const change = e => setForm({ ...form, [e.target.name]: e.target.value })
 	const handlePressChangeDate = () => {
 		setIsPressChange(!isPressChange)
 	}
 
+	const handleClickRegisterCourse = async event => {
+		event.preventDefault()
+		if (role === 4) {
+			await addStudentToCourseFlows(user.id_student, id_flows)
+		} else {
+			toast.warn('Войдите в свой аккаунт или пройдите регистрацию')
+			navigate('/login')
+		}
+	}
+
 	useEffect(() => {
-		checkIsAdmin()
 		getSpecialCourseFlows()
 		getAllTeachers()
 	}, [])
@@ -59,9 +65,10 @@ const SpecialFlowsPageModule = () => {
 		form,
 		allTeachers,
 		isPressChange,
-		isAdmin,
+		role,
 		change,
 		handlePressChangeDate,
+		handleClickRegisterCourse,
 	}
 }
 

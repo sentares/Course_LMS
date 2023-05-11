@@ -1,45 +1,45 @@
 const pool = require('../db/db')
 
 class QuestionService {
-	async topicExists(id_test, topicName) {
+	async select(id_test) {
 		try {
-			const result = await pool.query('SELECT EXISTS (SELECT 1 FROM tests_topics WHERE id_test=$1 AND topic_name=$2)', [id_test, topicName])
-			return result.rows[0].exists
+			const { rows } = await pool.query(`select * from questions where id_test=$1`, [id_test])
+			return rows
 		} catch (e) {
 			console.log(e)
 		}
 	}
 
-	async createTopic(id_test, topicName) {
+	async getCount(id_test) {
 		try {
-			const { rows } = await pool.query('insert into tests_topics (id_test, topic_name) values ($1, $2) returning *', [id_test, topicName])
+			const { rows } = await pool.query(`select id_question from questions where id_test=$1`, [id_test])
+			return rows
+		} catch (e) {
+			console.log(e)
+		}
+	}
+
+	async getTopicsQuestions(id_topic) {
+		try {
+			const { rows } = await pool.query(`select * from questions where id_topic=$1`, [id_topic])
+			return rows
+		} catch (e) {
+			console.log(e)
+		}
+	}
+
+	async getSpecial(id_question) {
+		try {
+			const { rows } = await pool.query(`select * from questions where id_question=$1`, [id_question])
 			return rows[0]
 		} catch (e) {
 			console.log(e)
 		}
 	}
 
-	async getTestsTopics(id_test) {
+	async insertQuestion(question, id_test, id_topic) {
 		try {
-			const { rows } = await pool.query('select * from tests_topics where id_test=$1', [id_test])
-			return rows
-		} catch (e) {
-			console.log(e)
-		}
-	}
-
-	async select(id_test) {
-		try {
-			const { rows } = await pool.query('select * from questions where id_test=$1', [id_test])
-			return rows
-		} catch (e) {
-			console.log(e)
-		}
-	}
-
-	async insertQuestion(question, id_test) {
-		try {
-			const { rows } = await pool.query('INSERT INTO questions (question, id_test) VALUES ($1, $2) RETURNING *', [question, id_test])
+			const { rows } = await pool.query('INSERT INTO questions (question, id_test, id_topic) VALUES ($1, $2, $3) RETURNING *', [question, id_test, id_topic])
 			return rows[0]
 		} catch (e) {
 			console.log(e)

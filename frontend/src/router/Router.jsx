@@ -17,6 +17,7 @@ import TestsPage from '../pages/TestsPage/TestsPage/TestsPage'
 import SpecialTestPage from '../pages/TestsPage/SpecialTestPage/SpecialTestPage'
 const Router = ({ user, isAuth }) => {
 	const { role } = user
+	console.log(role)
 
 	if (isAuth && role === 4) {
 		return (
@@ -25,6 +26,8 @@ const Router = ({ user, isAuth }) => {
 				<Route path='/register' element={<Navigate replace to='/' />} />
 				<Route path='/' element={<HomePage />} />
 				<Route path='/courses' element={<CoursesPage />} />
+				<Route path='/courses/:id_course' element={<SpecialCoursePage />} />
+				<Route path='/coursesFlows/:id_flows' element={<SpecialFlowsPage />} />
 				<Route path='/liked' element={<LikedPage />} />
 			</Routes>
 		)
@@ -57,7 +60,7 @@ const Router = ({ user, isAuth }) => {
 					element={<SpecialFlowsPage />}
 				/>
 				<Route path='/tests' element={<TestsPage />} />
-				<Route path='/test/:id_test' element={<SpecialTestPage />} />
+				<Route path='/tests/:id_test' element={<SpecialTestPage />} />
 				<Route path='/' element={<HomePage />} />
 			</Routes>
 		)
@@ -68,6 +71,8 @@ const Router = ({ user, isAuth }) => {
 				<Route path='/login' element={<LoginPage />} />
 				<Route path='/register' element={<RegisterPage />} />
 				<Route path='/courses' element={<CoursesPage />} />
+				<Route path='/courses/:id_course' element={<SpecialCoursePage />} />
+				<Route path='/coursesFlows/:id_flows' element={<SpecialFlowsPage />} />
 				<Route path='/loginAdmin' element={<LoginAdminPage />} />
 				<Route path='/loginTeacher' element={<LoginTeacherPage />} />
 			</Routes>

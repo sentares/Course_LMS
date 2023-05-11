@@ -3,8 +3,12 @@ import useCourse from '../../../../hooks/useCourse'
 import { useEffect, useState } from 'react'
 import useFlows from '../../../../hooks/useFlows'
 import useTeahcer from '../../../../hooks/useTeacher'
+import { useSelector } from 'react-redux'
 
 const SpecialCourseModule = () => {
+	const user = useSelector(state => state.auth.user)
+	const { role } = user
+
 	const params = useParams()
 	const { id_course } = params
 
@@ -58,6 +62,7 @@ const SpecialCourseModule = () => {
 		specialCourse,
 		allFlowsOfCourse,
 		allTeachers,
+		role,
 		handleChangeModal,
 		change,
 		handleCreateFlow,

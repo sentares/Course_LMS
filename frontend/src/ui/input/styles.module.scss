@@ -13,3 +13,7 @@
 .answer {
 	@apply w-full  bg-transparent outline-none focus:outline-none px-3 py-2 text-lg rounded-lg border hover:bg-gray-200;
 }
+
+.rightAnswer {
+	@apply w-full  bg-green-500 outline-none focus:outline-none px-3 py-2 text-lg rounded-lg border border-green-500 hover:bg-green-600 hover:border-green-600;
+}

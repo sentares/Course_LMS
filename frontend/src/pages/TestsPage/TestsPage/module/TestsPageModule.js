@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import useCourse from '../../../../hooks/useCourse'
-import useTest from '../../../../hooks/useTest'
-import useTeacher from '../../../../hooks/useTeacher'
 import { useDispatch, useSelector } from 'react-redux'
+import useCourse from '../../../../hooks/useCourse'
+import useTeacher from '../../../../hooks/useTeacher'
+import useTest from '../../../../hooks/useTest'
 import { setNewTest } from '../../../../redux/slices/newTestSlice'
 
 const TestsPageModule = () => {
@@ -53,7 +53,6 @@ const TestsPageModule = () => {
 
 	useEffect(() => {
 		getAllCourses()
-		getAllTeachers()
 	}, [])
 
 	useEffect(() => {
@@ -62,6 +61,7 @@ const TestsPageModule = () => {
 
 	useEffect(() => {
 		getTests(user)
+		getAllTeachers()
 	}, [isOpenCreateTestModal])
 
 	useEffect(() => {

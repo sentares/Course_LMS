@@ -10,6 +10,7 @@ const CoursesPage = () => {
 		allCourses,
 		isOpenCreateCourseModal,
 		form,
+		user,
 		change,
 		handleUploadCourse,
 		handleOpenChangeCourseModal,
@@ -26,13 +27,15 @@ const CoursesPage = () => {
 				/>
 			)}
 			<div>
-				<div className={styles.buttonBlock}>
-					<Button
-						title={'Создать курс'}
-						classOfStyle={'create'}
-						onClick={handleOpenChangeCourseModal}
-					/>
-				</div>
+				{user?.role === 1 && (
+					<div className={styles.buttonBlock}>
+						<Button
+							title={'Создать курс'}
+							classOfStyle={'create'}
+							onClick={handleOpenChangeCourseModal}
+						/>
+					</div>
+				)}
 				{allCourses && (
 					<div>
 						{allCourses.map(course => (

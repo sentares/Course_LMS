@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 import useCourse from '../../../../hooks/useCourse'
+import { useSelector } from 'react-redux'
 
 const CoursesPageModule = () => {
+	const user = useSelector(state => state.auth.user)
 	const [isOpenCreateCourseModal, setIsOpenCourseModal] = useState(false)
 	const [form, setForm] = useState({
 		nameOfCourse: '',
@@ -33,6 +35,7 @@ const CoursesPageModule = () => {
 		form,
 		allCourses,
 		isOpenCreateCourseModal,
+		user,
 		change,
 		handleOpenChangeCourseModal,
 		handleUploadCourse,

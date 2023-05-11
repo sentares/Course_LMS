@@ -3,17 +3,23 @@ import useTest from '../../../../hooks/useTest'
 import { useEffect, useState } from 'react'
 import useCourse from '../../../../hooks/useCourse'
 import useQuestion from '../../../../hooks/useQuestion'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import useTeacher from '../../../../hooks/useTeacher'
+import useTopic from '../../../../hooks/useTopic'
+import useAnswer from '../../../../hooks/useAnswer'
+import { setQuestionInfo } from '../../../../redux/slices/question'
 
 const SpecialTestModule = () => {
 	const user = useSelector(state => state.auth.user)
 	const params = useParams()
+	const dispacth = useDispatch()
 	const { id_test } = params
 	const [isAuthor, setIsAuthor] = useState(false)
 	const [isOpenModal, setIsOpenModal] = useState(false)
 	const [isOpenTopicModal, setIsOpenTopicModal] = useState(false)
 	const [isOpenTopicInfoBlock, setIsOpenTopicInfoBlock] = useState(false)
+	const [isOpenQuestionModal, setIsOpenQuestionModal] = useState(false)
+	const [idOfClickedTopic, setIdOfClickedTopic] = useState()
 	const [topicName, setTopicName] = useState('')
 	const [question, setQuestion] = useState('')
 	const [options, setOptions] = useState([
@@ -31,18 +37,26 @@ const SpecialTestModule = () => {
 		null,
 		specialTest?.id_course
 	)
+
 	const {
 		createQuestions,
 		getTestsQuestions,
-		createTopic,
-		getTopics,
-		testsTopics,
-		testsAllQuestions,
-	} = useQuestion(question, options, id_test, isAllFieldsFilled, topicName)
+		getTopicsQuestion,
+		getSpecialQuestion,
+		specialQuestion,
+		topicsQuestions,
+	} = useQuestion(question, options, id_test, isAllFieldsFilled)
+
 	const { getSpecialTeacher, specialTeahcer } = useTeacher(
 		specialTest?.id_teacher,
 		null
 	)
+
+	const { getTopics, getSpecialTopic, createTopic, testsTopics, specialTopic } =
+		useTopic(id_test, topicName)
+
+	const { getAnswers, getRightAnswer, questionsAnswers, rightAnswer } =
+		useAnswer()
 
 	const chekIsAuthor = async () => {
 		if (user?.id_teacher === specialTest?.id_teacher) {
@@ -86,24 +100,34 @@ const SpecialTestModule = () => {
 	const handleChangeTopicModal = () => {
 		setIsOpenTopicModal(!isOpenTopicModal)
 	}
-	const handleChangeModal = () => {
+	const handleChangeModal = async () => {
 		setIsOpenModal(!isOpenModal)
+		await getTopicsQuestion(idOfClickedTopic)
 	}
-	const handleChangeTopicInfoBlock = id_topic => {
-		setIsOpenTopicInfoBlock(!isOpenTopicInfoBlock)
+	const handleChangeQuestionModal = async () => {
+		setIsOpenQuestionModal(!isOpenQuestionModal)
 	}
-
+	const handleChangeTopicInfoBlock = async id_topic => {
+		setIsOpenTopicInfoBlock(true)
+		setIdOfClickedTopic(id_topic)
+		await getSpecialTopic(id_topic)
+		await getTopicsQuestion(id_topic)
+	}
 	const handleUploadTopic = async event => {
 		event.preventDefault()
 		createTopic()
 	}
+	const handleClickQuestion = async id_question => {
+		dispacth(setQuestionInfo(id_question))
+		await handleChangeQuestionModal()
+		await getSpecialQuestion(id_question)
+		await getAnswers(id_question)
+		await getRightAnswer(id_question)
+	}
 
 	const handleUploadQuestion = async event => {
 		event.preventDefault()
-		createQuestions()
-		if (isAllFieldsFilled) {
-			handleChangeModal()
-		}
+		createQuestions(specialTopic.id_topic)
 		getTestsQuestions()
 		setQuestion('')
 		setOptions([
@@ -112,6 +136,9 @@ const SpecialTestModule = () => {
 			{ number: 3, text: '', isCorrect: false },
 			{ number: 4, text: '', isCorrect: false },
 		])
+		if (isAllFieldsFilled) {
+			handleChangeModal()
+		}
 	}
 
 	useEffect(() => {
@@ -134,12 +161,19 @@ const SpecialTestModule = () => {
 		question,
 		options,
 		isAllFieldsFilled,
-		testsAllQuestions,
 		specialTeahcer,
 		isAuthor,
 		topicName,
 		testsTopics,
 		isOpenTopicInfoBlock,
+		specialTopic,
+		topicsQuestions,
+		isOpenQuestionModal,
+		specialQuestion,
+		questionsAnswers,
+		rightAnswer,
+		idOfClickedTopic,
+		handleChangeQuestionModal,
 		handleChangeModal,
 		handleChangeTopicModal,
 		handleOptionTextChange,
@@ -149,6 +183,7 @@ const SpecialTestModule = () => {
 		handleUploadQuestion,
 		handleUploadTopic,
 		handleChangeTopicInfoBlock,
+		handleClickQuestion,
 	}
 }
 

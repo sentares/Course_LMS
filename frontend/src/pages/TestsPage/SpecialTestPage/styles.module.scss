@@ -20,16 +20,30 @@
 			@apply w-full relative flex flex-row items-center mr-0 mt-3 p-2 focus:outline-none bg-slate-100 hover:bg-slate-200 text-gray-600 hover:text-gray-800 hover:scale-[1.02] transition-all
 			rounded-md;
 		}
+		.clickedTopic {
+			@apply w-full relative flex flex-row items-center mr-0 mt-3 p-2 focus:outline-none bg-yellow-300 hover:bg-yellow-400 text-gray-600 hover:text-gray-800 hover:scale-[1.02] transition-all
+			rounded-md;
+		}
 	}
 	.TopicInfoBlock {
-		@apply flex justify-center p-2 ml-10 border-2 fixed bg-gray-100 h-full w-[520px] rounded-lg transition-all;
+		@apply flex justify-center p-2 ml-10 border-2 fixed bg-gray-100 w-[420px] rounded-lg transition-all;
 		.content {
 			@apply w-full;
 			.topicName {
 				@apply flex items-center justify-center bg-yellow-300 font-medium rounded-lg px-5 py-2.5 text-lg mb-3;
 			}
-			.topics {
-				@apply w-full flex items-center justify-center mt-4 border-b-2 border-gray-200/50 pb-2 font-semibold text-lg;
+			.topicsBlock {
+				@apply w-full flex items-center justify-center mt-4 pb-2;
+				.topicsQuestionNaming {
+					@apply w-full flex items-center justify-center border-b-2 border-gray-200/50 pb-2 font-semibold text-lg;
+				}
+				.questionsBlock {
+					@apply w-full;
+					.questionItem {
+						@apply w-full relative flex flex-row items-center mr-0 mt-3 p-2 focus:outline-none bg-slate-200 hover:bg-slate-300 text-gray-600 hover:text-gray-800 hover:scale-[1.02] transition-all
+						rounded-md;
+					}
+				}
 			}
 		}
 	}

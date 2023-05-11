@@ -12,6 +12,7 @@ const SpecialCoursePage = () => {
 		form,
 		allFlowsOfCourse,
 		allTeachers,
+		role,
 		change,
 		handleChangeModal,
 		handleCreateFlow,
@@ -21,7 +22,7 @@ const SpecialCoursePage = () => {
 		<>
 			{specialCourse ? (
 				<div className={styles.SpecialCoursePage}>
-					{isOpenModal && (
+					{isOpenModal && role === 1 && (
 						<CreateCourseFlowsModal
 							handleChangeModal={handleChangeModal}
 							form={form}
@@ -44,14 +45,16 @@ const SpecialCoursePage = () => {
 						<div className={styles.flowsBlock}>
 							<div>
 								<div className={styles.shapka}>Потоки курсов:</div>
-								<div>
-									<Button
-										title={'Создать поток'}
-										onClick={handleChangeModal}
-										classOfStyle={'create'}
-									/>
-								</div>
-								{allFlowsOfCourse ? (
+								{role === 1 && (
+									<div>
+										<Button
+											title={'Создать поток'}
+											onClick={handleChangeModal}
+											classOfStyle={'create'}
+										/>
+									</div>
+								)}
+								{allFlowsOfCourse.length ? (
 									<div>
 										{allFlowsOfCourse.map(courseFlow => (
 											<Link

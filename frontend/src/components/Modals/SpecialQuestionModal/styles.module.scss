@@ -1,0 +1,25 @@
+.SpecialQuestionModal {
+	@apply h-screen w-screen bg-black bg-opacity-70 fixed flex items-center justify-center top-0 left-0 z-20;
+	.content {
+		@apply p-12 rounded-2xl w-[50%] bg-slate-50 relative;
+		.title {
+			@apply flex items-center justify-center mb-4 text-xl font-semibold;
+		}
+		.close {
+			@apply flex justify-end items-center;
+		}
+		.questionBlock {
+			@apply flex items-center justify-center;
+			.questionsAnswers {
+				@apply w-full;
+				.answersRightItem {
+					@apply w-full relative flex flex-row items-center mr-0 mt-3 p-2 focus:outline-none bg-green-500 hover:bg-green-600 text-gray-600 hover:text-gray-800 hover:scale-[1.01] transition-all	rounded-md;
+				}
+				.answersItem {
+					@apply w-full relative flex flex-row items-center mr-0 mt-3 p-2 focus:outline-none bg-slate-200 hover:bg-slate-300 text-gray-600 hover:text-gray-800 hover:scale-[1.01] transition-all
+					rounded-md;
+				}
+			}
+		}
+	}
+}

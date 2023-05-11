@@ -21,6 +21,7 @@ if (process.env.NODE_ENV === 'development') {
 
 const publicPath = path.join(__dirname, 'public')
 const uploadsPath = path.join(__dirname, 'uploads')
+
 app.use(express.static(publicPath))
 app.use('/uploads', express.static(uploadsPath))
 app.use('/api', require('./indexRouter'))

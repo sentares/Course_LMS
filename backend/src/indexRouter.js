@@ -10,5 +10,7 @@ app.use('/question', require('./question/question.router'))
 app.use('/answer', require('./answers/answer.router'))
 app.use('/courseFlows', require('./courseFlows/courseFlows.router'))
 app.use('/test', require('./tests/tests.router'))
+app.use('/edit', require('./edit/edit.router'))
+app.use('/topics', require('./topics/topics.router'))
 
 module.exports = app

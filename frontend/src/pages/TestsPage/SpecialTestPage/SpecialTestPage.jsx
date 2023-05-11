@@ -4,6 +4,8 @@ import styles from './styles.module.scss'
 import Button from '../../../ui/button/Button'
 import CreateQuestionModal from '../../../components/Modals/CreateQuestionModal/CreateQuestionModal'
 import CreateTopicModal from '../../../components/Modals/CreateTopicModal/CreateTopicModal'
+import SpecialQuestionModal from '../../../components/Modals/SpecialQuestionModal/SpecialQuestionModal'
+import ManagerSpecialQuestionModal from '../../../components/Modals/ManagerSpecialQuestionModal/ManagerSpecialQuestionModal'
 
 const SpecialTestPage = () => {
 	const {
@@ -11,16 +13,23 @@ const SpecialTestPage = () => {
 		specialCourse,
 		isOpenModal,
 		isOpenTopicModal,
+		isOpenQuestionModal,
 		options,
 		question,
 		isAllFieldsFilled,
-		testsAllQuestions,
 		specialTeahcer,
 		isAuthor,
 		topicName,
 		testsTopics,
 		isOpenTopicInfoBlock,
+		specialTopic,
+		topicsQuestions,
+		specialQuestion,
+		questionsAnswers,
+		rightAnswer,
+		idOfClickedTopic,
 		changeTopicName,
+		handleClickQuestion,
 		handleChangeModal,
 		handleChangeTopicModal,
 		changeQuestion,
@@ -29,11 +38,12 @@ const SpecialTestPage = () => {
 		handleUploadQuestion,
 		handleUploadTopic,
 		handleChangeTopicInfoBlock,
+		handleChangeQuestionModal,
 	} = SpecialTestModule()
 
 	return (
 		<div className={styles.SpecialTestPage}>
-			{specialTest && specialCourse && specialTeahcer && testsTopics && (
+			{specialTest && specialCourse && specialTeahcer && testsTopics ? (
 				<>
 					<div className=' pr-10'>
 						{isOpenModal && (
@@ -54,6 +64,22 @@ const SpecialTestPage = () => {
 								change={changeTopicName}
 								form={topicName}
 								handleCreateTopic={handleUploadTopic}
+							/>
+						)}
+						{isOpenQuestionModal &&
+							specialQuestion &&
+							rightAnswer &&
+							!isAuthor && (
+								<SpecialQuestionModal
+									handleChangeQuestionModal={handleChangeQuestionModal}
+									specialQuestion={specialQuestion}
+									questionsAnswers={questionsAnswers}
+									rightAnswer={rightAnswer}
+								/>
+							)}
+						{isOpenQuestionModal && isAuthor && (
+							<ManagerSpecialQuestionModal
+								handleChangeQuestionModal={handleChangeQuestionModal}
 							/>
 						)}
 						<div className={styles.testInfoBlock}>
@@ -102,7 +128,11 @@ const SpecialTestPage = () => {
 										{testsTopics.map((topic, index) => (
 											<button
 												key={topic.id_topic}
-												className={styles.questionItem}
+												className={
+													idOfClickedTopic === topic.id_topic
+														? styles.clickedTopic
+														: styles.questionItem
+												}
 												onClick={handleChangeTopicInfoBlock.bind(
 													null,
 													topic.id_topic
@@ -119,42 +149,64 @@ const SpecialTestPage = () => {
 							</div>
 						</div>
 					</div>
-					<div
-						className={`transform transition-opacity ease-out duration-300 ${
-							isOpenTopicInfoBlock ? 'opacity-100' : 'opacity-0'
-						}`}
-					>
-						<div className={styles.TopicInfoBlock}>
-							<div className={styles.content}>
-								<div className={styles.topicName}>Тема:</div>
-								{isAuthor && (
-									<Button
-										classOfStyle={'auth'}
-										title={'Добавить вопрос'}
-										onClick={handleChangeModal}
-									/>
-								)}
-								<div className={styles.topics}>Вопросы:</div>
+					{isOpenTopicInfoBlock && specialTopic && (
+						<div
+							className={`transform transition-opacity ease-out duration-300 ${
+								isOpenTopicInfoBlock ? 'opacity-100' : 'opacity-0'
+							}`}
+						>
+							<div className={styles.TopicInfoBlock}>
+								<div className={styles.content}>
+									<div className={styles.topicName}>
+										Тема: {specialTopic.topic_name}
+									</div>
+									{isAuthor && (
+										<Button
+											classOfStyle={'auth'}
+											title={'Добавить вопрос'}
+											onClick={handleChangeModal}
+										/>
+									)}
+									<div className={styles.topicsBlock}>
+										<div className='w-full'>
+											<div className={styles.topicsQuestionNaming}>
+												Вопросы:
+											</div>
+											{topicsQuestions?.length ? (
+												<div className={styles.questionsBlock}>
+													{topicsQuestions.map((question, index) => (
+														<div
+															key={question.id_question}
+															className={styles.questionItem}
+															onClick={handleClickQuestion.bind(
+																null,
+																question.id_question
+															)}
+														>
+															<span className='font-semibold pr-1'>
+																{index + 1}.
+															</span>{' '}
+															{question.question}
+														</div>
+													))}
+												</div>
+											) : (
+												<div className='flex justify-center mt-4 text-gray-400'>
+													Пока нет вопросов
+												</div>
+											)}
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
-					</div>
+					)}
 				</>
+			) : (
+				<div>Loader...</div>
 			)}
 		</div>
 	)
 }
 
 export default SpecialTestPage
-
-{
-	/* {testsAllQuestions &&
-								testsAllQuestions.map((question, index) => (
-									<div
-										key={question.id_question}
-										className={styles.questionItem}
-									>
-										<span className='font-semibold pr-1'>{index + 1}.</span>{' '}
-										{question.question}
-									</div>
-								))} */
-}

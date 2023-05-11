@@ -12,9 +12,10 @@ const SpecialFlowsPage = () => {
 		specialTeahcer,
 		allTeachers,
 		isPressChange,
-		isAdmin,
+		role,
 		change,
 		handlePressChangeDate,
+		handleClickRegisterCourse,
 	} = SpecialFlowsPageModule()
 
 	return (
@@ -24,7 +25,7 @@ const SpecialFlowsPage = () => {
 					<div className={styles.specialFlowsItem}>
 						<div className={styles.specialFlowsLabel}>Название потока:</div>
 						<div className={styles.specialFlowsValue}>
-							{isAdmin ? (
+							{role === 1 ? (
 								<Input
 									name='flows_name'
 									placeholder={specialFlows.flows_name}
@@ -43,7 +44,7 @@ const SpecialFlowsPage = () => {
 						<div className={styles.specialFlowsValue}>
 							{!isPressChange ? (
 								<>
-									{isAdmin ? (
+									{role === 1 ? (
 										<Button
 											title={new Date(
 												specialFlows.date_register
@@ -91,7 +92,7 @@ const SpecialFlowsPage = () => {
 						<div className={styles.specialFlowsValue}>
 							{!isPressChange ? (
 								<>
-									{isAdmin ? (
+									{role === 1 ? (
 										<Button
 											title={new Date(specialFlows.date_start).toLocaleString(
 												'ru-RU',
@@ -140,7 +141,7 @@ const SpecialFlowsPage = () => {
 						<div className={styles.specialFlowsValue}>
 							{!isPressChange ? (
 								<>
-									{isAdmin ? (
+									{role === 1 ? (
 										<Button
 											title={new Date(specialFlows.date_end).toLocaleString(
 												'ru-RU',
@@ -184,7 +185,7 @@ const SpecialFlowsPage = () => {
 					<div className={styles.specialFlowsItem}>
 						<div className={styles.specialFlowsLabel}>Преподаватель:</div>
 						<div className={styles.specialFlowsValue}>
-							{isAdmin ? (
+							{role === 1 ? (
 								<select
 									className={styles.choseTeacher}
 									name='id_teacher'
@@ -206,7 +207,7 @@ const SpecialFlowsPage = () => {
 					<div className={styles.specialFlowsItem}>
 						<div className={styles.specialFlowsLabel}>Количество мест:</div>
 						<div className={styles.specialFlowsValue}>
-							{isAdmin ? (
+							{role === 1 ? (
 								<Input
 									name='count_of_seats'
 									placeholder={specialFlows.count_of_seats}
@@ -223,7 +224,7 @@ const SpecialFlowsPage = () => {
 					<div className={styles.specialFlowsItem}>
 						<div className={styles.specialFlowsLabel}>Стоимость:</div>
 						<div className={styles.specialFlowsValue}>
-							{isAdmin ? (
+							{role === 1 ? (
 								<Input
 									name='price'
 									placeholder={specialFlows.price}
@@ -240,7 +241,7 @@ const SpecialFlowsPage = () => {
 					<div className={styles.specialFlowsItem}>
 						<div className={styles.specialFlowsLabel}>Автивный:</div>
 						<div>
-							{isAdmin ? (
+							{role === 1 ? (
 								<Button
 									title={form.activ ? 'Активный' : 'Неактивный'}
 									classOfStyle={form.activ ? 'activate' : 'deactivate'}
@@ -252,13 +253,33 @@ const SpecialFlowsPage = () => {
 							)}
 						</div>
 					</div>
-					{isAdmin ? (
+					{role === 1 && (
 						<div className={styles.buttonBlock}>
 							<Button title={'Сохранить изменения'} classOfStyle={'auth'} />
 						</div>
-					) : (
+					)}
+					{role === 2 ||
+						(role === 3 && (
+							<div className={styles.buttonBlock}>
+								<Button title={'Студенты потока'} classOfStyle={'auth'} />
+							</div>
+						))}
+					{role === 4 && (
 						<div className={styles.buttonBlock}>
-							<Button title={'Студенты потока'} classOfStyle={'auth'} />
+							<Button
+								title={'Записаться'}
+								classOfStyle={'auth'}
+								onClick={handleClickRegisterCourse}
+							/>
+						</div>
+					)}
+					{role == null && (
+						<div className={styles.buttonBlock}>
+							<Button
+								title={'Записаться'}
+								classOfStyle={'auth'}
+								onClick={handleClickRegisterCourse}
+							/>
 						</div>
 					)}
 				</div>

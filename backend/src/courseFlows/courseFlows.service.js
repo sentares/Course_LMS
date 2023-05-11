@@ -39,6 +39,13 @@ class CourseFlowsService {
 			console.log(e)
 		}
 	}
+
+	async addStudentToFlows(id_flows, id_student) {
+		try {
+		} catch (e) {
+			console.log(e)
+		}
+	}
 }
 
 module.exports = new CourseFlowsService()
