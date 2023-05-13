@@ -1,7 +1,16 @@
 import React from 'react'
 import styles from './styles.module.scss'
 
-const Input = ({ name, type, value, onChange, placeholder, classOfStyle }) => {
+const Input = ({
+	name,
+	type,
+	value,
+	onChange,
+	placeholder,
+	classOfStyle,
+	min,
+	max,
+}) => {
 	return (
 		<input
 			name={name}
@@ -10,6 +19,8 @@ const Input = ({ name, type, value, onChange, placeholder, classOfStyle }) => {
 			value={value}
 			onChange={onChange}
 			placeholder={placeholder}
+			min={min}
+			max={max}
 		/>
 	)
 }

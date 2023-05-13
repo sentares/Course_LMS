@@ -12,5 +12,7 @@ app.use('/courseFlows', require('./courseFlows/courseFlows.router'))
 app.use('/test', require('./tests/tests.router'))
 app.use('/edit', require('./edit/edit.router'))
 app.use('/topics', require('./topics/topics.router'))
+app.use('/studentsFollows', require('./studentsFollows/studentFollows.router'))
+app.use('/rules', require('./rules/rules.router'))
 
 module.exports = app

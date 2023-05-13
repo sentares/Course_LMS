@@ -27,10 +27,10 @@ const SpecialFlowsPageModule = () => {
 	const params = useParams()
 	const { id_flows } = params
 
-	const { getSpecialCourseFlows, specialFlows } = useFlows(null, null, id_flows)
-	const { getSpecialTeacher, getAllTeachers, allTeachers, specialTeahcer } =
-		useTeacher(specialFlows ? specialFlows.id_teacher : null)
-	const { addStudentToCourseFlows } = useStudent()
+	const { getSpecialCourseFlows, specialFlows } = useFlows(null, null)
+	const { getSpecialTeacher, getAllTeachers, allTeachers, specialTeacher } =
+		useTeacher(specialFlows?.id_teacher)
+	const { addStudentToCourseFlows, checkIsStudentAdded, isAdded } = useStudent()
 
 	const change = e => setForm({ ...form, [e.target.name]: e.target.value })
 	const handlePressChangeDate = () => {
@@ -40,7 +40,11 @@ const SpecialFlowsPageModule = () => {
 	const handleClickRegisterCourse = async event => {
 		event.preventDefault()
 		if (role === 4) {
-			await addStudentToCourseFlows(user.id_student, id_flows)
+			await addStudentToCourseFlows(
+				user.id_student,
+				id_flows,
+				specialFlows.id_course
+			)
 		} else {
 			toast.warn('Войдите в свой аккаунт или пройдите регистрацию')
 			navigate('/login')
@@ -48,7 +52,7 @@ const SpecialFlowsPageModule = () => {
 	}
 
 	useEffect(() => {
-		getSpecialCourseFlows()
+		getSpecialCourseFlows(id_flows)
 		getAllTeachers()
 	}, [])
 
@@ -56,16 +60,18 @@ const SpecialFlowsPageModule = () => {
 		if (specialFlows && specialFlows.id_teacher) {
 			getSpecialTeacher(specialFlows.id_teacher)
 			setForm(specialFlows)
+			checkIsStudentAdded(user.id_student, id_flows)
 		}
 	}, [specialFlows])
 
 	return {
 		specialFlows,
-		specialTeahcer,
+		specialTeacher,
 		form,
 		allTeachers,
 		isPressChange,
 		role,
+		isAdded,
 		change,
 		handlePressChangeDate,
 		handleClickRegisterCourse,

@@ -85,7 +85,7 @@ class QuestionController {
 
 			const rows = await QuestionService.insertQuestion(question, id_test, id_topic)
 			const questionId = await rows?.id_question
-			await QuestionService.plusCountQuestion(id_test)
+			await QuestionService.plusCountQuestion(id_test, id_topic)
 			const answers = options.map(async option => {
 				const { number, text, isCorrect } = option
 				const answersResult = await QuestionService.insertAnswers(questionId, text)

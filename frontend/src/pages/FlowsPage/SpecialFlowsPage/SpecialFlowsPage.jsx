@@ -9,10 +9,11 @@ const SpecialFlowsPage = () => {
 	const {
 		form,
 		specialFlows,
-		specialTeahcer,
+		specialTeacher,
 		allTeachers,
 		isPressChange,
 		role,
+		isAdded,
 		change,
 		handlePressChangeDate,
 		handleClickRegisterCourse,
@@ -20,7 +21,7 @@ const SpecialFlowsPage = () => {
 
 	return (
 		<div className={styles.SpecialFlows}>
-			{specialFlows && specialTeahcer ? (
+			{specialFlows ? (
 				<div className={styles.specialFlowsWrapper}>
 					<div className={styles.specialFlowsItem}>
 						<div className={styles.specialFlowsLabel}>Название потока:</div>
@@ -193,14 +194,16 @@ const SpecialFlowsPage = () => {
 									onChange={change}
 								>
 									<option value=''>Выберите учителя</option>
-									{allTeachers.map(teacher => (
+									{allTeachers?.map(teacher => (
 										<option key={teacher.id_teacher} value={teacher.id_teacher}>
 											{teacher.surname} {teacher.name} {teacher.patronymic}
 										</option>
 									))}
 								</select>
 							) : (
-								<p>Вы:</p>
+								<p>
+									{specialTeacher?.name} {specialTeacher?.patronymic}
+								</p>
 							)}
 						</div>
 					</div>
@@ -264,7 +267,7 @@ const SpecialFlowsPage = () => {
 								<Button title={'Студенты потока'} classOfStyle={'auth'} />
 							</div>
 						))}
-					{role === 4 && (
+					{role === 4 && !isAdded && (
 						<div className={styles.buttonBlock}>
 							<Button
 								title={'Записаться'}
@@ -272,6 +275,9 @@ const SpecialFlowsPage = () => {
 								onClick={handleClickRegisterCourse}
 							/>
 						</div>
+					)}
+					{role === 4 && isAdded && (
+						<div className={styles.added}>Вы записаны на курс</div>
 					)}
 					{role == null && (
 						<div className={styles.buttonBlock}>

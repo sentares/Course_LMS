@@ -9,7 +9,7 @@ const TestsPageModule = () => {
 	const dispatch = useDispatch()
 	const user = useSelector(state => state.auth.user)
 	const newTest = useSelector(state => state.newTest.newTest)
-	const { id_teacher } = user
+	const { id_teacher, role } = user
 
 	const [isOpenCreateTestModal, setIsOpenCreateTestModal] = useState(false)
 	const [form, setForm] = useState({
@@ -78,6 +78,7 @@ const TestsPageModule = () => {
 		allTests,
 		isOpenCreateTestModal,
 		form,
+		role,
 	}
 }
 

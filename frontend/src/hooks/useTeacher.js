@@ -6,7 +6,7 @@ const useTeacher = (id_teacher, form) => {
 	const { request } = useHttp()
 
 	const [allTeachers, setAllTeachers] = useState(null)
-	const [specialTeahcer, setSpecialTeacher] = useState(null)
+	const [specialTeacher, setSpecialTeacher] = useState(null)
 
 	const getAllTeachers = async () => {
 		const { data } = await request('/teacher')
@@ -59,7 +59,7 @@ const useTeacher = (id_teacher, form) => {
 		getAllTeachers,
 		getSpecialTeacher,
 		createTeacher,
-		specialTeahcer,
+		specialTeacher,
 		allTeachers,
 	}
 }

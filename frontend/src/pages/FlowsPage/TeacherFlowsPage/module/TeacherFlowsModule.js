@@ -7,12 +7,7 @@ const TeacherFlowsModule = () => {
 	const params = useParams()
 	const { id_teacher } = params
 
-	const { getFlowsOfTeacher, teachersFlows } = useFlows(
-		null,
-		null,
-		null,
-		id_teacher
-	)
+	const { getFlowsOfTeacher, teachersFlows } = useFlows(null, null, id_teacher)
 
 	const { getSpecialCourse, specialCourse } = useCourse(null, null)
 

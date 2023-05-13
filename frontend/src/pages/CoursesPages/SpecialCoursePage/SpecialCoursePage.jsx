@@ -54,9 +54,9 @@ const SpecialCoursePage = () => {
 										/>
 									</div>
 								)}
-								{allFlowsOfCourse.length ? (
+								{allFlowsOfCourse?.length ? (
 									<div>
-										{allFlowsOfCourse.map(courseFlow => (
+										{allFlowsOfCourse?.map(courseFlow => (
 											<Link
 												to={`/coursesFlows/${courseFlow.id_flows}`}
 												key={courseFlow.id_flows}

@@ -36,6 +36,7 @@ const CoursesPage = () => {
 						/>
 					</div>
 				)}
+				<div>Все курсы:</div>
 				{allCourses && (
 					<div>
 						{allCourses.map(course => (

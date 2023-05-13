@@ -31,8 +31,8 @@ const MenuLIst = () => {
 		},
 		{
 			id: 3,
-			title: 'Избранное',
-			link: '/liked',
+			title: 'Мои курсы',
+			link: '/myCourses',
 			icon: <FaRegStar />,
 			isActive: false,
 		},

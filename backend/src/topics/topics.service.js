@@ -21,7 +21,7 @@ class TopicsServise {
 
 	async getTestsTopics(id_test) {
 		try {
-			const { rows } = await pool.query('select * from tests_topics where id_test=$1', [id_test])
+			const { rows } = await pool.query('select * from tests_topics where id_test=$1 order by id_topic asc', [id_test])
 			return rows
 		} catch (e) {
 			console.log(e)

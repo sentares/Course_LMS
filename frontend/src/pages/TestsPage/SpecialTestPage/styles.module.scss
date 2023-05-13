@@ -1,16 +1,6 @@
 .SpecialTestPage {
 	@apply flex justify-center w-full mt-8;
-	.testInfoBlock {
-		@apply flex items-center justify-start bg-yellow-200 p-3 rounded-md;
-		.naming {
-			@apply w-96;
-			.nameOfCat {
-				@apply flex justify-start gap-1;
-				.testDescription {
-				}
-			}
-		}
-	}
+
 	.questionBlock {
 		@apply mt-3 w-full;
 		.topics {
@@ -25,26 +15,8 @@
 			rounded-md;
 		}
 	}
-	.TopicInfoBlock {
-		@apply flex justify-center p-2 ml-10 border-2 fixed bg-gray-100 w-[420px] rounded-lg transition-all;
-		.content {
-			@apply w-full;
-			.topicName {
-				@apply flex items-center justify-center bg-yellow-300 font-medium rounded-lg px-5 py-2.5 text-lg mb-3;
-			}
-			.topicsBlock {
-				@apply w-full flex items-center justify-center mt-4 pb-2;
-				.topicsQuestionNaming {
-					@apply w-full flex items-center justify-center border-b-2 border-gray-200/50 pb-2 font-semibold text-lg;
-				}
-				.questionsBlock {
-					@apply w-full;
-					.questionItem {
-						@apply w-full relative flex flex-row items-center mr-0 mt-3 p-2 focus:outline-none bg-slate-200 hover:bg-slate-300 text-gray-600 hover:text-gray-800 hover:scale-[1.02] transition-all
-						rounded-md;
-					}
-				}
-			}
-		}
+
+	.haveNothing {
+		@apply w-full flex items-center justify-center mt-2 text-gray-400;
 	}
 }

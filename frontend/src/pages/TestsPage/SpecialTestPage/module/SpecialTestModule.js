@@ -8,9 +8,15 @@ import useTeacher from '../../../../hooks/useTeacher'
 import useTopic from '../../../../hooks/useTopic'
 import useAnswer from '../../../../hooks/useAnswer'
 import { setQuestionInfo } from '../../../../redux/slices/question'
+import { toast } from 'react-toastify'
+import useRule from '../../../../hooks/useRule'
 
 const SpecialTestModule = () => {
 	const user = useSelector(state => state.auth.user)
+	const regulateCountOfQuestionInTopic = useSelector(
+		state => state.topic.regulateCountOfQuestionInTopic
+	)
+	const { role } = user
 	const params = useParams()
 	const dispacth = useDispatch()
 	const { id_test } = params
@@ -20,6 +26,8 @@ const SpecialTestModule = () => {
 	const [isOpenTopicInfoBlock, setIsOpenTopicInfoBlock] = useState(false)
 	const [isOpenQuestionModal, setIsOpenQuestionModal] = useState(false)
 	const [idOfClickedTopic, setIdOfClickedTopic] = useState()
+	const [timeForTest, setTimeForTest] = useState(0)
+	const [isGoodRule, setIsGoodRule] = useState(false)
 	const [topicName, setTopicName] = useState('')
 	const [question, setQuestion] = useState('')
 	const [options, setOptions] = useState([
@@ -32,6 +40,7 @@ const SpecialTestModule = () => {
 	const isAllFieldsFilled =
 		question !== '' && options.every(option => option.text !== '')
 
+	const { createRule } = useRule()
 	const { getSpecialTest, specialTest } = useTest(null, id_test)
 	const { getSpecialCourse, specialCourse } = useCourse(
 		null,
@@ -47,7 +56,7 @@ const SpecialTestModule = () => {
 		topicsQuestions,
 	} = useQuestion(question, options, id_test, isAllFieldsFilled)
 
-	const { getSpecialTeacher, specialTeahcer } = useTeacher(
+	const { getSpecialTeacher, specialTeacher } = useTeacher(
 		specialTest?.id_teacher,
 		null
 	)
@@ -73,6 +82,8 @@ const SpecialTestModule = () => {
 
 	const changeQuestion = e => setQuestion(e.target.value)
 	const changeTopicName = e => setTopicName(e.target.value)
+	const changeTimeForTest = e => setTimeForTest(e.target.value)
+
 	const handleOptionTextChange = (optionNumber, optionText) => {
 		setOptions(
 			options.map(option => {
@@ -108,14 +119,19 @@ const SpecialTestModule = () => {
 		setIsOpenQuestionModal(!isOpenQuestionModal)
 	}
 	const handleChangeTopicInfoBlock = async id_topic => {
-		setIsOpenTopicInfoBlock(true)
 		setIdOfClickedTopic(id_topic)
-		await getSpecialTopic(id_topic)
-		await getTopicsQuestion(id_topic)
+		if (role === 3) {
+			setIsOpenTopicInfoBlock(true)
+			await getSpecialTopic(id_topic)
+			await getTopicsQuestion(id_topic)
+		}
 	}
+
 	const handleUploadTopic = async event => {
 		event.preventDefault()
-		createTopic()
+		await createTopic()
+		handleChangeTopicModal()
+		await getTopics()
 	}
 	const handleClickQuestion = async id_question => {
 		dispacth(setQuestionInfo(id_question))
@@ -127,8 +143,9 @@ const SpecialTestModule = () => {
 
 	const handleUploadQuestion = async event => {
 		event.preventDefault()
-		createQuestions(specialTopic.id_topic)
-		getTestsQuestions()
+		await createQuestions(specialTopic.id_topic)
+		await getTestsQuestions()
+		await getTopics()
 		setQuestion('')
 		setOptions([
 			{ number: 1, text: '', isCorrect: true },
@@ -141,9 +158,65 @@ const SpecialTestModule = () => {
 		}
 	}
 
+	const checkIsGoodRule = async () => {
+		const realCountOfQuestionInTopic = testsTopics?.reduce(
+			(acc, topic) => ({
+				...acc,
+				[topic.id_topic]: topic.count_question || 0,
+			}),
+			{}
+		)
+		if (
+			regulateCountOfQuestionInTopic === 0 ||
+			Object.entries(regulateCountOfQuestionInTopic).some(
+				([id_topic, count]) => count > realCountOfQuestionInTopic?.[id_topic]
+			) ||
+			Object.values(regulateCountOfQuestionInTopic).some(
+				count => count === 0
+			) ||
+			timeForTest === 0
+		) {
+			setIsGoodRule(false)
+		} else {
+			setIsGoodRule(true)
+		}
+	}
+
+	const handleSaveRegulate = async () => {
+		const realCountOfQuestionInTopic = testsTopics.reduce(
+			(acc, topic) => ({
+				...acc,
+				[topic.id_topic]: topic.count_question || 0,
+			}),
+			{}
+		)
+		if (regulateCountOfQuestionInTopic === 0) {
+			toast.warn('Выберите вопросы тем')
+			return
+		}
+		if (
+			Object.entries(regulateCountOfQuestionInTopic).some(
+				([id_topic, count]) => count > realCountOfQuestionInTopic[id_topic]
+			)
+		) {
+			toast.warn('Вы превысили количество вопросов')
+			return
+		}
+		if (
+			Object.values(regulateCountOfQuestionInTopic).some(count => count === 0)
+		) {
+			toast.warn('Выберите вопросы всех тем')
+			return
+		}
+		if (timeForTest === 0) {
+			toast.warn('Выберите длительность теста')
+			return
+		}
+		await createRule(timeForTest, regulateCountOfQuestionInTopic, id_test)
+	}
+
 	useEffect(() => {
 		getSpecialTest(id_test)
-		getTestsQuestions()
 	}, [])
 
 	useEffect(() => {
@@ -151,7 +224,14 @@ const SpecialTestModule = () => {
 		getCourseInfo()
 		getSpecialTeacher()
 		chekIsAuthor()
+		if (specialTest) {
+			setTimeForTest(specialTest?.time)
+		}
 	}, [specialTest])
+
+	useEffect(() => {
+		checkIsGoodRule()
+	}, [regulateCountOfQuestionInTopic, timeForTest])
 
 	return {
 		specialTest,
@@ -161,7 +241,7 @@ const SpecialTestModule = () => {
 		question,
 		options,
 		isAllFieldsFilled,
-		specialTeahcer,
+		specialTeacher,
 		isAuthor,
 		topicName,
 		testsTopics,
@@ -173,6 +253,9 @@ const SpecialTestModule = () => {
 		questionsAnswers,
 		rightAnswer,
 		idOfClickedTopic,
+		role,
+		timeForTest,
+		isGoodRule,
 		handleChangeQuestionModal,
 		handleChangeModal,
 		handleChangeTopicModal,
@@ -184,6 +267,9 @@ const SpecialTestModule = () => {
 		handleUploadTopic,
 		handleChangeTopicInfoBlock,
 		handleClickQuestion,
+		changeTimeForTest,
+		handleSaveRegulate,
+		checkIsGoodRule,
 	}
 }
 

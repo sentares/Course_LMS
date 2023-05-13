@@ -82,21 +82,6 @@ class CourseFlowsController {
 			})
 		}
 	}
-
-	async addStudentToFlows(req, res) {
-		try {
-			const { id_flows, id_student } = req.params
-			const rows = await CourseFlowsService.addStudentToFlows(id_flows, id_student)
-			
-		} catch (e) {
-			console.log(e)
-			res.status(500).json({
-				message: 'Ошибка в сервере',
-				type: 'error',
-				data: {}
-			})
-		}
-	}
 }
 
 module.exports = new CourseFlowsController()

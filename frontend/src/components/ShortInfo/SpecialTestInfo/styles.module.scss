@@ -1,0 +1,11 @@
+.testInfoBlock {
+	@apply flex items-center justify-start bg-yellow-200 p-3 rounded-md;
+	.naming {
+		@apply w-96;
+		.nameOfCat {
+			@apply flex justify-start gap-1;
+			.testDescription {
+			}
+		}
+	}
+}

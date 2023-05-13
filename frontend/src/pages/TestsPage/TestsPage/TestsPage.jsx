@@ -16,6 +16,7 @@ const TestsPage = () => {
 		allTeachers,
 		form,
 		isOpenCreateTestModal,
+		role,
 	} = TestsPageModule()
 
 	return (
@@ -31,11 +32,14 @@ const TestsPage = () => {
 			)}
 			<div>
 				<div className={styles.buttonBlock}>
-					<Button
-						title={'Создать тест'}
-						classOfStyle={'create'}
-						onClick={handleChangeModal}
-					/>
+					{role === 3 && (
+						<Button
+							title={'Создать тест'}
+							classOfStyle={'create'}
+							onClick={handleChangeModal}
+						/>
+					)}
+					{role === 2 && <div className={styles.allTestsName}>Все тесты</div>}
 				</div>
 				{allTests && allCourses && allTeachers && (
 					<div>

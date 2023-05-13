@@ -15,9 +15,11 @@ import TeacherFlowsPage from '../pages/FlowsPage/TeacherFlowsPage/TeacherFlowsPa
 import TeachersCoursesPage from '../pages/CoursesPages/TeachersCoursesPage/TeachersCoursesPage'
 import TestsPage from '../pages/TestsPage/TestsPage/TestsPage'
 import SpecialTestPage from '../pages/TestsPage/SpecialTestPage/SpecialTestPage'
+import StudentCoursePage from '../pages/StudentsFollowsPages/StudentCoursesPage/StudentCoursePage'
+import SpecialCourseOfStudentPage from '../pages/StudentsFollowsPages/SpecialCourseOfStudentPage/SpecialCourseOfStudentPage'
+
 const Router = ({ user, isAuth }) => {
 	const { role } = user
-	console.log(role)
 
 	if (isAuth && role === 4) {
 		return (
@@ -28,7 +30,11 @@ const Router = ({ user, isAuth }) => {
 				<Route path='/courses' element={<CoursesPage />} />
 				<Route path='/courses/:id_course' element={<SpecialCoursePage />} />
 				<Route path='/coursesFlows/:id_flows' element={<SpecialFlowsPage />} />
-				<Route path='/liked' element={<LikedPage />} />
+				<Route path='/myCourses' element={<StudentCoursePage />} />
+				<Route
+					path='/myCourses/:id_flows'
+					element={<SpecialCourseOfStudentPage />}
+				/>
 			</Routes>
 		)
 	} else if (isAuth && role === 1) {

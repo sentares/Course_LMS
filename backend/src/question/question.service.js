@@ -21,7 +21,7 @@ class QuestionService {
 
 	async getTopicsQuestions(id_topic) {
 		try {
-			const { rows } = await pool.query(`select * from questions where id_topic=$1`, [id_topic])
+			const { rows } = await pool.query(`select * from questions where id_topic=$1 ORDER BY id_question asc`, [id_topic])
 			return rows
 		} catch (e) {
 			console.log(e)
@@ -46,9 +46,10 @@ class QuestionService {
 		}
 	}
 
-	async plusCountQuestion(id_test) {
+	async plusCountQuestion(id_test, id_topic) {
 		try {
 			const { rows } = await pool.query('UPDATE tests SET question_count = question_count + 1 WHERE id_test = $1 returning *', [id_test])
+			const { rows: topic } = await pool.query('UPDATE tests_topics SET count_question = count_question + 1 WHERE id_topic = $1 returning *', [id_topic])
 			return rows[0]
 		} catch (e) {
 			console.log(e)

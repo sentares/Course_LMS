@@ -31,8 +31,9 @@ const useQuestion = (question, options, id_test, isAllFieldsFilled) => {
 				id_topic,
 			})
 			toast[data?.type](data?.message)
+		} else if (!isAllFieldsFilled) {
+			toast.warn('Заполните все поля')
 		}
-		toast.warn('Заполните все поля')
 		return
 	}
 

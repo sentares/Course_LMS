@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useHttp } from './useHttp'
 import { toast } from 'react-toastify'
 
-const useFlows = (id_course, form, id_flows, id_teacher) => {
+const useFlows = (id_course, form, id_teacher) => {
 	const [allFlowsOfCourse, setAllFlowsOfCourse] = useState(null)
 	const [isDoneFunction, setIsDoneFunction] = useState(null)
 	const [specialFlows, setSpesialFlows] = useState(null)
@@ -19,7 +19,7 @@ const useFlows = (id_course, form, id_flows, id_teacher) => {
 		}
 	}
 
-	const getSpecialCourseFlows = async () => {
+	const getSpecialCourseFlows = async id_flows => {
 		try {
 			const { data } = await request(`/courseFlows/getSpecial/${id_flows}`)
 			setSpesialFlows(data)

@@ -29,7 +29,13 @@ const useTopic = (id_test, topicName) => {
 		setSpecialTopic(data)
 	}
 
-	return { getTopics, createTopic, getSpecialTopic, testsTopics, specialTopic }
+	return {
+		getTopics,
+		createTopic,
+		getSpecialTopic,
+		testsTopics,
+		specialTopic,
+	}
 }
 
 export default useTopic

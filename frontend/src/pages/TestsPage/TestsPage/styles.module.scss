@@ -1,5 +1,8 @@
 .TestsPage {
 	@apply flex items-center justify-center w-full m-1 mt-8;
+	.allTestsName {
+		@apply focus:outline-none w-full text-white hover:bg-green-800 focus:ring-2 focus:ring-green-300 font-medium rounded-lg px-5 py-2.5 text-lg dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800;
+	}
 	.testItem {
 		@apply w-96 max-w-sm relative flex flex-row items-center mt-3 p-2 focus:outline-none bg-green-200 hover:bg-green-100 text-gray-600 hover:text-gray-800 hover:scale-[1.02] transition-all
 			rounded-md;
