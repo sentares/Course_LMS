@@ -38,7 +38,10 @@
 			@apply absolute left-[-10px] top-[-6px] text-sm text-white  px-1.5 rounded-2xl bg-green-600 bg-opacity-60;
 		}
 		.nameBlock {
-			@apply flex justify-between w-full mt-0.5;
+			@apply flex justify-between w-full mt-0.5 relative;
+			.roleExist {
+				@apply flex items-center justify-center px-1 py-0.5 rounded-lg bg-green-500 absolute top-[-15px] left-[-14px] text-sm text-white;
+			}
 			.name {
 				@apply font-semibold flex items-center;
 			}

@@ -8,6 +8,9 @@ const useTest = form => {
 	const [allTests, setAllTests] = useState(null)
 	const [isSucces, setIsSucces] = useState(false)
 	const [specialTest, setSpecialTest] = useState(null)
+	const [regulateTests, setRegulateTests] = useState(null)
+	const [regulateTestsOfCourse, setRegulateTestsOfCourse] = useState(null)
+	const [connectedWithFlowsTests, setConnectedWidthFlowsTests] = useState(null)
 
 	const getTests = async user => {
 		if (user.role === 2) {
@@ -19,8 +22,25 @@ const useTest = form => {
 		}
 	}
 
+	const getRegulateTests = async () => {
+		const { data } = await request('/test/getRegulateTests')
+		setRegulateTests(data)
+	}
+
+	const getRegulateTestsForCourse = async id_course => {
+		const { data } = await request(
+			`/test/getRegulateTestsOfCourse/${id_course}`
+		)
+		setRegulateTestsOfCourse(data)
+	}
+
 	const getSpecialTest = async id_test => {
 		const { data } = await request(`/test/getSpecial/${id_test}`)
+		setSpecialTest(data)
+	}
+
+	const getFullInfoAboutSpecialTest = async id_test => {
+		const { data } = await request(`/test/getFullInfo/${id_test}`)
 		setSpecialTest(data)
 	}
 
@@ -56,10 +76,32 @@ const useTest = form => {
 		setIsSucces(true)
 	}
 
+	const connectTestWithFlow = async formForTest => {
+		const { type, message } = await request(
+			`/test/connectWithFlow`,
+			'POST',
+			formForTest
+		)
+		toast[type](message)
+	}
+
+	const getConnectedTests = async id_flows => {
+		const { data } = await request(`test/getConnectedWithFlow/${id_flows}`)
+		setConnectedWidthFlowsTests(data)
+	}
+
 	return {
 		createTest,
 		getTests,
 		getSpecialTest,
+		getRegulateTests,
+		getRegulateTestsForCourse,
+		connectTestWithFlow,
+		getConnectedTests,
+		getFullInfoAboutSpecialTest,
+		regulateTestsOfCourse,
+		connectedWithFlowsTests,
+		regulateTests,
 		specialTest,
 		allTests,
 		createdTest,

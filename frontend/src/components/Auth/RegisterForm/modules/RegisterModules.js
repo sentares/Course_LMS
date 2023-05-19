@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import useAuth from '../../../../hooks/useAuth'
+import { useNavigate } from 'react-router-dom'
 
 const RegisterModules = () => {
 	const [form, setForm] = useState({
@@ -13,6 +14,7 @@ const RegisterModules = () => {
 	const [isCaptchaSuccessful, setIsCaptchaSuccess] = useState(true)
 	// const recaptchaKey = process.env.REACT_APP_RECAPTCHA_SITE_KEY
 	const { registerStudent } = useAuth(form, isCaptchaSuccessful)
+	const navigate = useNavigate()
 
 	const onChangeRecap = () => {
 		setIsCaptchaSuccess(true)
@@ -26,6 +28,10 @@ const RegisterModules = () => {
 		await registerStudent(form, isCaptchaSuccessful)
 	}
 
+	const handleClickSign = () => {
+		navigate('/login')
+	}
+
 	return {
 		form,
 		isDisabled,
@@ -33,6 +39,7 @@ const RegisterModules = () => {
 		onChangeForm,
 		handleClickRegister,
 		onChangeRecap,
+		handleClickSign,
 	}
 }
 

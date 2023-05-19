@@ -17,6 +17,11 @@ import TestsPage from '../pages/TestsPage/TestsPage/TestsPage'
 import SpecialTestPage from '../pages/TestsPage/SpecialTestPage/SpecialTestPage'
 import StudentCoursePage from '../pages/StudentsFollowsPages/StudentCoursesPage/StudentCoursePage'
 import SpecialCourseOfStudentPage from '../pages/StudentsFollowsPages/SpecialCourseOfStudentPage/SpecialCourseOfStudentPage'
+import ManagerCoursePage from '../pages/CoursesPages/ManagerCoursePage/ManagerCoursePage'
+import TestsToPassPages from '../pages/TestsToPassPages/TestsToPassPages'
+import SpecialTestToPass from '../pages/TestsToPassPages/SpecialTestToPass/SpecialTestToPass'
+import StartPassTestPage from '../pages/StartPassTestPage/StartPassTestPage'
+import TESTPAGE from '../TESTPAGE/TESTPAGE'
 
 const Router = ({ user, isAuth }) => {
 	const { role } = user
@@ -35,6 +40,10 @@ const Router = ({ user, isAuth }) => {
 					path='/myCourses/:id_flows'
 					element={<SpecialCourseOfStudentPage />}
 				/>
+				<Route path='/testsToPass' element={<TestsToPassPages />} />
+				<Route path='/testsToPass/:id_test' element={<SpecialTestToPass />} />
+				<Route path='/startPassTest/:id_test' element={<StartPassTestPage />} />
+				<Route path='/test' element={<TESTPAGE />} />
 			</Routes>
 		)
 	} else if (isAuth && role === 1) {
@@ -49,7 +58,22 @@ const Router = ({ user, isAuth }) => {
 				<Route path='/' element={<HomePage />} />
 			</Routes>
 		)
-	} else if ((isAuth && role === 2) || (isAuth && role === 3)) {
+	} else if (isAuth && role === 2) {
+		return (
+			<Routes>
+				<Route path='/loginTeacher' element={<Navigate replace to='/' />} />
+				<Route path='/managerCourses' element={<ManagerCoursePage />} />
+				<Route
+					path='/managerCourses/:id_course'
+					element={<SpecialCoursePage />}
+				/>
+				<Route path='/coursesFlows/:id_flows' element={<SpecialFlowsPage />} />
+				<Route path='/tests' element={<TestsPage />} />
+				<Route path='/tests/:id_test' element={<SpecialTestPage />} />
+				<Route path='/' element={<HomePage />} />
+			</Routes>
+		)
+	} else if (isAuth && role === 3) {
 		return (
 			<Routes>
 				<Route path='/loginTeacher' element={<Navigate replace to='/' />} />

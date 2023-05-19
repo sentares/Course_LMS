@@ -65,6 +65,9 @@ const TestsPage = () => {
 											<div className={styles.new}>new</div>
 										)}
 										<div className={styles.nameBlock}>
+											{test.regulate && (
+												<div className={styles.roleExist}>Есть условие</div>
+											)}
 											<div className={styles.name}>{test.test_name}</div>
 											<div className={styles.count}>
 												<div>

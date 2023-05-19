@@ -4,6 +4,8 @@ import { menuListSlice } from './slices/menuList'
 import { newTestSlice } from './slices/newTestSlice'
 import { questionSlice } from './slices/question'
 import { topicSlice } from './slices/topicSlice'
+import { activeTestsSlice } from './slices/activeTestsSlice'
+import { testPassingSlice } from './slices/testPassingSlice'
 
 export const store = configureStore({
 	reducer: {
@@ -12,5 +14,7 @@ export const store = configureStore({
 		newTest: newTestSlice.reducer,
 		question: questionSlice.reducer,
 		topic: topicSlice.reducer,
+		activeTests: activeTestsSlice.reducer,
+		testPassing: testPassingSlice.reducer,
 	},
 })

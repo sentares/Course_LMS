@@ -11,12 +11,13 @@ const Layout = props => {
 			{pathname === '/register' ||
 			pathname === '/login' ||
 			pathname === '/loginAdmin' ||
-			pathname === '/loginTeacher' ? (
-				<div>{children}</div>
+			pathname === '/loginTeacher' ||
+			pathname.startsWith('/startPassTest/') ? (
+				<>{children}</>
 			) : (
-				<div className='flex'>
+				<div className='flex w-full'>
 					<Sidebar />
-					<div>{children}</div>
+					<div className=''>{children}</div>
 				</div>
 			)}
 		</>

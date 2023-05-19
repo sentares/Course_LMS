@@ -4,6 +4,8 @@ import Input from '../../../ui/input/Input'
 import Button from '../../../ui/button/Button'
 import { TiArrowBack } from 'react-icons/ti'
 import styles from './styles.module.scss'
+import AddTestToFlowModal from '../../../components/Modals/AddTestToFlowModal/AddTestToFlowModal'
+import ConnectedTestItem from '../../../components/Items/ConnectedTestItem/ConnectedTestItem'
 
 const SpecialFlowsPage = () => {
 	const {
@@ -14,9 +16,17 @@ const SpecialFlowsPage = () => {
 		isPressChange,
 		role,
 		isAdded,
+		isOpenAddTestModal,
+		regulateTestsOfCourse,
+		formForTest,
+		arrOfFlowsStudents,
+		connectedWithFlowsTests,
+		changeFormForTest,
 		change,
 		handlePressChangeDate,
 		handleClickRegisterCourse,
+		changeOpenAddTestModal,
+		handleSaveConnectTestWithFlow,
 	} = SpecialFlowsPageModule()
 
 	return (
@@ -256,17 +266,17 @@ const SpecialFlowsPage = () => {
 							)}
 						</div>
 					</div>
+
 					{role === 1 && (
 						<div className={styles.buttonBlock}>
 							<Button title={'Сохранить изменения'} classOfStyle={'auth'} />
 						</div>
 					)}
-					{role === 2 ||
-						(role === 3 && (
-							<div className={styles.buttonBlock}>
-								<Button title={'Студенты потока'} classOfStyle={'auth'} />
-							</div>
-						))}
+					{role === 2 || (
+						<div className={styles.buttonBlock}>
+							<Button title={'Студенты потока'} classOfStyle={'auth'} />
+						</div>
+					)}
 					{role === 4 && !isAdded && (
 						<div className={styles.buttonBlock}>
 							<Button
@@ -287,6 +297,42 @@ const SpecialFlowsPage = () => {
 								onClick={handleClickRegisterCourse}
 							/>
 						</div>
+					)}
+					{role === 2 && (
+						<>
+							{isOpenAddTestModal && (
+								<AddTestToFlowModal
+									formForTest={formForTest}
+									changeFormForTest={changeFormForTest}
+									changeOpenAddTestModal={changeOpenAddTestModal}
+									handleSaveConnectTestWithFlow={handleSaveConnectTestWithFlow}
+									regulateTestsOfCourse={regulateTestsOfCourse}
+									arrOfFlowsStudents={arrOfFlowsStudents}
+								/>
+							)}
+							<div className={styles.testForFlow}>
+								<div className='w-full'>
+									<div className={styles.testsNaming}>Тесты потока</div>
+
+									<Button
+										title={'Привязать тест'}
+										classOfStyle={'auth'}
+										onClick={changeOpenAddTestModal}
+									/>
+									<div className='mb-4'>
+										{connectedWithFlowsTests?.length ? (
+											<>
+												{connectedWithFlowsTests.map(test => (
+													<ConnectedTestItem key={test.id_test} test={test} />
+												))}
+											</>
+										) : (
+											<div>Пока нет привязанных тестов</div>
+										)}
+									</div>
+								</div>
+							</div>
+						</>
 					)}
 				</div>
 			) : (

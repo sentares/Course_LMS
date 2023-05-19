@@ -12,6 +12,10 @@ import { useSelector } from 'react-redux'
 
 const MenuLIst = () => {
 	const user = useSelector(state => state.auth.user)
+	const activeTestsCount = useSelector(
+		state => state.activeTests.activeTestsCount
+	)
+
 	const { id_teacher } = user
 
 	const menuListStudent = [
@@ -44,29 +48,47 @@ const MenuLIst = () => {
 			isActive: false,
 			count: '',
 		},
+		// {
+		// 	id: 5,
+		// 	title: 'Задания',
+		// 	link: '/tasks',
+		// 	icon: <BiTask />,
+		// 	isActive: false,
+		// 	count: '',
+		// },
 		{
-			id: 5,
-			title: 'Задания',
-			link: '/tasks',
+			id: 6,
+			title: 'Тесты',
+			link: '/testsToPass',
 			icon: <BiTask />,
 			isActive: false,
 			count: '',
 		},
 		{
-			id: 6,
+			id: 7,
 			title: 'Профиль',
 			link: '/profile',
 			icon: <CgProfile />,
 			isActive: false,
 		},
 		{
-			id: 7,
+			id: 8,
 			title: 'Настройки',
 			link: '/settings',
 			icon: <RiSettings5Fill />,
 			isActive: false,
 		},
 	]
+
+	const updatedMenuListStudent = menuListStudent.map(item => {
+		if (item.id === 6) {
+			return {
+				...item,
+				count: activeTestsCount > 0 ? String(activeTestsCount) : '',
+			}
+		}
+		return item
+	})
 
 	const menuListGuest = [
 		{
@@ -133,6 +155,51 @@ const MenuLIst = () => {
 		},
 		{
 			id: 2,
+			title: 'Курсы и потоки',
+			link: `/managerCourses`,
+			icon: <DiJsBadge />,
+			isActive: false,
+		},
+		{
+			id: 3,
+			title: 'Студенты',
+			link: '/students',
+			icon: <BsFillPersonFill />,
+			isActive: false,
+		},
+		{
+			id: 4,
+			title: 'Материалы',
+			link: '/materials',
+			icon: <ImStackoverflow />,
+			isActive: false,
+		},
+		{
+			id: 5,
+			title: 'Тесты',
+			link: '/tests',
+			icon: <GrTest />,
+			isActive: false,
+		},
+		{
+			id: 7,
+			title: 'Настройки',
+			link: '/settings',
+			icon: <RiSettings5Fill />,
+			isActive: false,
+		},
+	]
+
+	const menuListTeacher = [
+		{
+			id: 1,
+			title: 'Главная',
+			link: '/',
+			icon: <AiOutlineHome />,
+			isActive: true,
+		},
+		{
+			id: 2,
 			title: 'Мои потоки',
 			link: `/teacher/${id_teacher}/flows`,
 			icon: <DiJsBadge />,
@@ -169,10 +236,11 @@ const MenuLIst = () => {
 	]
 
 	return {
-		menuListStudent,
+		updatedMenuListStudent,
 		menuListGuest,
 		menuListAdmin,
 		menuListManager,
+		menuListTeacher,
 	}
 }
 

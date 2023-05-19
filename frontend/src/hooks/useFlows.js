@@ -7,6 +7,7 @@ const useFlows = (id_course, form, id_teacher) => {
 	const [isDoneFunction, setIsDoneFunction] = useState(null)
 	const [specialFlows, setSpesialFlows] = useState(null)
 	const [teachersFlows, setTeachersFlows] = useState(null)
+	const [courseAndStudentsConnect, setCourseAndStudentsConnect] = useState(null)
 
 	const { request } = useHttp()
 
@@ -34,6 +35,17 @@ const useFlows = (id_course, form, id_teacher) => {
 				`/courseFlows/getTeachersFlows/${id_teacher}`
 			)
 			setTeachersFlows(data)
+		} catch (e) {
+			console.log(e)
+		}
+	}
+
+	const getStudentsOfFlow = async id_flows => {
+		try {
+			const { data } = await request(
+				`/courseFlows/getStudentsOfFlow/${id_flows}`
+			)
+			setCourseAndStudentsConnect(data)
 		} catch (e) {
 			console.log(e)
 		}
@@ -90,10 +102,12 @@ const useFlows = (id_course, form, id_teacher) => {
 		allFlowsOfCourse,
 		specialFlows,
 		teachersFlows,
+		courseAndStudentsConnect,
 		createCourseFlow,
 		getAllCourseFlows,
 		getSpecialCourseFlows,
 		getFlowsOfTeacher,
+		getStudentsOfFlow,
 	}
 }
 

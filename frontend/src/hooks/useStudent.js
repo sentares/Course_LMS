@@ -9,6 +9,9 @@ const useStudent = () => {
 	const [studentFollows, setStudentFollows] = useState(null)
 	const [studentsCourses, setStudentsCourses] = useState(null)
 	const [studentsFlows, setStudentFlows] = useState(null)
+	const [arrOfFlowsStudents, setArrOfFlowsStudents] = useState(null)
+	const [countOfActiveTest, setCountOfPersonalTest] = useState(0)
+	const [personalTests, setPersonalTests] = useState(null)
 
 	const getStudentsFollows = async id_student => {
 		const { data } = await request(`/studentsFollows/${id_student}`)
@@ -52,12 +55,36 @@ const useStudent = () => {
 		setStudentFlows(data)
 	}
 
+	const getStudentsByFlowConnect = async studentsIds => {
+		const { data } = await request('/student/getStudentsByArrIds', 'POST', {
+			studentsIds,
+		})
+		setArrOfFlowsStudents(data)
+	}
+
+	const getPersonalActiveTestsCount = async id_student => {
+		const { data } = await request(
+			`/test/getPersonalActiveTestCount/${id_student}`
+		)
+		setCountOfPersonalTest(data)
+	}
+
+	const getPersonalTests = async id_student => {
+		const { data } = await request(`/test/getPersonalTests/${id_student}`)
+		setPersonalTests(data)
+	}
 	return {
 		addStudentToCourseFlows,
 		checkIsStudentAdded,
 		getStudentsFollows,
 		getStudentsCourses,
 		getStudentsFlows,
+		getStudentsByFlowConnect,
+		getPersonalActiveTestsCount,
+		getPersonalTests,
+		personalTests,
+		countOfActiveTest,
+		arrOfFlowsStudents,
 		studentsFlows,
 		studentFollows,
 		studentsCourses,

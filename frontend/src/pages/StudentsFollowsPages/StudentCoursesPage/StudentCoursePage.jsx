@@ -42,7 +42,7 @@ const StudentCoursePage = () => {
 						})}
 					</div>
 				) : (
-					<div>Loading</div>
+					<div>Пока нет записанных курсов</div>
 				)}
 			</div>
 		</div>

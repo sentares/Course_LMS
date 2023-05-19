@@ -6,7 +6,6 @@ const HomePage = () => {
 	const isAuth = useSelector(state => state.auth.isAuth)
 	const user = useSelector(state => state.auth.user)
 	const { role } = user
-	console.log(role)
 	return (
 		<div>
 			{isAuth && role === 4 && <StudentHomePage />}

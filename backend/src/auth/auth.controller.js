@@ -2,6 +2,7 @@ const AuthService = require('./auth.service')
 const jwt = require('jsonwebtoken')
 const pool = require('../db/db')
 const bcrypt = require('bcrypt')
+const path = require('path')
 
 class AuthController {
 	async login(req, res) {
@@ -167,16 +168,9 @@ class AuthController {
 		try {
 			const { name, surname, patronymic, password, login } = req.body
 
-			const result = await AuthService.registerStudent({ name, surname, patronymic, password, login })
+			const { rows } = await pool.query('select * from students where login=$1', [login])
 
-			if (result.register) {
-				return res.status(201).json({
-					message: 'Вы успешно зарегистированы',
-					type: 'success',
-					data: [],
-					register: true
-				})
-			} else {
+			if (rows.length) {
 				return res.status(303).json({
 					message: `Пользователь с такой ${login} эл.почтой уже регистрирован`,
 					type: 'warn',
@@ -184,12 +178,46 @@ class AuthController {
 					register: false
 				})
 			}
+			const hashPassword = await bcrypt.hash(password, 12)
+
+			const { rows: arrId } = await pool.query('insert into students (login, password, name, surname, patronymic) values ($1, $2, $3, $4, $5) returning id_student', [
+				login,
+				hashPassword,
+				name,
+				surname,
+				patronymic
+			])
+
+			if (arrId.length) {
+				const uploadsDir = path.join(__dirname, '../uploads/students')
+				if (!fs.existsSync(uploadsDir)) {
+					fs.mkdirSync(uploadsDir)
+				}
+
+				const studentDir = path.join(uploadsDir, arrId[0].id_student.toString())
+				if (!fs.existsSync(studentDir)) {
+					fs.mkdirSync(studentDir)
+				}
+				return res.status(201).json({
+					message: 'Вы успешно зарегистированы',
+					type: 'success',
+					data: [],
+					register: true
+				})
+			}
+
+			return res.status(404).json({
+				message: 'Ошибка в регистрации',
+				type: 'error',
+				data: [],
+				register: false
+			})
 		} catch (e) {
 			console.log(e)
-			return res.status(500).json({
-				message: 'Ошибка в сервере',
+			res.status(500).json({
+				message: 'Ошибка в сервер',
 				type: 'error',
-				data: {}
+				data: []
 			})
 		}
 	}

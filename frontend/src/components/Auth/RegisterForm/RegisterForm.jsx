@@ -13,6 +13,7 @@ const RegisterForm = () => {
 		onChangeForm,
 		handleClickRegister,
 		onChangeRecap,
+		handleClickSign,
 	} = RegisterModules()
 
 	return (
@@ -77,6 +78,12 @@ const RegisterForm = () => {
 					classOfStyle={'auth'}
 					// disabled={isDisabled}
 				/>
+			</div>
+			<div className={styles.isHaveAcc}>
+				Есть аккаунт?{' '}
+				<button className={styles.regButton} onClick={handleClickSign}>
+					Войти
+				</button>
 			</div>
 		</form>
 	)

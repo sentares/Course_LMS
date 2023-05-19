@@ -63,6 +63,25 @@ class CourseFlowsController {
 		}
 	}
 
+	async getStudentsOfFlow(req, res) {
+		try {
+			const { id_flows } = req.params
+			const rows = await CourseFlowsService.getStudentsOfFlow(id_flows)
+			res.status(200).json({
+				message: 'Студенты потока успешно загружен',
+				type: 'success',
+				data: rows
+			})
+		} catch (e) {
+			console.log(e)
+			res.status(500).json({
+				message: 'Ошибка в сервере',
+				type: 'error',
+				data: {}
+			})
+		}
+	}
+
 	async getSpecialFLowsOfTeacher(req, res) {
 		try {
 			const { id_teacher } = req.params

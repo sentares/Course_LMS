@@ -72,6 +72,49 @@ class QuestionService {
 			console.log(e)
 		}
 	}
+
+	async getQuestionsForStudentTest(id_test) {
+		try {
+			const { rows } = await pool.query('SELECT * FROM tests_topics WHERE id_test = $1', [id_test])
+			const filteredRows = rows.filter(row => row.regulate_count_question !== 0)
+
+			const questions = []
+
+			for (const row of filteredRows) {
+				const { id_topic, regulate_count_question } = row
+				const questionQuery = `SELECT * FROM questions WHERE id_topic = $1 ORDER BY RANDOM() LIMIT $2`
+				const questionResult = await pool.query(questionQuery, [id_topic, regulate_count_question])
+				const questionsForTopic = questionResult.rows
+
+				questions.push(...questionsForTopic)
+			}
+
+			return questions
+		} catch (e) {
+			console.log(e)
+		}
+	}
+
+	async getQuestionsByIds(questionsArrIds) {
+		try {
+			const arrIds = questionsArrIds.split(',').map(Number)
+			const placeholders = arrIds.map((_, index) => `$${index + 1}`).join(',')
+			let orderByClause = ''
+			arrIds.forEach((id, index) => {
+				orderByClause += ` WHEN id_question = $${index + 2} THEN ${index}`
+			})
+			const query = `
+      SELECT * 
+      FROM questions 
+      WHERE id_question = ANY($1::bigint[]) 
+      ORDER BY CASE ${orderByClause} END
+    `
+			const { rows } = await pool.query(query, [arrIds, ...arrIds])
+			return rows
+		} catch (e) {
+			console.log(e)
+		}
+	}
 }
 
 module.exports = new QuestionService()

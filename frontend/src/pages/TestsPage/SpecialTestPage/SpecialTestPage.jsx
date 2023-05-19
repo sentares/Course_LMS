@@ -110,7 +110,11 @@ const SpecialTestPage = () => {
 									<div className='mb-2'>
 										<Button
 											classOfStyle={isGoodRule ? 'auth' : 'notReady'}
-											title={'Создать условие'}
+											title={
+												specialTest.regulate
+													? 'Изменить условие'
+													: 'Создать условие'
+											}
 											onClick={handleSaveRegulate}
 										/>
 									</div>

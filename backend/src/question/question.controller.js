@@ -120,6 +120,47 @@ class QuestionController {
 			})
 		}
 	}
+
+	async getQuestionsForStudentTest(req, res) {
+		try {
+			const { id_test } = req.params
+			const data = await QuestionService.getQuestionsForStudentTest(id_test)
+
+			res.status(200).json({
+				message: 'Данные успешно получены',
+				type: 'success',
+				data
+			})
+		} catch (e) {
+			console.log(e)
+			res.status(500).json({
+				message: 'Ошибка в сервер',
+				type: 'error',
+				data: []
+			})
+		}
+	}
+
+	async getQuestionsForTestByArrIds(req, res) {
+		try {
+			const { id_test } = req.params
+			const { questionsArrIds } = req.body
+			const data = await QuestionService.getQuestionsByIds(questionsArrIds)
+
+			res.status(200).json({
+				message: 'Данные успешно получены',
+				type: 'success',
+				data
+			})
+		} catch (e) {
+			console.log(e)
+			res.status(500).json({
+				message: 'Ошибка в сервер',
+				type: 'error',
+				data: []
+			})
+		}
+	}
 }
 
 module.exports = new QuestionController()

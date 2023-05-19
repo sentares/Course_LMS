@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
 import { setIsAuth, setUser } from '../redux/slices/authSlice'
 import { useState } from 'react'
+import { setActiveTestsCount } from '../redux/slices/activeTestsSlice'
 
 const useAuth = (form, isCaptchaSuccessful) => {
 	const [tryCount, setTryCount] = useState(null)
@@ -138,6 +139,7 @@ const useAuth = (form, isCaptchaSuccessful) => {
 			})
 		)
 		dispatch(setIsAuth(false))
+		dispatch(setActiveTestsCount(0))
 		navigate('/')
 	}
 

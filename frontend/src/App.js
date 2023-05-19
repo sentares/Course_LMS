@@ -2,8 +2,8 @@ import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { ToastContainer } from 'react-toastify'
 import useAuth from './hooks/useAuth'
-import Router from './router/Router'
 import Layout from './layout/Layout'
+import Router from './router/Router'
 
 function App() {
 	const isAuth = useSelector(state => state.auth.isAuth)

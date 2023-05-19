@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import useAuth from '../../../../hooks/useAuth'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const LoginModule = () => {
 	const [isTeacher, setIsTeacher] = useState(false)
@@ -10,6 +10,7 @@ const LoginModule = () => {
 	})
 
 	const { pathname } = useLocation()
+	const navigate = useNavigate()
 
 	const [isDisabled, setIsDisabled] = useState(false)
 	const [isCaptchaSuccessful, setIsCaptchaSuccess] = useState(true)
@@ -42,6 +43,9 @@ const LoginModule = () => {
 			await loginStudent()
 		}
 	}
+	const handleClickSign = () => {
+		navigate('/register')
+	}
 
 	useEffect(() => {
 		checkIsTeacher()
@@ -55,6 +59,7 @@ const LoginModule = () => {
 		onChangeForm,
 		handleClickLogin,
 		onChangeRecap,
+		handleClickSign,
 	}
 }
 

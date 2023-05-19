@@ -5,7 +5,7 @@ import LoginForm from '../../../components/Auth/LoginForm/LoginForm'
 const LoginPage = () => {
 	return (
 		<div className={styles.LoginPage}>
-			<LoginForm />
+			<LoginForm className={styles.form} />
 		</div>
 	)
 }

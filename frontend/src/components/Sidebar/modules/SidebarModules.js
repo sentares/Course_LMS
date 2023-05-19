@@ -1,21 +1,36 @@
 import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 import useAuth from '../../../hooks/useAuth'
 import MenuLIst from '../menuList/MenuLIst'
+import useStudent from '../../../hooks/useStudent'
+import { setActiveTestsCount } from '../../../redux/slices/activeTestsSlice'
 
 const SidebarModules = () => {
 	const isAuth = useSelector(state => state.auth.isAuth)
 	const user = useSelector(state => state.auth.user)
-	const [nameOfRole, setNameOfRole] = useState('')
-	const [menuList, setMenuList] = useState([])
-	const { menuListStudent, menuListGuest, menuListAdmin, menuListManager } =
-		MenuLIst()
+	const activeTestsCount = useSelector(
+		state => state.activeTests.activeTestsCount
+	)
+
+	const dispatch = useDispatch()
 	const location = useLocation()
-	const { logout } = useAuth()
 	const currentPath = location.pathname
 
-	const updatedMenuList = menuListStudent.map(menuItem => ({
+	const [nameOfRole, setNameOfRole] = useState('')
+	const [menuList, setMenuList] = useState([])
+	const {
+		updatedMenuListStudent,
+		menuListGuest,
+		menuListAdmin,
+		menuListManager,
+		menuListTeacher,
+	} = MenuLIst()
+
+	const { logout } = useAuth()
+	const { getPersonalActiveTestsCount, countOfActiveTest } = useStudent()
+
+	const updatedMenuList = updatedMenuListStudent.map(menuItem => ({
 		...menuItem,
 		isActive: menuItem.link === currentPath,
 	}))
@@ -35,6 +50,11 @@ const SidebarModules = () => {
 		isActive: menuItem.link === currentPath,
 	}))
 
+	const updatedMenuListTeacher = menuListTeacher.map(menuItem => ({
+		...menuItem,
+		isActive: menuItem.link === currentPath,
+	}))
+
 	const checkRole = () => {
 		if (!isAuth) {
 			setNameOfRole('Гость')
@@ -44,7 +64,7 @@ const SidebarModules = () => {
 			setMenuList(updatedMenuList)
 		} else if (user.role === 3) {
 			setNameOfRole(`Преподаватель ${user.name}`)
-			setMenuList(updatedMenuListManager)
+			setMenuList(updatedMenuListTeacher)
 		} else if (user.role === 2) {
 			setNameOfRole(`Менеджер ${user.name}`)
 			setMenuList(updatedMenuListManager)
@@ -78,7 +98,32 @@ const SidebarModules = () => {
 
 	useEffect(() => {
 		checkRole()
+		if (user.role === 4) {
+			getPersonalActiveTestsCount(user.id_student)
+		}
 	}, [user])
+
+	useEffect(() => {
+		if (countOfActiveTest > 0) {
+			dispatch(setActiveTestsCount(countOfActiveTest))
+		}
+		return
+	}, [countOfActiveTest])
+
+	// useEffect(() => {
+	// 	const updatedMenuListWithCount = updatedMenuListStudent.map(menuItem => {
+	// 		if (menuItem.id === 6) {
+	// 			return {
+	// 				...menuItem,
+	// 				// isActive: menuItem.link === currentPath,
+	// 				count: activeTestsCount > 0 ? String(activeTestsCount) : '',
+	// 			}
+	// 		}
+	// 		return menuItem
+	// 	})
+
+	// 	setMenuList(updatedMenuListWithCount)
+	// }, [activeTestsCount])
 
 	return {
 		isAuth,

@@ -10,6 +10,7 @@ const Input = ({
 	classOfStyle,
 	min,
 	max,
+	checked,
 }) => {
 	return (
 		<input
@@ -21,6 +22,7 @@ const Input = ({
 			placeholder={placeholder}
 			min={min}
 			max={max}
+			checked={checked}
 		/>
 	)
 }

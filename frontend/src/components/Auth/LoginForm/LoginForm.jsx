@@ -13,6 +13,7 @@ const LoginForm = () => {
 		onChangeForm,
 		onChangeRecap,
 		handleClickLogin,
+		handleClickSign,
 	} = LoginFormModule()
 
 	return (
@@ -44,6 +45,12 @@ const LoginForm = () => {
 					classOfStyle={'auth'}
 					// disabled={isDisabled}
 				/>
+			</div>
+			<div className={styles.isHaveAcc}>
+				Нет аккаунта?{' '}
+				<button className={styles.regButton} onClick={handleClickSign}>
+					Регистрация
+				</button>
 			</div>
 		</form>
 	)

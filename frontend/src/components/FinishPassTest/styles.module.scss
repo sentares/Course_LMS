@@ -1,0 +1,12 @@
+.FinishPassTest {
+	@apply flex justify-center items-center w-[40%] p-6 rounded-2xl border-2 border-gray-100 shadow-lg;
+	.result {
+		@apply w-full;
+		.textOfResult {
+			@apply font-semibold text-xl mb-6 flex-wrap flex;
+			.percentage {
+				@apply text-yellow-500;
+			}
+		}
+	}
+}
