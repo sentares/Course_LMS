@@ -22,6 +22,7 @@ import TestsToPassPages from '../pages/TestsToPassPages/TestsToPassPages'
 import SpecialTestToPass from '../pages/TestsToPassPages/SpecialTestToPass/SpecialTestToPass'
 import StartPassTestPage from '../pages/StartPassTestPage/StartPassTestPage'
 import TESTPAGE from '../TESTPAGE/TESTPAGE'
+import TimerComponent from '../TESTPAGE/TESTPAGE'
 
 const Router = ({ user, isAuth }) => {
 	const { role } = user
@@ -43,7 +44,7 @@ const Router = ({ user, isAuth }) => {
 				<Route path='/testsToPass' element={<TestsToPassPages />} />
 				<Route path='/testsToPass/:id_test' element={<SpecialTestToPass />} />
 				<Route path='/startPassTest/:id_test' element={<StartPassTestPage />} />
-				<Route path='/test' element={<TESTPAGE />} />
+				<Route path='/pagination' element={<TimerComponent />} />
 			</Routes>
 		)
 	} else if (isAuth && role === 1) {

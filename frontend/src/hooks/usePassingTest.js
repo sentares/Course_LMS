@@ -20,12 +20,13 @@ const usePassingTest = () => {
 	const [rightAnswer, setRightAnswer] = useState(null)
 	const [testsByIds, setTestByIds] = useState(null)
 	const [loading, setLodaing] = useState(false)
-	// const [infoAboutTestPassing, setInfoAboutTestPassing] = useState(null)
 
 	const getQuestionsForStudentTest = async id_test => {
 		const { data } = await request(
 			`/question/getQuestionsForStudent/${id_test}`
 		)
+		console.log(id_test)
+
 		setAllQuestions(data)
 		dispatch(setQuestionsOfTest(data))
 	}

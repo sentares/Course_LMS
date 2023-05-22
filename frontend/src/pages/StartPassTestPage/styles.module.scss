@@ -1,21 +1,101 @@
 .StartPassTestPage {
-	@apply flex items-center justify-center w-full h-[70vh];
-	.questBlock {
-		@apply flex justify-center items-center w-[40%] p-6 rounded-2xl border-2 border-gray-100 shadow-lg;
-		.quest {
-			@apply w-full;
-			.progressBar {
-				@apply bg-yellow-300 h-3 w-full rounded-lg mb-4;
-			}
-			.question {
-				@apply flex items-center justify-center text-3xl font-semibold mb-6 flex-wrap;
-			}
-			.answersBlock {
-				@apply w-full;
-				.answer {
-					@apply w-full my-2 font-semibold text-2xl rounded-lg shadow-sm;
+	@apply flex items-center justify-center w-full;
+	.infoTestBlock {
+		@apply flex mt-6;
+		.info {
+			@apply flex justify-center;
+			.tableOfAnswers {
+				.mapOfQuest {
+					.activeQuestion {
+						@apply px-3 py-1 bg-blue-400 m-1 rounded-lg shadow-md shadow-blue-500/50 scale-[1.30] text-white font-bold;
+					}
+					.notActiveQuestion {
+						@apply px-3 py-1 bg-gray-100 m-1 rounded-lg shadow-sm font-semibold;
+					}
+					.answered {
+						@apply px-3 py-1 bg-yellow-400 m-1 rounded-lg shadow-md font-semibold focus:bg-blue-400 focus:shadow-blue-500/50 target:bg-blue-400;
+					}
+				}
+				.instruction {
+					@apply w-full items-center flex justify-center mt-2;
+					.colorBlocks {
+						@apply flex items-center gap-2;
+						.answeredBlock {
+							@apply flex items-center justify-center bg-yellow-400 h-3 w-3 rounded;
+						}
+						.notAnsweredBlock {
+							@apply flex items-center justify-center bg-gray-100  border-gray-200 border h-3 w-3 rounded;
+						}
+						.activeBlock {
+							@apply flex items-center justify-center bg-blue-400 h-3 w-3 rounded;
+						}
+					}
+				}
+				.timerBlock {
+					@apply mt-4;
+					p {
+						@apply font-semibold text-xl;
+					}
+					label {
+						@apply text-3xl font-bold;
+					}
 				}
 			}
+		}
+	}
+	.questBlock {
+		@apply w-[40%] absolute top-[50%] left-[50%];
+		transform: translate(-50%, -50%);
+		.block {
+			@apply flex justify-center items-center p-6 rounded-2xl border-2 border-gray-100 shadow-lg;
+			.quest {
+				@apply w-full;
+				.progressBar {
+					@apply bg-yellow-300 h-3 w-full rounded-lg mb-4;
+				}
+				.question {
+					@apply flex items-center justify-center text-3xl font-semibold mb-6 flex-wrap;
+				}
+				.answersBlock {
+					@apply w-full;
+					.answer {
+						@apply w-full my-2 font-semibold text-2xl rounded-lg shadow-sm;
+					}
+				}
+				.paginationBlock {
+					@apply mt-6 flex justify-center items-center gap-2;
+					.pagination {
+						@apply flex w-full items-center justify-center gap-2;
+						.paginateItem {
+							@apply bg-gray-200/70 rounded-lg shadow-sm;
+						}
+						.activeLink {
+							@apply bg-yellow-400 rounded-lg text-white hover:bg-yellow-500 font-semibold transition-all z-10 shadow-sm;
+						}
+						.pageLink {
+							@apply w-10 rounded-lg h-10 flex items-center justify-center font-semibold;
+						}
+						.paginate_prev__link {
+							@apply mr-2 bg-gray-200/70 rounded-lg shadow-sm flex items-center justify-center px-2 py-0.5 text-lg hover:bg-yellow-400 hover:text-white;
+						}
+						.paginate_next__link {
+							@apply ml-2 bg-gray-200/70 rounded-lg shadow-sm flex items-center justify-center px-2 py-0.5 text-lg hover:bg-yellow-400 hover:text-white;
+						}
+						.paginateDisabled {
+							@apply bg-slate-50 hover:bg-slate-100 text-white;
+							-webkit-touch-callout: none;
+							-webkit-user-select: none;
+							-khtml-user-select: none;
+							-moz-user-select: none;
+							-ms-user-select: none;
+							user-select: none;
+						}
+					}
+				}
+			}
+		}
+		.finishButton {
+			@apply mt-6;
 		}
 	}
 }

@@ -71,11 +71,12 @@ class StudentService {
 		}
 	}
 
-	async updateTestResultQuestions(id_test_result, questionsString, questionCount) {
+	async updateTestResultQuestions(id_test_result, questionsString, questionCount, answersString) {
 		try {
-			const { rows } = await pool.query('update tests_results set questions = $1, count_question = $2 where id_test_result = $3', [
+			const { rows } = await pool.query('update tests_results set questions = $1, count_question = $2, answers = $3 where id_test_result = $4', [
 				questionsString,
 				questionCount,
+				answersString,
 				id_test_result
 			])
 			return rows

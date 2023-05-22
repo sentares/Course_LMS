@@ -116,9 +116,11 @@ class StudentController {
 			const { id_test_result } = req.params
 			const { arrOfQuestionsIds } = req.body
 			const questionsString = arrOfQuestionsIds.join(',')
+			const answersString = Array.from({ length: arrOfQuestionsIds.length }, () => 0).join(',')
+
 			const questionCount = arrOfQuestionsIds.length
 
-			const data = await StudentService.updateTestResultQuestions(id_test_result, questionsString, questionCount)
+			const data = await StudentService.updateTestResultQuestions(id_test_result, questionsString, questionCount, answersString)
 			res.status(200).json({
 				message: 'Вопросы для теста успешно обновлены',
 				type: 'success',

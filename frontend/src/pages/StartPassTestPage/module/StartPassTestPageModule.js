@@ -1,18 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
 import usePassingTest from '../../../hooks/usePassingTest'
 import useTest from '../../../hooks/useTest'
-import // list of action imports from react-redux
-'react-redux'
 
 const StartPassTestPageModule = () => {
 	const { user } = useSelector(state => state.auth)
 	const { infoAboutTestPassing, questionsOfTest } = useSelector(
 		state => state.testPassing
 	)
-
-	console.log(questionsOfTest)
 
 	const navigate = useNavigate()
 	const params = useParams()
@@ -30,7 +26,6 @@ const StartPassTestPageModule = () => {
 	})
 	const { isRight, countRightAnswers } = state
 
-	const dispatch = useDispatch()
 	const {
 		getSpecialQuestion,
 		setCurrentIndex,
@@ -63,16 +58,6 @@ const StartPassTestPageModule = () => {
 		setChoseAnswer(id_answers)
 		changeStudentMoves(id_answers)
 		checkAnswer()
-		handleNextQuestion()
-	}
-
-	const correctIndexQuestionWhereIStoped = () => {
-		if (questionsOfTest) {
-			const unansweredQuestionIndex = questionsOfTest?.findIndex(
-				question => !studentChose[question.id_question]
-			)
-			setCurrentIndex(unansweredQuestionIndex)
-		}
 	}
 
 	const changeStudentMoves = id_answers => {
@@ -92,21 +77,21 @@ const StartPassTestPageModule = () => {
 		})
 	}
 
-	const handleNextQuestion = () => {
-		if (currentIndex === questionsOfTest?.length - 1) {
-			setCurrentIndex(-1)
-		} else {
-			setCurrentIndex(prevIndex => prevIndex + 1)
-		}
-	}
-
 	const checkAnswer = () => {
 		if (choseAnswer === rightAnswer?.id_answers) {
-			setState(prevState => ({
-				...prevState,
-				isRight: 'true',
-				countRightAnswers: prevState.countRightAnswers + 1,
-			}))
+			if (isRight === 'true') {
+				setState(prevState => ({
+					...prevState,
+					isRight: null,
+					countRightAnswers: prevState.countRightAnswers - 1,
+				}))
+			} else {
+				setState(prevState => ({
+					...prevState,
+					isRight: 'true',
+					countRightAnswers: prevState.countRightAnswers + 1,
+				}))
+			}
 		} else {
 			setState(prevState => ({ ...prevState, isRight: 'false' }))
 		}
@@ -125,6 +110,10 @@ const StartPassTestPageModule = () => {
 		if (!loading) {
 			navigate(`/testsToPass/${id_test}`)
 		}
+	}
+
+	const deleteLocal = () => {
+		localStorage.removeItem('questionsAndAnswers')
 	}
 
 	const stopTest = () => {
@@ -169,12 +158,15 @@ const StartPassTestPageModule = () => {
 			pushQuestionIdsToTestPassingInfo()
 			getSpecialQuestion()
 		}
+	}, [questionsOfTest, currentIndex, id_question, choseAnswer])
+
+	useEffect(() => {
 		if (id_question) {
 			getSpecialAnswer(id_question)
 			getSpecialRightAnswer()
-			correctIndexQuestionWhereIStoped()
+			// correctIndexQuestionWhereIStoped()
 		}
-	}, [questionsOfTest, currentIndex, id_question, choseAnswer])
+	}, [questionsOfTest, id_question])
 
 	useEffect(() => {
 		checkAnswer()
@@ -189,6 +181,31 @@ const StartPassTestPageModule = () => {
 		100
 	).toFixed(2)
 
+	//logic for pagination
+
+	const handleClickPrev = () => {
+		if (currentIndex === 0) {
+			return false
+		} else {
+			setCurrentIndex(currentIndex - 1)
+		}
+	}
+
+	const handleClickNext = () => {
+		if (currentIndex === questionsOfTest.length - 1) {
+			return false
+		} else {
+			setCurrentIndex(currentIndex + 1)
+		}
+	}
+
+	const handleCLickQuestion = index => {
+		setCurrentIndex(index)
+	}
+
+	const generate_date = infoAboutTestPassing?.generate_date
+	const time = specialTest?.time
+
 	return {
 		test,
 		percentageOfProgress,
@@ -196,9 +213,17 @@ const StartPassTestPageModule = () => {
 		percentageOfRightAnswer,
 		start,
 		currentIndex,
+		questionsOfTest,
+		studentChose,
+		generate_date,
+		time,
+		handleClickPrev,
+		handleClickNext,
 		handleClickOnAnswer,
 		hadlePostResult,
 		stopTest,
+		deleteLocal,
+		handleCLickQuestion,
 	}
 }
 

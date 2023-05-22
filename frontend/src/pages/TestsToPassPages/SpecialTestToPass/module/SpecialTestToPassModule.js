@@ -13,11 +13,6 @@ const SpecialTestToPassModule = () => {
 	const infoAboutTestPassing = useSelector(
 		state => state.testPassing.infoAboutTestPassing
 	)
-	const questionsOfTest = useSelector(
-		state => state.testPassing.questionsOfTest
-	)
-
-	console.log(questionsOfTest)
 
 	const [openModal, setOpenModal] = useState(false)
 
