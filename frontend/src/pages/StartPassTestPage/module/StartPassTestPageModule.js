@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import usePassingTest from '../../../hooks/usePassingTest'
 import useTest from '../../../hooks/useTest'
+import { toast } from 'react-toastify'
 
 const StartPassTestPageModule = () => {
 	const { user } = useSelector(state => state.auth)
@@ -17,7 +18,7 @@ const StartPassTestPageModule = () => {
 	const [choseAnswer, setChoseAnswer] = useState(null)
 	const [start, setStart] = useState('')
 	const [resultOfTest, setResultOfTest] = useState({})
-	const [studentChose, setStudentChose] = useState({})
+	const [studentChose, setStudentChose] = useState(0)
 	const [deleteLocalStorage, setDeleteLocalStorage] = useState(false)
 
 	const [state, setState] = useState({
@@ -36,6 +37,7 @@ const StartPassTestPageModule = () => {
 		getInfoTestResultOfStudent,
 		getQuestionsByArrIds,
 		getQuestionsForStudentTest,
+		uploadChosedQuestionAndAnswer,
 		rightAnswer,
 		id_question,
 		currentIndex,
@@ -54,7 +56,7 @@ const StartPassTestPageModule = () => {
 		}
 	}
 
-	const handleClickOnAnswer = id_answers => {
+	const handleClickOnAnswer = async id_answers => {
 		setChoseAnswer(id_answers)
 		changeStudentMoves(id_answers)
 		checkAnswer()
@@ -97,14 +99,13 @@ const StartPassTestPageModule = () => {
 		}
 	}
 
-	const hadlePostResult = event => {
-		event.preventDefault()
+	const hadlePostResult = () => {
 		setDeleteLocalStorage(true)
 		localStorage.removeItem('questionsAndAnswers')
 		uploadResult(
 			user.id_student,
 			id_test,
-			resultOfTest,
+			questionsOfTest?.length,
 			infoAboutTestPassing.id_test_result
 		)
 		if (!loading) {
@@ -117,12 +118,19 @@ const StartPassTestPageModule = () => {
 	}
 
 	const stopTest = () => {
-		setResultOfTest({
-			countRightAnswers,
-			percentageOfRightAnswer,
-			studentChose,
-		})
 		setStart('stop')
+	}
+
+	const handleCLickPassTest = async () => {
+		const questionsIds = questionsOfTest.map(question => question.id_question)
+		const hasAllQuestions = questionsIds.every(
+			questionId => studentChose[questionId] !== undefined
+		)
+		if (hasAllQuestions) {
+			await stopTest()
+		} else {
+			toast.warn('Ответьте на все вопросы')
+		}
 	}
 
 	const checkIsStudentFirstPass = () => {
@@ -148,6 +156,15 @@ const StartPassTestPageModule = () => {
 	}, [])
 
 	useEffect(() => {
+		if (infoAboutTestPassing && studentChose !== 0) {
+			uploadChosedQuestionAndAnswer(
+				infoAboutTestPassing?.id_test_result,
+				studentChose
+			)
+		}
+	}, [studentChose])
+
+	useEffect(() => {
 		if (infoAboutTestPassing) {
 			checkIsStudentFirstPass()
 		}
@@ -164,13 +181,20 @@ const StartPassTestPageModule = () => {
 		if (id_question) {
 			getSpecialAnswer(id_question)
 			getSpecialRightAnswer()
-			// correctIndexQuestionWhereIStoped()
 		}
 	}, [questionsOfTest, id_question])
 
 	useEffect(() => {
 		checkAnswer()
 	}, [choseAnswer])
+
+	useEffect(() => {
+		if (start === 'stop') {
+			hadlePostResult()
+		}
+	}, [start])
+
+	// percentage
 
 	const percentageOfProgress = (
 		(currentIndex / questionsOfTest?.length) *
@@ -221,6 +245,7 @@ const StartPassTestPageModule = () => {
 		handleClickNext,
 		handleClickOnAnswer,
 		hadlePostResult,
+		handleCLickPassTest,
 		stopTest,
 		deleteLocal,
 		handleCLickQuestion,

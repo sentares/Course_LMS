@@ -28,6 +28,24 @@ class StudentService {
 		}
 	}
 
+	async getAndCheckIsRightAnswers(id_test_result) {
+		try {
+			const { rows } = await pool.query('select questions, answers from tests_results where id_test_result = $1', [id_test_result])
+			let numberOfCorrectAnswers
+
+			if (!rows[0].answers) {
+				return 0
+			} else {
+				const { questions, answers } = rows[0]
+				const questionsArray = questions.split(',')
+				const { rows: rightAnswers } = await pool.query(`select * from right_answers where id_question in (${questionsArray.join(',')})`)
+				return (numberOfCorrectAnswers = rightAnswers.filter(rightAnswer => answers.includes(rightAnswer.id_answers)).length)
+			}
+		} catch (e) {
+			console.log(e)
+		}
+	}
+
 	async startPassTest(id_test, id_student, ipAddress) {
 		try {
 			const statusOfProgress = 'start'
@@ -71,12 +89,11 @@ class StudentService {
 		}
 	}
 
-	async updateTestResultQuestions(id_test_result, questionsString, questionCount, answersString) {
+	async updateTestResultQuestions(id_test_result, questionsString, questionCount) {
 		try {
-			const { rows } = await pool.query('update tests_results set questions = $1, count_question = $2, answers = $3 where id_test_result = $4', [
+			const { rows } = await pool.query('update tests_results set questions = $1, count_question = $2 where id_test_result = $3', [
 				questionsString,
 				questionCount,
-				answersString,
 				id_test_result
 			])
 			return rows
@@ -85,10 +102,27 @@ class StudentService {
 		}
 	}
 
-	async uploadResultOfTest(id_student, id_test, countRightAnswers, percentageOfRightAnswer, studentChose, id_test_result) {
+	async updateChosedAnswer(id_test_result, studentChose) {
 		try {
-			const studentChoseValues = Object.values(studentChose).join(', ')
+			const { rows } = await pool.query('select questions, answers from tests_results where id_test_result = $1', [id_test_result])
+			const { questions, answers } = rows[0]
+			const newAnswers = questions.split(',').map((question, index) => {
+				const answer = studentChose[question] || 0
+				return answer
+			})
+			const newAnswersString = newAnswers.join(',')
+			const { rows: updatedAnswers } = await pool.query('update tests_results set answers = $1 where id_test_result = $2 returning answers', [
+				newAnswersString,
+				id_test_result
+			])
+			return updatedAnswers
+		} catch (e) {
+			console.log(e)
+		}
+	}
 
+	async uploadResultOfTest(id_student, id_test, countRightAnswers, percentageOfRightAnswer, id_test_result) {
+		try {
 			const querySelect = 'SELECT * FROM tests_results WHERE id_test_result = $1'
 			const { rows: selectRows } = await pool.query(querySelect, [id_test_result])
 
@@ -112,15 +146,8 @@ class StudentService {
 				.padStart(2, '0')}.000`
 			const statusPassed = 'passed'
 
-			const queryUpdate = 'UPDATE tests_results SET ball = $1, delivery_date = $2, answers = $3, count_right_answers = $4, status = $5 WHERE id_test_result = $6 RETURNING *'
-			const { rows: updateRows } = await pool.query(queryUpdate, [
-				percentageOfRightAnswer,
-				formattedDate,
-				studentChoseValues,
-				countRightAnswers,
-				statusPassed,
-				id_test_result
-			])
+			const queryUpdate = 'UPDATE tests_results SET ball = $1, delivery_date = $2, count_right_answers = $3, status = $4 WHERE id_test_result = $5 RETURNING *'
+			const { rows: updateRows } = await pool.query(queryUpdate, [percentageOfRightAnswer, formattedDate, countRightAnswers, statusPassed, id_test_result])
 
 			if (updateRows.length > 0) {
 				const updatedData = updateRows[0]

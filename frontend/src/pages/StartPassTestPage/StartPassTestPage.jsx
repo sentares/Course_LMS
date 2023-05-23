@@ -22,8 +22,8 @@ const StartPassTestPage = () => {
 		stopTest,
 		handleClickOnAnswer,
 		hadlePostResult,
-		deleteLocal,
 		handleCLickQuestion,
+		handleCLickPassTest,
 	} = StartPassTestPageModule()
 
 	const [generateDate, setGenerateDate] = useState(null)
@@ -57,6 +57,7 @@ const StartPassTestPage = () => {
 				} else {
 					clearInterval(timer)
 					setRemainingTime('Время вышло')
+					stopTest()
 				}
 			}, 1000)
 
@@ -88,7 +89,7 @@ const StartPassTestPage = () => {
 								<div className='w-full flex items-center justify-center'>
 									<div className={styles.mapOfQuest}>
 										{questionsOfTest.map((question, index) => {
-											const isAnswered = studentChose.hasOwnProperty(
+											const isAnswered = studentChose?.hasOwnProperty(
 												question.id_question
 											)
 											return (
@@ -156,7 +157,7 @@ const StartPassTestPage = () => {
 											<Button
 												title={item.answers}
 												classOfStyle={
-													studentChose[test.id_question] === item.id_answers
+													studentChose[test?.id_question] === item?.id_answers
 														? 'answerChosedItem'
 														: 'answerItem'
 												}
@@ -187,7 +188,11 @@ const StartPassTestPage = () => {
 							</div>
 						</div>
 						<div className={styles.finishButton}>
-							<Button title={'Завершить тест'} classOfStyle={'notReady'} />
+							<Button
+								title={'Завершить тест'}
+								classOfStyle={'notReady'}
+								onClick={handleCLickPassTest}
+							/>
 						</div>
 					</div>
 				</div>

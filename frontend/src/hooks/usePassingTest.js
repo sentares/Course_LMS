@@ -25,8 +25,6 @@ const usePassingTest = () => {
 		const { data } = await request(
 			`/question/getQuestionsForStudent/${id_test}`
 		)
-		console.log(id_test)
-
 		setAllQuestions(data)
 		dispatch(setQuestionsOfTest(data))
 	}
@@ -96,17 +94,28 @@ const usePassingTest = () => {
 		dispatch(setQuestionsOfTest(data))
 	}
 
+	const uploadChosedQuestionAndAnswer = async (
+		id_test_result,
+		studentChose
+	) => {
+		if (studentChose !== 0) {
+			await request(`/student/updateStudentChose/${id_test_result}`, 'PUT', {
+				studentChose,
+			})
+		}
+	}
+
 	const uploadResult = async (
 		id_student,
 		id_test,
-		resultOfTest,
+		count_question,
 		id_test_result
 	) => {
 		setLodaing(true)
 		const { data } = await request(
 			`/student/${id_student}/uploadResultOfTest/${id_test}`,
 			'POST',
-			{ resultOfTest, id_test_result }
+			{ count_question, id_test_result }
 		)
 		toast[data?.type](data?.message)
 		setLodaing(false)
@@ -123,6 +132,7 @@ const usePassingTest = () => {
 		pushQuestionsIds,
 		getQuestionsByArrIds,
 		getInfoTestResultOfStudent,
+		uploadChosedQuestionAndAnswer,
 		rightAnswer,
 		testsByIds,
 		currentIndex,
