@@ -2,7 +2,7 @@
 	@apply flex items-center justify-center w-full m-1 mt-8;
 	.specialFlowsWrapper {
 		.specialFlowsItem {
-			@apply w-96 max-w-sm relative flex flex-row justify-between items-center mt-3 p-4 focus:outline-none bg-slate-100 hover:bg-slate-200 text-gray-600 hover:text-gray-800  transition-all
+			@apply w-96 max-w-sm relative flex flex-row justify-between items-center mt-1 p-3 focus:outline-none bg-slate-100 hover:bg-slate-200 text-gray-600 hover:text-gray-800  transition-all
 			rounded-md;
 			.specialFlowsValue {
 				@apply flex justify-end;

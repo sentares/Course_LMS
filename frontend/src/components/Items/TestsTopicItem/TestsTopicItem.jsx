@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setRegulateCountOfQuestionInTopic } from '../../../redux/slices/topicSlice'
 
 const TestsTopicItem = ({
+	isRegulate,
 	role,
 	testsTopics,
 	idOfClickedTopic,
@@ -54,7 +55,7 @@ const TestsTopicItem = ({
 							<div className='text-gray-400'>
 								вопросов: {topic.count_question}
 							</div>
-							{role === 2 && (
+							{role === 2 && !isRegulate ? (
 								<Input
 									classOfStyle={'count'}
 									type={'number'}
@@ -69,6 +70,10 @@ const TestsTopicItem = ({
 										)
 									}
 								/>
+							) : (
+								<div className={styles.regulateCount}>
+									/ {countOfQuestionsInTopics[topic.id_topic]}
+								</div>
 							)}
 						</div>
 					</div>

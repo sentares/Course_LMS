@@ -4,8 +4,6 @@ import useTeacher from '../../../../hooks/useTeacher'
 import { useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import every from 'lodash.every'
-import isEmpty from 'lodash.isempty'
 import useStudent from '../../../../hooks/useStudent'
 import useTest from '../../../../hooks/useTest'
 
@@ -18,6 +16,7 @@ const SpecialFlowsPageModule = () => {
 	const { id_flows } = params
 
 	const [isPressChange, setIsPressChange] = useState(false)
+	const [isOpenStudentsModal, setIsOpenStudentsModal] = useState(false)
 	const [isOpenAddTestModal, setIsOpenAddTestModal] = useState(false)
 	const [studentsIds, setStudentsIds] = useState(null)
 	const [form, setForm] = useState({
@@ -32,6 +31,8 @@ const SpecialFlowsPageModule = () => {
 		id_teacher: '',
 		price: '',
 	})
+
+	const [formForActivateStudents, setFormForActivateStudents] = useState([])
 	const [formForTest, setFormForTest] = useState({
 		id_course: '',
 		id_flows: id_flows,
@@ -44,6 +45,7 @@ const SpecialFlowsPageModule = () => {
 	const {
 		getSpecialCourseFlows,
 		getStudentsOfFlow,
+		activateStudentsOfFLow,
 		specialFlows,
 		courseAndStudentsConnect,
 	} = useFlows(null, null)
@@ -101,6 +103,28 @@ const SpecialFlowsPageModule = () => {
 		}
 	}
 
+	const changeFormForActivateStudents = (event, studentId) => {
+		const checked = event.target.checked
+		if (studentId === 'selectAll') {
+			if (checked) {
+				const allStudentIds = arrOfFlowsStudents.map(
+					student => student.id_student
+				)
+				setFormForActivateStudents(allStudentIds)
+			} else {
+				setFormForActivateStudents([])
+			}
+		} else {
+			if (checked) {
+				setFormForActivateStudents(prevState => [...prevState, studentId])
+			} else {
+				setFormForActivateStudents(prevState =>
+					prevState.filter(id => id !== studentId)
+				)
+			}
+		}
+	}
+
 	const handlePressChangeDate = () => {
 		setIsPressChange(!isPressChange)
 	}
@@ -119,10 +143,16 @@ const SpecialFlowsPageModule = () => {
 		}
 	}
 
+	const changeStudentsModal = async event => {
+		event.preventDefault()
+		await getStudentsByFlowConnect(studentsIds)
+		setIsOpenStudentsModal(!isOpenStudentsModal)
+	}
+
 	const changeOpenAddTestModal = async event => {
 		event.preventDefault()
+		await filterAndGetActivateStudents(courseAndStudentsConnect)
 		await getRegulateTestsForCourse(specialFlows.id_course)
-		await getStudentsByFlowConnect(studentsIds)
 		setIsOpenAddTestModal(!isOpenAddTestModal)
 	}
 
@@ -132,6 +162,26 @@ const SpecialFlowsPageModule = () => {
 				return student.id_student
 			})
 			setStudentsIds(idStudentsArray)
+		}
+	}
+
+	const filterAndGetActivateStudents = async courseAndStudentsConnect => {
+		if (courseAndStudentsConnect) {
+			const activeStudents = courseAndStudentsConnect
+				.filter(student => student.is_active)
+				.map(student => student.id_student)
+			await getStudentsByFlowConnect(activeStudents)
+		}
+	}
+
+	const handleSaveActivatedStudents = async event => {
+		if (!formForActivateStudents.length) {
+			toast.warn('Никто из студентов не активирован')
+		} else {
+			event.preventDefault()
+			await activateStudentsOfFLow(id_flows, formForActivateStudents)
+			setIsOpenStudentsModal(false)
+			getConnectedTests(id_flows)
 		}
 	}
 
@@ -219,6 +269,15 @@ const SpecialFlowsPageModule = () => {
 		}
 	}, [isOpenAddTestModal])
 
+	useEffect(() => {
+		if (courseAndStudentsConnect) {
+			const activeStudents = courseAndStudentsConnect
+				.filter(student => student.is_active)
+				.map(student => student.id_student)
+			setFormForActivateStudents(activeStudents)
+		}
+	}, [courseAndStudentsConnect])
+
 	return {
 		specialFlows,
 		specialTeacher,
@@ -232,12 +291,17 @@ const SpecialFlowsPageModule = () => {
 		regulateTestsOfCourse,
 		arrOfFlowsStudents,
 		connectedWithFlowsTests,
+		isOpenStudentsModal,
+		formForActivateStudents,
 		change,
 		changeFormForTest,
+		changeStudentsModal,
+		changeFormForActivateStudents,
 		handlePressChangeDate,
 		handleClickRegisterCourse,
 		changeOpenAddTestModal,
 		handleSaveConnectTestWithFlow,
+		handleSaveActivatedStudents,
 	}
 }
 

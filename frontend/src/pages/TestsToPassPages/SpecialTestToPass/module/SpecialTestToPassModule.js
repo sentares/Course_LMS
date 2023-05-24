@@ -53,7 +53,14 @@ const SpecialTestToPassModule = () => {
 	}, [])
 
 	const isPassed = infoAboutTestPassing?.status === 'passed'
-	return { specialTest, openModal, isPassed, handleClickStartTest, onAllow }
+	return {
+		specialTest,
+		openModal,
+		isPassed,
+		infoAboutTestPassing,
+		handleClickStartTest,
+		onAllow,
+	}
 }
 
 export default SpecialTestToPassModule

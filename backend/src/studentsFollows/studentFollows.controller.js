@@ -106,5 +106,26 @@ class StudentFollowsController {
 			})
 		}
 	}
+
+	async activateStudent(req, res) {
+		try {
+			const { id_flows } = req.params
+			const { arrOfIdStudents } = req.body
+
+			const rows = await StudentFollowsService.updateIsActiveStudent(id_flows, arrOfIdStudents)
+			res.status(200).json({
+				message: 'Активация прошла успешно',
+				type: 'success',
+				data: rows
+			})
+		} catch (e) {
+			console.log(e)
+			res.status(500).json({
+				message: 'Ошибка в сервере',
+				type: 'error',
+				data: {}
+			})
+		}
+	}
 }
 module.exports = new StudentFollowsController()

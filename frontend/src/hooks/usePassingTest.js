@@ -20,6 +20,7 @@ const usePassingTest = () => {
 	const [rightAnswer, setRightAnswer] = useState(null)
 	const [testsByIds, setTestByIds] = useState(null)
 	const [loading, setLodaing] = useState(false)
+	const [arrOfTestResult, setArrOfTestResult] = useState([])
 
 	const getQuestionsForStudentTest = async id_test => {
 		const { data } = await request(
@@ -121,6 +122,14 @@ const usePassingTest = () => {
 		setLodaing(false)
 	}
 
+	const getStudentResultsOfTest = async (id_student, id_test) => {
+		const { data } = await request(
+			`/student/${id_student}/getResultOfTest/${id_test}`
+		)
+		setArrOfTestResult(prevArr => [...prevArr, data]) // Добавляем полученные данные в массив
+		// console.log(data)
+	}
+
 	return {
 		getQuestionsForStudentTest,
 		getSpecialQuestion,
@@ -133,6 +142,8 @@ const usePassingTest = () => {
 		getQuestionsByArrIds,
 		getInfoTestResultOfStudent,
 		uploadChosedQuestionAndAnswer,
+		getStudentResultsOfTest,
+		arrOfTestResult,
 		rightAnswer,
 		testsByIds,
 		currentIndex,

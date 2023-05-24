@@ -45,6 +45,19 @@ class StudentFollowsService {
 			console.log(e)
 		}
 	}
+
+	async updateIsActiveStudent(id_flows, arrOfIdStudents) {
+		try {
+			const query = `UPDATE course_of_students SET is_active = CASE WHEN id_student IN (${arrOfIdStudents
+				.map((_, index) => `$${index + 2}`)
+				.join(',')}) THEN true ELSE false END WHERE id_flows = $1`
+			const params = [id_flows, ...arrOfIdStudents]
+			const { rowCount } = await pool.query(query, params)
+			console.log(`Updated ${rowCount} rows`)
+		} catch (e) {
+			console.log(e)
+		}
+	}
 }
 
 module.exports = new StudentFollowsService()

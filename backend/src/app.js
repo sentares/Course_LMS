@@ -5,12 +5,13 @@ const express = require('express')
 const logger = require('morgan')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
+const handlebars = require('handlebars')
 
 const app = express()
 
 app.use(express.json())
 // app.use(express.urlencoded({ extended: false }))
-app.use(express.static(path.resolve(__dirname, 'public')))
+app.use(express.static(path.resolve(__dirname, '../public')))
 app.use(logger('dev'))
 app.use(cookieParser())
 
@@ -25,6 +26,11 @@ const uploadsPath = path.join(__dirname, 'uploads')
 app.use(express.static(publicPath))
 app.use('/uploads', express.static(uploadsPath))
 app.use('/api', require('./indexRouter'))
+app.get('*', (req, res) => {
+	res.sendFile(path.join(publicPath, 'index.html'))
+})
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'hbs')
 
 const PORT = process.env.PORT
 const server = http.createServer(app)

@@ -35,6 +35,7 @@ const SpecialTestPage = () => {
 		role,
 		timeForTest,
 		isGoodRule,
+		passingScore,
 		changeTopicName,
 		handleClickQuestion,
 		handleChangeModal,
@@ -47,6 +48,7 @@ const SpecialTestPage = () => {
 		handleChangeTopicInfoBlock,
 		handleChangeQuestionModal,
 		changeTimeForTest,
+		changePassingScore,
 		handleSaveRegulate,
 		checkIsGoodRule,
 	} = SpecialTestModule()
@@ -108,27 +110,50 @@ const SpecialTestPage = () => {
 							{role === 2 && (
 								<>
 									<div className='mb-2'>
-										<Button
-											classOfStyle={isGoodRule ? 'auth' : 'notReady'}
-											title={
-												specialTest.regulate
-													? 'Изменить условие'
-													: 'Создать условие'
-											}
-											onClick={handleSaveRegulate}
-										/>
+										{specialTest.regulate ? (
+											<div className={styles.ruleExist}>Условие создано</div>
+										) : (
+											<Button
+												classOfStyle={isGoodRule ? 'auth' : 'notReady'}
+												title={'Создать условие'}
+												onClick={handleSaveRegulate}
+											/>
+										)}
 									</div>
 									<div className='flex items-center justify-between mt-4 p-2 border-2 rounded-lg border-gray-200'>
 										<label htmlFor=''>Длительность теста (минут)</label>
 										<div className='flex justify-end'>
-											<Input
-												classOfStyle={'count'}
-												type={'number'}
-												min={1}
-												value={timeForTest}
-												placeholder={1}
-												onChange={changeTimeForTest}
-											/>
+											{specialTest.regulate ? (
+												<div className={styles.regulateInfo}>{timeForTest}</div>
+											) : (
+												<Input
+													classOfStyle={'count'}
+													type={'number'}
+													min={1}
+													value={timeForTest}
+													placeholder={1}
+													onChange={changeTimeForTest}
+												/>
+											)}
+										</div>
+									</div>
+									<div className='flex items-center justify-between mt-1 p-2 border-2 rounded-lg border-gray-200'>
+										<label htmlFor=''>Проходной балл</label>
+										<div className='flex justify-end'>
+											{specialTest.regulate ? (
+												<div className={styles.regulateInfo}>
+													{passingScore}
+												</div>
+											) : (
+												<Input
+													classOfStyle={'count'}
+													type={'number'}
+													min={1}
+													value={passingScore}
+													placeholder={1}
+													onChange={changePassingScore}
+												/>
+											)}
 										</div>
 									</div>
 								</>
@@ -137,6 +162,7 @@ const SpecialTestPage = () => {
 								<div className={styles.topics}>Темы:</div>
 								{testsTopics?.length ? (
 									<TestsTopicItem
+										isRegulate={specialTest.regulate}
 										role={role}
 										testsTopics={testsTopics}
 										idOfClickedTopic={idOfClickedTopic}

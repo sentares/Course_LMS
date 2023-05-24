@@ -73,6 +73,7 @@ const useStudent = () => {
 		const { data } = await request(`/test/getPersonalTests/${id_student}`)
 		setPersonalTests(data)
 	}
+
 	return {
 		addStudentToCourseFlows,
 		checkIsStudentAdded,

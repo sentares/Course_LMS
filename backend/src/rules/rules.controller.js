@@ -4,9 +4,9 @@ class RulesControllers {
 	async createRule(req, res) {
 		try {
 			const { id_test } = req.params
-			const { timeForTest, regulateCountOfQuestionInTopic } = req.body
+			const { timeForTest, regulateCountOfQuestionInTopic, passingScore } = req.body
 
-			if (!id_test || !timeForTest || !regulateCountOfQuestionInTopic) {
+			if (!id_test || !timeForTest || !regulateCountOfQuestionInTopic || !passingScore) {
 				return res.status(400).json({
 					message: 'Данные записаны не правильно',
 					type: 'warn'
@@ -19,6 +19,7 @@ class RulesControllers {
 			}
 
 			await RulesService.addTimeToTest(id_test, timeForTest)
+			await RulesService.addPassingScoreToTest(id_test, passingScore)
 
 			return res.status(200).json({
 				message: 'Условие создано',

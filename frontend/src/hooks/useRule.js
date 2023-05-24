@@ -7,11 +7,13 @@ const useRule = () => {
 	const createRule = async (
 		timeForTest,
 		regulateCountOfQuestionInTopic,
-		id_test
+		id_test,
+		passingScore
 	) => {
 		const data = await request(`/rules/createRule/${id_test}`, 'PUT', {
 			timeForTest,
 			regulateCountOfQuestionInTopic,
+			passingScore,
 		})
 		toast[data?.type](data?.message)
 	}

@@ -6,4 +6,13 @@
 			@apply flex items-center gap-1 w-full;
 		}
 	}
+	.youPassed {
+		@apply bg-green-500 text-lg text-white p-2 rounded-lg font-semibold;
+	}
+	.youLosed {
+		@apply bg-red-500 text-lg text-white p-2 rounded-lg font-semibold;
+	}
+	.result {
+		@apply bg-yellow-200 mt-1 p-2 rounded-lg font-semibold;
+	}
 }

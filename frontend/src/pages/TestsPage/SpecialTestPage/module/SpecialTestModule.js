@@ -27,6 +27,7 @@ const SpecialTestModule = () => {
 	const [isOpenQuestionModal, setIsOpenQuestionModal] = useState(false)
 	const [idOfClickedTopic, setIdOfClickedTopic] = useState()
 	const [timeForTest, setTimeForTest] = useState(0)
+	const [passingScore, setPassingScore] = useState(0)
 	const [isGoodRule, setIsGoodRule] = useState(false)
 	const [topicName, setTopicName] = useState('')
 	const [question, setQuestion] = useState('')
@@ -83,6 +84,7 @@ const SpecialTestModule = () => {
 	const changeQuestion = e => setQuestion(e.target.value)
 	const changeTopicName = e => setTopicName(e.target.value)
 	const changeTimeForTest = e => setTimeForTest(e.target.value)
+	const changePassingScore = e => setPassingScore(e.target.value)
 
 	const handleOptionTextChange = (optionNumber, optionText) => {
 		setOptions(
@@ -174,7 +176,8 @@ const SpecialTestModule = () => {
 			Object.values(regulateCountOfQuestionInTopic).some(
 				count => count === 0
 			) ||
-			timeForTest === 0
+			timeForTest === 0 ||
+			passingScore === 0
 		) {
 			setIsGoodRule(false)
 		} else {
@@ -212,7 +215,17 @@ const SpecialTestModule = () => {
 			toast.warn('Выберите длительность теста')
 			return
 		}
-		await createRule(timeForTest, regulateCountOfQuestionInTopic, id_test)
+		if (passingScore === 0) {
+			toast.warn('Установите проходной балл')
+			return
+		}
+		await createRule(
+			timeForTest,
+			regulateCountOfQuestionInTopic,
+			id_test,
+			passingScore
+		)
+		await getSpecialTest(id_test)
 	}
 
 	useEffect(() => {
@@ -226,6 +239,7 @@ const SpecialTestModule = () => {
 		chekIsAuthor()
 		if (specialTest) {
 			setTimeForTest(specialTest?.time)
+			setPassingScore(specialTest?.score_to_passing)
 		}
 	}, [specialTest])
 
@@ -256,6 +270,7 @@ const SpecialTestModule = () => {
 		role,
 		timeForTest,
 		isGoodRule,
+		passingScore,
 		handleChangeQuestionModal,
 		handleChangeModal,
 		handleChangeTopicModal,
@@ -268,6 +283,7 @@ const SpecialTestModule = () => {
 		handleChangeTopicInfoBlock,
 		handleClickQuestion,
 		changeTimeForTest,
+		changePassingScore,
 		handleSaveRegulate,
 		checkIsGoodRule,
 	}

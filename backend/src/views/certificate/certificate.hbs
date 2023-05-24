@@ -1,0 +1,134 @@
+{{!-- // Справка об обучении --}}
+<link rel="stylesheet" href="/bt/css/context.css" />
+<link rel="stylesheet" href="/bt/css/style.css" />
+<link rel="stylesheet" href="/bt/css/educdemand.css" />
+<link rel="stylesheet" href="/bt/css/certificate.css" />
+<link rel = "stylesheet" media = "print" href = "/bt/css/print3.css">
+<script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs@gh-pages/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+ <div class='D_main_header'>
+    <header>
+        <div class='SpravkaObOkonch_input'>
+             </div>
+        <h2>Справка об обучении</h2>
+        
+        
+        <div class="IconbtnPrint">
+             <button onclick="myPrintFunction()" class="btnPrint">
+                <img src="/bt/img/printer.png" alt="">
+            </button> <ul class="lang">
+            <li class="lang_item">
+                <a href="{{urlKg}}" class="lang_link" >
+                    Кыр.
+                </a>
+            </li>
+            <li class="lang_item">
+                <a href="{{urlEn}}" class="lang_link">
+                    En.  
+                </a>
+            </li>
+        </ul>
+        </div>
+    </header>
+</div>
+<div class="a4">
+   
+    {{!-- <h4 class="upper center" style="line-height: 15px;">
+        {{obj.vuz.mo}}<br />
+    </h4>
+    <h4 class="center" style="line-height: 15px;">
+        {{obj.vuz.v2_s}}<br />
+    </h4>
+    <h4 class="upper center" style="line-height: 15px;">
+      <span class="normal">
+      {{obj.vuz.faculty}}
+    </span>
+  </h4> --}}
+    
+ 
+    {{!-- <div class="real_div" style="line-height:25px">
+        <p>&emsp;&emsp;&emsp;Настоящая справка подтверждает, что <b>{{obj.faculty.s_fio}}</b> 
+   действительно является {{obj.stud}} {{obj.faculty.id_rate}}-курса, группы {{obj.faculty.p20}}, {{obj.unKnown.textDidection}}
+    "{{obj.unKnown.direction}}<span>"{{obj.unKnown.textSpecial}}</span>.</p> --}}
+
+    {{!-- <div style="text-indent:40px;line-height:15px">
+        <p>Форма обучения: <b>{{obj.faculty.p108}}, {{obj.faculty.name}}.</b></p>
+        <p>Нормативный срок освоения: <b>{{obj.unKnown.max_rate_id}} {{obj.unKnown.nameMax_rate}}.</b></p>
+        <p>Справка выдана <b>{{obj.refnumber.naznachenie}}.</b></p>
+    </div> --}}
+
+<div class="grid-col-3" style="margin-bottom:10px">
+   <div class="head_block"> 
+        <div class='logo_block'>
+            <img src='/img/logo_un.png' alt='logo' style='width: 80px;' />
+        </div>
+        <div style="margin-top:10px;">
+            <h4 class="upper center">Кыргыз руспубликасынын билим беруу жана илим министирлиги</h4>
+            <h4 class="upper center">Министерство образования и науки кыргызской руспублики</h4>
+        </div>
+    </div>
+    <div class="head_block"> 
+        <div class='logo_block'>
+            <img src='/img/logo_un.png' alt='logo' style='width: 80px;' />
+        </div>
+        <div style="margin-top:10px;">
+            <h4 class="upper center">И.Арабаев атындагы кыргыз мамлекеттик университети</h4>
+            <h4 class="upper center">Кыргызский государственный университет имени И.Арабаева</h4>
+        </div>
+    </div>
+    <div class="head_block"> 
+        <div class='logo_block'>
+            <img src='/img/logo_un.png' alt='logo' style='width: 80px;' />
+        </div>
+        <div style="margin-top:10px;">
+            <h4 class="upper center">Педагогика факультети</h4>
+            <h4 class="upper center">факультет педагогики</h4>
+        </div>
+    </div>
+</div>
+
+        <h4 class="upper center" style="font-size: 60px;">Сертификат</h4>
+
+        <h4 class="upper center" >Дизайнер</h4>
+        <h4 class="upper center" >ываамвыаы</h4>
+
+        <h4 class="upper center" style="font-size: 36px;font-style: italic;color: blue;">Асанов Асан Асанович</h4>
+               
+            <p class="qr_text" style="line-height: normal!important;text-align:justify;">&emsp;&emsp;&emsp;<b>Примечание:</b> Документ имеет юридическую силу и приравнивается к документу на бумажном носителе, подписанном собственноручной подписью, 
+                выданным {{obj.vuz.v4}} в соответствии с Правилом 
+                пользования порталом электронных услуг Центра обслуживания 
+                студентов, утвержденным Ученым советом 
+                {{obj.vuz.v4}}
+                 от  26.01.2023 г. Пр. №1/24.
+            </p>
+
+            <div class="grid-col-2" style="margin-bottom:10px">
+                <div class="foot_block"> 
+                    <div class='logo_block'>
+                    </div>
+                    <div style="margin-top:10px;">
+                        <h4 class="upper center">И.Арабаев атындагы КМУнун ректору, профессор. Ректор КГУ им. И.Арабаев профессор Абдырахманов Т.А.</h4>
+                        <h4 class="upper center"></h4>
+                    </div>
+                </div>
+                <div class="foot_block"> 
+                    <div class='logo_block'>
+                    </div>
+                    <div style="margin-top:10px;">
+                        <h4 class="upper center">И.Арабаев атындагы КМУнун ректору, профессор. Ректор КГУ им. </h4>
+                    </div>
+                </div>
+            </div>
+
+    <h4 class="upper center" >Бишкек - 2023 Май Рек.№</h4>
+</div>
+
+
+</div>
+</div>
+
+
+    <script >new QRCode(document.querySelector(".qrcode"), document.querySelector(".qrcode").id);
+</script>
+    <script src="/bt/js/print.js"></script>

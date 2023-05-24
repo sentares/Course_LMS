@@ -1,9 +1,14 @@
 .RegisterForm {
-	@apply max-w-lg h-full w-full p-8 rounded-xl border-gray-200 border m-auto px-12;
+	@apply max-w-lg  w-full p-8 rounded-xl border-gray-200 border m-auto px-12;
+
 	.isHaveAcc {
 		@apply flex justify-end mt-4  text-lg;
 		.regButton {
 			@apply pl-2 text-green-600;
 		}
 	}
+}
+
+.goHome {
+	@apply flex justify-center p-2 m-2 mt-[-100px];
 }

@@ -13,8 +13,6 @@ const StudentTestsToPass = () => {
 		return currentDate < startDate || currentDate > endDate
 	}
 
-	console.log(personalTests)
-
 	return (
 		<div className={styles.StudentTestsToPass}>
 			<div>

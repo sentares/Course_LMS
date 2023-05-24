@@ -6,6 +6,7 @@ import { TiArrowBack } from 'react-icons/ti'
 import styles from './styles.module.scss'
 import AddTestToFlowModal from '../../../components/Modals/AddTestToFlowModal/AddTestToFlowModal'
 import ConnectedTestItem from '../../../components/Items/ConnectedTestItem/ConnectedTestItem'
+import StudentsOfFlowsModal from '../../../components/Modals/StudentsOfFlowsModal/StudentsOfFlowsModal'
 
 const SpecialFlowsPage = () => {
 	const {
@@ -21,7 +22,12 @@ const SpecialFlowsPage = () => {
 		formForTest,
 		arrOfFlowsStudents,
 		connectedWithFlowsTests,
+		isOpenStudentsModal,
+		formForActivateStudents,
 		changeFormForTest,
+		changeFormForActivateStudents,
+		handleSaveActivatedStudents,
+		changeStudentsModal,
 		change,
 		handlePressChangeDate,
 		handleClickRegisterCourse,
@@ -300,6 +306,15 @@ const SpecialFlowsPage = () => {
 					)}
 					{role === 2 && (
 						<>
+							{isOpenStudentsModal && (
+								<StudentsOfFlowsModal
+									changeStudentsModal={changeStudentsModal}
+									arrOfFlowsStudents={arrOfFlowsStudents}
+									formForActivateStudents={formForActivateStudents}
+									changeFormForActivateStudents={changeFormForActivateStudents}
+									handleSaveActivatedStudents={handleSaveActivatedStudents}
+								/>
+							)}
 							{isOpenAddTestModal && (
 								<AddTestToFlowModal
 									formForTest={formForTest}
@@ -310,6 +325,13 @@ const SpecialFlowsPage = () => {
 									arrOfFlowsStudents={arrOfFlowsStudents}
 								/>
 							)}
+							<div className={styles.testForFlow}>
+								<Button
+									title={'Студенты'}
+									classOfStyle={'auth'}
+									onClick={changeStudentsModal}
+								/>
+							</div>
 							<div className={styles.testForFlow}>
 								<div className='w-full'>
 									<div className={styles.testsNaming}>Тесты потока</div>

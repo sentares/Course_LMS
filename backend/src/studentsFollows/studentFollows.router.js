@@ -8,5 +8,6 @@ router.get('/:id_flows/checkStudent/:id_student', StudentFollowsController.check
 router.get('/:id_student', StudentFollowsController.getStudentsFollows)
 router.post('/getStudentsCourses', StudentFollowsController.getStudentsCourses)
 router.post('/getStudentsFlows', StudentFollowsController.getStudentsFlows)
+router.put('/activateStudents/:id_flows', StudentFollowsController.activateStudent)
 
 module.exports = router

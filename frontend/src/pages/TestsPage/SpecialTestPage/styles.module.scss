@@ -4,7 +4,7 @@
 	.questionBlock {
 		@apply mt-3 w-full;
 		.topics {
-			@apply w-full flex items-center justify-center mt-4 border-b-2 border-gray-100 pb-2 font-semibold text-lg;
+			@apply w-full flex items-center justify-center mt-4 mb-3 border-b-2 border-gray-100 pb-2 font-semibold text-lg;
 		}
 		.questionItem {
 			@apply w-full relative flex flex-row items-center mr-0 mt-3 p-2 focus:outline-none bg-slate-100 hover:bg-slate-200 text-gray-600 hover:text-gray-800 hover:scale-[1.02] transition-all
@@ -18,5 +18,11 @@
 
 	.haveNothing {
 		@apply w-full flex items-center justify-center mt-2 text-gray-400;
+	}
+	.ruleExist {
+		@apply w-full flex items-center justify-center mt-2 text-white bg-green-600 p-2 rounded-lg text-lg font-semibold;
+	}
+	.regulateInfo {
+		@apply font-semibold mr-2;
 	}
 }

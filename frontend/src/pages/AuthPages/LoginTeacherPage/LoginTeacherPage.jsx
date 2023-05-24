@@ -4,7 +4,7 @@ import LoginForm from '../../../components/Auth/LoginForm/LoginForm'
 
 const LoginTeacherPage = () => {
 	return (
-		<div>
+		<div className={styles.LoginPage}>
 			<LoginForm />
 		</div>
 	)

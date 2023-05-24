@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { useHttp } from './useHttp'
 import { toast } from 'react-toastify'
+import { useHttp } from './useHttp'
 
 const useFlows = (id_course, form, id_teacher) => {
 	const [allFlowsOfCourse, setAllFlowsOfCourse] = useState(null)
@@ -97,6 +97,21 @@ const useFlows = (id_course, form, id_teacher) => {
 		}
 	}
 
+	const activateStudentsOfFLow = async (id_flows, arrOfIdStudents) => {
+		try {
+			const { type, message } = await request(
+				`/studentsFollows/activateStudents/${id_flows}`,
+				'PUT',
+				{
+					arrOfIdStudents,
+				}
+			)
+			toast[type](message)
+		} catch (e) {
+			console.log(e)
+		}
+	}
+
 	return {
 		isDoneFunction,
 		allFlowsOfCourse,
@@ -108,6 +123,7 @@ const useFlows = (id_course, form, id_teacher) => {
 		getSpecialCourseFlows,
 		getFlowsOfTeacher,
 		getStudentsOfFlow,
+		activateStudentsOfFLow,
 	}
 }
 
