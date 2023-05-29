@@ -1,7 +1,12 @@
 import React from 'react'
 import axios from 'axios'
 
-export const baseURL = 'http://localhost:443/api'
+
+const hostURL = ''
+const apiURL = 'api'
+const appName = 'lms-lite'
+
+export const baseURL = `${hostURL}/${appName}/${apiURL}`
 
 const api = axios.create({
 	baseURL,

@@ -8,6 +8,7 @@ const cookieParser = require('cookie-parser')
 const hbs = require('hbs')
 
 const app = express()
+const APP_NAME = process.env.APP_NAME
 
 app.use(express.json())
 // app.use(express.urlencoded({ extended: false }))
@@ -24,8 +25,11 @@ const publicPath = path.join(__dirname, 'public')
 const uploadsPath = path.join(__dirname, 'uploads')
 
 app.use(express.static(publicPath))
+app.use(`/${APP_NAME}`,express.static(publicPath))
 app.use('/uploads', express.static(uploadsPath))
 app.use('/api', require('./src/indexRouter'))
+app.use(`/${APP_NAME}/api`, require('./src/indexRouter'))
+
 app.get('*', (req, res) => {
 	res.sendFile(path.join(publicPath, 'index.html'))
 })
