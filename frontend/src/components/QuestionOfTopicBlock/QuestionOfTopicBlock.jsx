@@ -9,6 +9,7 @@ const QuestionOfTopicBlock = ({
 	isOpenTopicInfoBlock,
 	handleChangeModal,
 	handleClickQuestion,
+	specialTest,
 }) => {
 	return (
 		<div
@@ -21,7 +22,7 @@ const QuestionOfTopicBlock = ({
 					<div className={styles.topicName}>
 						Тема: {specialTopic.topic_name}
 					</div>
-					{isAuthor && (
+					{isAuthor && !specialTest.regulate && (
 						<Button
 							classOfStyle={'auth'}
 							title={'Добавить вопрос'}

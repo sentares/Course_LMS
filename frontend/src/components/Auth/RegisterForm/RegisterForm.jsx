@@ -1,10 +1,10 @@
 import React from 'react'
 import RegisterModules from './modules/RegisterModules'
 import Input from '../../../ui/input/Input'
-import styles from './styles.module.scss'
 import Button from '../../../ui/button/Button'
 import ReCAPTCHA from 'react-google-recaptcha'
 import { useNavigate } from 'react-router-dom'
+import styles from './styles.module.scss'
 
 const RegisterForm = () => {
 	const {

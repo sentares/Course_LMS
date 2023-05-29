@@ -27,6 +27,15 @@ class RulesService {
 			console.log(e)
 		}
 	}
+
+	async addIsSertificate(id_test, isSertificate) {
+		try {
+			const { rows } = await pool.query(`UPDATE tests SET with_sertificate=$1  WHERE id_test=$2`, [isSertificate, id_test])
+			return rows
+		} catch (e) {
+			console.log(e)
+		}
+	}
 }
 
 module.exports = new RulesService()

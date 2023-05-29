@@ -28,6 +28,7 @@ const SpecialTestModule = () => {
 	const [idOfClickedTopic, setIdOfClickedTopic] = useState()
 	const [timeForTest, setTimeForTest] = useState(0)
 	const [passingScore, setPassingScore] = useState(0)
+	const [isSertificate, setIsSertificate] = useState(false)
 	const [isGoodRule, setIsGoodRule] = useState(false)
 	const [topicName, setTopicName] = useState('')
 	const [question, setQuestion] = useState('')
@@ -85,6 +86,7 @@ const SpecialTestModule = () => {
 	const changeTopicName = e => setTopicName(e.target.value)
 	const changeTimeForTest = e => setTimeForTest(e.target.value)
 	const changePassingScore = e => setPassingScore(e.target.value)
+	const changeWithSertificate = () => setIsSertificate(!isSertificate)
 
 	const handleOptionTextChange = (optionNumber, optionText) => {
 		setOptions(
@@ -223,7 +225,8 @@ const SpecialTestModule = () => {
 			timeForTest,
 			regulateCountOfQuestionInTopic,
 			id_test,
-			passingScore
+			passingScore,
+			isSertificate
 		)
 		await getSpecialTest(id_test)
 	}
@@ -269,6 +272,7 @@ const SpecialTestModule = () => {
 		idOfClickedTopic,
 		role,
 		timeForTest,
+		isSertificate,
 		isGoodRule,
 		passingScore,
 		handleChangeQuestionModal,
@@ -286,6 +290,7 @@ const SpecialTestModule = () => {
 		changePassingScore,
 		handleSaveRegulate,
 		checkIsGoodRule,
+		changeWithSertificate,
 	}
 }
 

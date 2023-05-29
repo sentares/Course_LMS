@@ -58,6 +58,7 @@ class TestsService {
 									course_name: nameOfCourse,
 									flow_name: flowName,
 									id_flows: id_flows
+									// with_sertificate: with_sertificate
 								}
 							}
 						}

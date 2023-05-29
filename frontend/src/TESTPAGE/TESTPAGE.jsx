@@ -22,7 +22,6 @@ const TimerComponent = () => {
 		}
 	})
 
-	console.log(personalTests)
 	return (
 		<div>
 			<p>Generate Date: </p>

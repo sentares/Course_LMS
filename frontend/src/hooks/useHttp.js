@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 
-const baseURL = 'http://localhost:443/api'
+export const baseURL = 'http://localhost:443/api'
 
 const api = axios.create({
 	baseURL,

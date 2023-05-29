@@ -14,5 +14,6 @@ app.use('/edit', require('./edit/edit.router'))
 app.use('/topics', require('./topics/topics.router'))
 app.use('/studentsFollows', require('./studentsFollows/studentFollows.router'))
 app.use('/rules', require('./rules/rules.router'))
+app.use('/doc', require('./doc/doc.router'))
 
 module.exports = app

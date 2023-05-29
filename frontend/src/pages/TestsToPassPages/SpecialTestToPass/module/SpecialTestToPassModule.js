@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import useTest from '../../../../hooks/useTest'
 import { useEffect, useState } from 'react'
 import usePassingTest from '../../../../hooks/usePassingTest'
+import useDoc from '../../../../hooks/useDoc'
 
 const SpecialTestToPassModule = () => {
 	const params = useParams()
@@ -17,6 +18,7 @@ const SpecialTestToPassModule = () => {
 	const [openModal, setOpenModal] = useState(false)
 
 	const { getFullInfoAboutSpecialTest, specialTest } = useTest()
+	const { postDataForDoc } = useDoc()
 	const {
 		startPassResultTestOfStudent,
 		getQuestionsForStudentTest,
@@ -47,18 +49,25 @@ const SpecialTestToPassModule = () => {
 		await navigate(`/startPassTest/${id_test}`)
 	}
 
+	const handleClickDoc = async () => {
+		await postDataForDoc(infoAboutTestPassing, user)
+	}
+
 	useEffect(() => {
 		getFullInfoAboutSpecialTest(id_test)
 		getInfoTestResultOfStudent(id_test, user.id_student)
 	}, [])
+
 
 	const isPassed = infoAboutTestPassing?.status === 'passed'
 	return {
 		specialTest,
 		openModal,
 		isPassed,
+		user,
 		infoAboutTestPassing,
 		handleClickStartTest,
+		handleClickDoc,
 		onAllow,
 	}
 }

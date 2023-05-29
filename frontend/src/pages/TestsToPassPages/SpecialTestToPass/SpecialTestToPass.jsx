@@ -3,6 +3,7 @@ import SpecialTestToPassModule from './module/SpecialTestToPassModule'
 import styles from './styles.module.scss'
 import Button from '../../../ui/button/Button'
 import ReadyForTestModal from '../../../components/Modals/ReadyForTestModal/ReadyForTestModal'
+import { baseURL } from '../../../hooks/useHttp'
 
 const SpecialTestToPass = () => {
 	const {
@@ -10,7 +11,9 @@ const SpecialTestToPass = () => {
 		openModal,
 		isPassed,
 		infoAboutTestPassing,
+		user,
 		handleClickStartTest,
+		handleClickDoc,
 		onAllow,
 	} = SpecialTestToPassModule()
 
@@ -68,6 +71,18 @@ const SpecialTestToPass = () => {
 									<div className={styles.result}>
 										ваш результат {infoAboutTestPassing.ball} %
 									</div>
+									{infoAboutTestPassing.ball >=
+										specialTest.score_to_passing && (
+										<button className={styles.sertificate}>
+											<a
+												href={`${baseURL}/doc/course/${specialTest.id_course}/test/${infoAboutTestPassing.id_test_result}/student/${user.id_student}`}
+												target='_blank'
+											>
+												{' '}
+												Сертификат
+											</a>
+										</button>
+									)}
 								</div>
 							)}
 						</div>

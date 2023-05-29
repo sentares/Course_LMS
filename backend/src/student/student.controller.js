@@ -92,7 +92,6 @@ class StudentController {
 			const ipAddress = results.Ethernet[0]
 
 			const data = await StudentService.startPassTest(id_test, id_student, ipAddress)
-			console.log(data, 'dataOfStart')
 
 			res.status(200).json({
 				message: 'Данные успешно получены',
@@ -165,10 +164,8 @@ class StudentController {
 			// const { countRightAnswers, percentageOfRightAnswer } = resultOfTest
 
 			const countRightAnswers = await StudentService.getAndCheckIsRightAnswers(id_test_result)
-			console.log(countRightAnswers)
-			console.log(count_question)
+
 			const percentageOfRightAnswer = await ((countRightAnswers / count_question) * 100).toFixed(2)
-			console.log(percentageOfRightAnswer)
 
 			const data = await StudentService.uploadResultOfTest(id_student, id_test, countRightAnswers, percentageOfRightAnswer, id_test_result)
 			res.status(200).json({

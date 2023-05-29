@@ -127,7 +127,6 @@ const usePassingTest = () => {
 			`/student/${id_student}/getResultOfTest/${id_test}`
 		)
 		setArrOfTestResult(prevArr => [...prevArr, data]) // Добавляем полученные данные в массив
-		// console.log(data)
 	}
 
 	return {

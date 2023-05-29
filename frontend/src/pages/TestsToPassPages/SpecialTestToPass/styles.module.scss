@@ -15,4 +15,7 @@
 	.result {
 		@apply bg-yellow-200 mt-1 p-2 rounded-lg font-semibold;
 	}
+	.sertificate {
+		@apply font-semibold text-xl flex items-center justify-center w-full p-2 bg-orange-400 mt-2 rounded-lg text-white;
+	}
 }

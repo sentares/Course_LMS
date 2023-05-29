@@ -22,7 +22,6 @@ class EditController {
 			if (state.right) {
 				try {
 					const rows = await editService.updateRightAnswer(state.right)
-					console.log(state.right)
 					res.status(200).json({
 						message: 'Данные успешно изменены',
 						type: 'success',

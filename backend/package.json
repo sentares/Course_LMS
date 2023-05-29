@@ -1,34 +1,43 @@
 {
-    "name": "avn",
-    "version": "1.0.0",
-    "private": true,
-    "scripts": {
-        "start": "node src/app.js",
-        "dev": "nodemon src/app.js",
-        "build": "webpack"
-    },
-    "dependencies": {
-        "bcrypt": "^5.1.0",
-        "cookie-parser": "~1.4.4",
-        "cors": "^2.8.5",
-        "dotenv": "^16.0.3",
-        "express": "^4.18.2",
-        "handlebars": "^4.7.7",
-        "jsonwebtoken": "^9.0.0",
-        "morgan": "~1.9.1",
-        "os": "^0.1.2",
-        "pg": "^8.10.0",
-        "uuid": "^9.0.0"
-    },
-    "devDependencies": {
-        "@babel/core": "^7.20.12",
-        "@babel/preset-env": "^7.20.2",
-        "@types/mssql": "^8.1.1",
-        "babel-loader": "^9.1.2",
-        "clean-webpack-plugin": "^4.0.0",
-        "nodemon": "^2.0.20",
-        "prettier": "^2.8.3",
-        "webpack": "^5.75.0",
-        "webpack-cli": "^5.0.1"
-    }
+	"name": "avn",
+	"version": "1.0.0",
+	"private": true,
+	"scripts": {
+		"start": "node app.js",
+		"dev": "nodemon app.js",
+		"build": "webpack"
+	},
+	"dependencies": {
+		"aws-sdk": "^2.1386.0",
+		"babel-preset-es2015": "^6.24.1",
+		"bcrypt": "^5.1.0",
+		"cookie-parser": "~1.4.4",
+		"cors": "^2.8.5",
+		"dotenv": "^16.0.3",
+		"express": "4.18.2",
+		"handlebars": "^4.7.7",
+		"hbs": "^4.2.0",
+		"html-loader": "^4.2.0",
+		"jsonwebtoken": "^9.0.0",
+		"loaders": "^1.1.3",
+		"mock-aws-s3": "^4.0.2",
+		"morgan": "~1.9.1",
+		"nock": "^13.3.1",
+		"os": "^0.1.2",
+		"pg": "8.10.0",
+		"uuid": "^9.0.0",
+		"webpack-node-externals": "^3.0.0"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.20.12",
+		"@babel/preset-env": "^7.20.2",
+		"@types/mssql": "^8.1.1",
+		"babel-loader": "^9.1.2",
+		"clean-webpack-plugin": "4.0.0",
+		"nodemon": "^2.0.20",
+		"prettier": "^2.8.3",
+		"webpack": "^5.84.1",
+		"webpack-cli": "^5.1.1",
+		"worker-plugin": "^5.0.1"
+	}
 }

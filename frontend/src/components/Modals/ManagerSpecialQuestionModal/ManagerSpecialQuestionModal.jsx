@@ -6,7 +6,10 @@ import Input from '../../../ui/input/Input'
 import ManagerModule from './module/ManagerModule'
 import { AiOutlineCheckCircle } from 'react-icons/ai'
 
-const ManagerSpecialQuestionModal = ({ handleChangeQuestionModal }) => {
+const ManagerSpecialQuestionModal = ({
+	handleChangeQuestionModal,
+	specialTest,
+}) => {
 	const {
 		questionTitle,
 		right,
@@ -65,11 +68,13 @@ const ManagerSpecialQuestionModal = ({ handleChangeQuestionModal }) => {
 							))}
 						</div>
 					</div>
-					<Button
-						classOfStyle={'auth'}
-						title={'Сохранить изменения'}
-						onClick={handleUpdateQuestion}
-					/>
+					{!specialTest.regulate && (
+						<Button
+							classOfStyle={'auth'}
+							title={'Сохранить изменения'}
+							onClick={handleUpdateQuestion}
+						/>
+					)}
 				</div>
 			) : (
 				<div>Loading</div>

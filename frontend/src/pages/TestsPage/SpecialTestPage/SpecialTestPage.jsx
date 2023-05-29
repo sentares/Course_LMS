@@ -33,6 +33,7 @@ const SpecialTestPage = () => {
 		rightAnswer,
 		idOfClickedTopic,
 		role,
+		isSertificate,
 		timeForTest,
 		isGoodRule,
 		passingScore,
@@ -51,7 +52,10 @@ const SpecialTestPage = () => {
 		changePassingScore,
 		handleSaveRegulate,
 		checkIsGoodRule,
+		changeWithSertificate,
 	} = SpecialTestModule()
+
+	console.log(specialTest?.regulate)
 
 	return (
 		<div className={styles.SpecialTestPage}>
@@ -92,6 +96,7 @@ const SpecialTestPage = () => {
 						{isOpenQuestionModal && isAuthor && (
 							<ManagerSpecialQuestionModal
 								handleChangeQuestionModal={handleChangeQuestionModal}
+								specialTest={specialTest}
 							/>
 						)}
 						<SpecialTestInfo
@@ -100,7 +105,7 @@ const SpecialTestPage = () => {
 							specialTest={specialTest}
 						/>
 						<div className={styles.questionBlock}>
-							{isAuthor && role === 3 && (
+							{isAuthor && role === 3 && !specialTest.regulate && (
 								<Button
 									classOfStyle={'auth'}
 									title={'Добавить тему'}
@@ -156,6 +161,23 @@ const SpecialTestPage = () => {
 											)}
 										</div>
 									</div>
+									<div className='flex items-center justify-between mt-1 p-2 border-2 rounded-lg border-gray-200'>
+										<label htmlFor=''>Сертификат</label>
+										<div className='flex justify-end'>
+											{specialTest.with_sertificate ? (
+												<div className={styles.regulateInfo}>Да</div>
+											) : (
+												<Input
+													// classOfStyle={'count'}
+													type={'checkbox'}
+													min={1}
+													value={isSertificate}
+													placeholder={1}
+													onChange={changeWithSertificate}
+												/>
+											)}
+										</div>
+									</div>
 								</>
 							)}
 							<div>
@@ -184,6 +206,7 @@ const SpecialTestPage = () => {
 							isOpenTopicInfoBlock={isOpenTopicInfoBlock}
 							handleChangeModal={handleChangeModal}
 							handleClickQuestion={handleClickQuestion}
+							specialTest={specialTest}
 						/>
 					)}
 				</>
